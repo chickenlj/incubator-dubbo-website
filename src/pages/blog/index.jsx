@@ -9,24 +9,24 @@ import BlogItem from './blogItem';
 import Footer from '../../components/footer';
 import blogConfig from '../../../site_config/blog';
 import siteConfig from '../../../site_config/site';
-import { getLink } from '../../../utils';
+import {getLink} from '../../../utils';
 import './index.scss';
 
 class Blog extends Language {
 
   render() {
-    let urlLang;
-    if (window.rootPath) {
-      urlLang = window.location.pathname.split('/')[2];
-    } else {
-      urlLang = window.location.pathname.split('/')[1];
-    }
-    let language = this.props.lang || urlLang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
+      let urlLang;
+      if (window.rootPath) {
+          urlLang = window.location.pathname.split('/')[2];
+      } else {
+          urlLang = window.location.pathname.split('/')[1];
+      }
+      let language = this.props.lang || urlLang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
     // 防止链接被更改导致错误的cookie存储
     if (language !== 'en-us' && language !== 'zh-cn') {
       language = siteConfig.defaultLanguage;
     }
-    // 同步cookie的语言版本
+      // 同步cookie的语言版本
     if (language !== cookie.get('docsite_language')) {
       cookie.set('docsite_language', language, { expires: 365, path: '' });
     }
@@ -34,14 +34,14 @@ class Blog extends Language {
     const blogs = dataSource.list;
     return (
       <div className="blog-list-page">
-      <Header
-        type="normal"
-        currentKey="blog"
-        logo={`${window.rootPath}/img/dubbo_colorful.png`}
-        language={language}
-        onLanguageChange={this.onLanguageChange}
-      />
-      <Bar img={`${window.rootPath}/img/blog.png`} text={dataSource.barText} />
+          <Header
+              type="normal"
+              currentKey="blog"
+              logo={`${window.rootPath}/img/dubbo_colorful.png`}
+              language={language}
+              onLanguageChange={this.onLanguageChange}
+          />
+          <Bar img={`${window.rootPath}/img/blog.png`} text={dataSource.barText}/>
         <section className="blog-container">
           <div className="col col-18 left-part">
             <PageSlider pageSize={5}>
@@ -57,18 +57,20 @@ class Blog extends Language {
             <ul>
             {
               blogs.map((blog, i) => (
-                <li key={i}><a href={getLink(blog.link)}><span>{blog.dateStr}&nbsp;&nbsp;</span><span>{blog.title}</span></a></li>
+                  <li key={i}><a
+                      href={getLink(blog.link)}><span>{blog.dateStr}&nbsp;&nbsp;</span><span>{blog.title}</span></a>
+                  </li>
               ))
             }
             </ul>
           </div>
         </section>
-        <Footer logo={`${window.rootPath}/img/dubbo_gray.png`} />
+          <Footer logo={`${window.rootPath}/img/dubbo_gray.png`}/>
       </div>
     );
   }
 }
 
-document.getElementById('root') && ReactDOM.render(<Blog />, document.getElementById('root'));
+document.getElementById('root') && ReactDOM.render(<Blog/>, document.getElementById('root'));
 
 export default Blog;

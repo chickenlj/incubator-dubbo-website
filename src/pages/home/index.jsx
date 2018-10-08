@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import cookie from 'js-cookie';
-import { getScrollTop, getLink } from '../../../utils';
+import {getLink, getScrollTop} from '../../../utils';
 import Header from '../../components/header';
 import Button from '../../components/button';
 import Footer from '../../components/footer';
@@ -36,44 +36,46 @@ class Home extends Language {
   }
 
   render() {
-    let urlLang;
-    if (window.rootPath) {
-      urlLang = window.location.pathname.split('/')[2];
-    } else {
-      urlLang = window.location.pathname.split('/')[1];
-    }
-    let language = this.props.lang || urlLang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
+      let urlLang;
+      if (window.rootPath) {
+          urlLang = window.location.pathname.split('/')[2];
+      } else {
+          urlLang = window.location.pathname.split('/')[1];
+      }
+      let language = this.props.lang || urlLang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
     // 防止链接被更改导致错误的cookie存储
     if (language !== 'en-us' && language !== 'zh-cn') {
       language = siteConfig.defaultLanguage;
     }
-    // 同步cookie语言版本
+      // 同步cookie语言版本
     if (language !== cookie.get('docsite_language')) {
       cookie.set('docsite_language', language, { expires: 365, path: '' });
     }
     const dataSource = homeConfig[language];
     const { headerType } = this.state;
-    const headerLogo = headerType === 'primary' ? `${window.rootPath}/img/dubbo_white.png` : `${window.rootPath}/img/dubbo_colorful.png`;
+      const headerLogo = headerType === 'primary' ? `${window.rootPath}/img/dubbo_white.png` : `${window.rootPath}/img/dubbo_colorful.png`;
     return (
       <div className="home-page">
         <section className="top-section">
           <Header
-            currentKey="home"
-            type={headerType}
-            logo={headerLogo}
-            language={language}
-            onLanguageChange={this.onLanguageChange}
+              currentKey="home"
+              type={headerType}
+              logo={headerLogo}
+              language={language}
+              onLanguageChange={this.onLanguageChange}
           />
           <div className="vertical-middle">
-            <img src={`${window.rootPath}/img/dubbo.png`} />
+              <img src={`${window.rootPath}/img/dubbo.png`}/>
             <div className="product-name">
               <h2>{dataSource.brand.brandName}</h2>
-              <img src={`${window.rootPath}/img/incubating.svg`} />
+                <img src={`${window.rootPath}/img/incubating.svg`}/>
             </div>
             <p className="product-desc">{dataSource.brand.briefIntroduction}</p>
             <div className="button-area">
-              <Button type="primary" link={getLink(dataSource.brand.getStartedButton.link)}>{dataSource.brand.getStartedButton.text}</Button>
-              <Button type="normal" link={getLink(dataSource.brand.viewOnGithubButton.link)}>{dataSource.brand.viewOnGithubButton.text}</Button>
+                <Button type="primary"
+                        link={getLink(dataSource.brand.getStartedButton.link)}>{dataSource.brand.getStartedButton.text}</Button>
+                <Button type="normal"
+                        link={getLink(dataSource.brand.viewOnGithubButton.link)}>{dataSource.brand.viewOnGithubButton.text}</Button>
             </div>
           </div>
           <div className="animation animation1" />
@@ -88,7 +90,7 @@ class Home extends Language {
               <h3>{dataSource.introduction.title}</h3>
               <p>{dataSource.introduction.desc}</p>
             </div>
-            <img src={`${window.rootPath}${dataSource.introduction.img}`} />
+              <img src={`${window.rootPath}${dataSource.introduction.img}`}/>
           </div>
         </section>
         <section className="feature-section">
@@ -106,9 +108,9 @@ class Home extends Language {
             <div className="left-part">
               <h3>{dataSource.start.title}</h3>
               <p>{dataSource.start.desc}</p>
-              <a href={getLink(dataSource.start.button.link)}>{dataSource.start.button.text}</a>
+                <a href={getLink(dataSource.start.button.link)}>{dataSource.start.button.text}</a>
               </div>
-            <div className="right-part"><img src={`${window.rootPath}/img/quick_start.png`} /></div>
+              <div className="right-part"><img src={`${window.rootPath}/img/quick_start.png`}/></div>
           </div>
         </section>
         <section className="users-section">
@@ -117,17 +119,17 @@ class Home extends Language {
           <div className="users">
           {
             dataSource.users.list.map((user, i) => (
-              <img src={`${window.rootPath}${user}`} key={i} />
+                <img src={`${window.rootPath}${user}`} key={i}/>
             ))
           }
           </div>
         </section>
-        <Footer logo={`${window.rootPath}/img/dubbo_gray.png`} />
+          <Footer logo={`${window.rootPath}/img/dubbo_gray.png`}/>
       </div>
     );
   }
 }
 
-document.getElementById('root') && ReactDOM.render(<Home />, document.getElementById('root'));
+document.getElementById('root') && ReactDOM.render(<Home/>, document.getElementById('root'));
 
 export default Home;

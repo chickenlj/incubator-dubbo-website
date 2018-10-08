@@ -1,30 +1,30 @@
 export default {
-  rootPath: '', // 发布到服务器的根目录，需以/开头但不能有尾/，如果只有/，请填写空字符串
-  port: 8080, // 本地开发服务器的启动端口
-  domain: 'dubbo.apache.org', // 站点部署域名
-  defaultSearch: 'google', // 默认搜索引擎，baidu或者google
+    rootPath: '', // 发布到服务器的根目录，需以/开头但不能有尾/，如果只有/，请填写空字符串
+    port: 8080, // 本地开发服务器的启动端口
+    domain: 'dubbo.apache.org', // 站点部署域名
+    defaultSearch: 'google', // 默认搜索引擎，baidu或者google
   defaultLanguage: 'en-us',
   'en-us': {
     pageMenu: [
       {
-        key: 'home', // 用作顶部菜单的选中
+          key: 'home', // 用作顶部菜单的选中
         text: 'HOME',
-        link: '/en-us/index.html',
+          link: '/en-us/index.html',
       },
       {
-        key: 'docs',
+          key: 'docs',
         text: 'DOCS',
-        link: '/en-us/docs/user/quick-start.html',
+          link: '/en-us/docs/user/quick-start.html',
       },
       {
-        key: 'blog',
+          key: 'blog',
         text: 'BLOG',
-        link: '/en-us/blog/index.html',
+          link: '/en-us/blog/index.html',
       },
       {
-        key: 'community',
+          key: 'community',
         text: 'COMMUNITY',
-        link: '/en-us/community/index.html',
+          link: '/en-us/community/index.html',
       },
     ],
     disclaimer: {
@@ -36,15 +36,15 @@ export default {
       list: [
         {
           text: 'Quick start',
-          link: '/en-us/docs/user/quick-start.html',
+            link: '/en-us/docs/user/quick-start.html',
         },
         {
           text: 'Developer guide',
-          link: '/en-us/docs/dev/build.html',
+            link: '/en-us/docs/dev/build.html',
         },
         {
           text: 'Admin manual',
-          link: '/en-us/docs/admin/ops/dubbo-ops.html',
+            link: '/en-us/docs/admin/ops/dubbo-ops.html',
         },
       ],
     },
@@ -53,11 +53,11 @@ export default {
       list: [
         {
           text: 'Blog',
-          link: '/en-us/blog/index.html',
+            link: '/en-us/blog/index.html',
         },
         {
           text: 'Community',
-          link: '/en-us/community/index.html',
+            link: '/en-us/community/index.html',
         },
       ],
     },
@@ -66,24 +66,24 @@ export default {
   'zh-cn': {
     pageMenu: [
       {
-        key: 'home',
+          key: 'home',
         text: '首页',
-        link: '/zh-cn/index.html',
+          link: '/zh-cn/index.html',
       },
       {
-        key: 'docs',
+          key: 'docs',
         text: '文档',
-        link: '/zh-cn/docs/user/quick-start.html',
+          link: '/zh-cn/docs/user/quick-start.html',
       },
       {
-        key: 'blog',
+          key: 'blog',
         text: '博客',
-        link: '/zh-cn/blog/index.html',
+          link: '/zh-cn/blog/index.html',
       },
       {
-        key: 'community',
+          key: 'community',
         text: '社区',
-        link: '/zh-cn/community/index.html',
+          link: '/zh-cn/community/index.html',
       }
     ],
     disclaimer: {
@@ -95,15 +95,15 @@ export default {
       list: [
         {
           text: '快速开始',
-          link: '/zh-cn/docs/user/quick-start.html',
+            link: '/zh-cn/docs/user/quick-start.html',
         },
         {
           text: '开发者指南',
-          link: '/zh-cn/docs/dev/build.html',
+            link: '/zh-cn/docs/dev/build.html',
         },
         {
           text: '运维管理',
-          link: '/zh-cn/docs/admin/ops/dubbo-ops.html',
+            link: '/zh-cn/docs/admin/ops/dubbo-ops.html',
         },
       ]
     },
@@ -112,11 +112,11 @@ export default {
       list: [
         {
           text: '博客',
-          link: '/zh-cn/blog/index.html',
+            link: '/zh-cn/blog/index.html',
         },
         {
           text: '社区',
-          link: '/zh-cn/community/index.html',
+            link: '/zh-cn/community/index.html',
         }
       ]
     },

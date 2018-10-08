@@ -613,7 +613,7 @@ export default {
                                 title: 'Tracking with Skywalking',
                                 link: '/en-us/docs/admin/ops/skywalking.html'
                             }
-			    
+
                         ]
                     }
 

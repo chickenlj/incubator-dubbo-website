@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import './index.scss';
 
 const propTypes = {
-  text: PropTypes.string.isRequired, // 显示的文案
-  img: PropTypes.string.isRequired, // 显示的图片链接
+    text: PropTypes.string.isRequired, // 显示的文案
+    img: PropTypes.string.isRequired, // 显示的图片链接
 };
 
 const Bar = (props) => {

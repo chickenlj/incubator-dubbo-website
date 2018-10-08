@@ -320,6 +320,9 @@ The Apache Dubbo (Incubating) Team
 
 1. Commit release package of  https://dist.apache.org/repos/dist/dev/incubator/dubbo to https://dist.apache.org/repos/dist/release/incubator/dubbo/, complete official release。
 2. Send mail to dev@dubbo.apache.org and general@apache.org, notify the community that the release is completed.
+3. Publish [release notes](https://github.com/apache/incubator-dubbo/releases) on Github.
+4. Update the recommend dependency on [Github] (https://github.com/apache/incubator-dubbo#maven-dependency) to the latest version, also update the version in other place if necessary.
+5. Announce on the [official site](http://dubbo.apache.org/) that the version was successfully released.
 
 ## Complete Maven Convenient Binary release（Optional）
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getLink } from '../../../utils';
+import {getLink} from '../../../utils';
 
 const EcoItem = (props) => {
   const { eco } = props;
@@ -11,11 +11,11 @@ const EcoItem = (props) => {
       {
         eco.tags.map((tag, i) => (
           <a
-            key={i}
-            href={getLink(tag.link)}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ background: tag.bgColor }}
+              key={i}
+              href={getLink(tag.link)}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{background: tag.bgColor}}
           >
           {
             tag.text
