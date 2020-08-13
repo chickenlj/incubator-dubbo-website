@@ -113,8 +113,15 @@
     <!-- Header title -->
     <div class="md-header-nav__title" data-md-component="header-title">
       
-        <div class="md-header-nav__ellipsis md-ellipsis">
-          Apache Dubbo
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Apache Dubbo
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Apache Dubbo
+            
+          </span>
         </div>
       
     </div>
@@ -255,6 +262,19 @@
 -->
 
 <!-- Home page -->
+
+  <li class="md-tabs__item">
+    
+      <a
+        href="."
+        class="md-tabs__link md-tabs__link--active"
+      >
+        Home
+      </a>
+    
+  </li>
+
+<!-- Main navigation item with nested items -->
 
       
         <!--
@@ -1057,17 +1077,39 @@
 
 
 
+
+
 <!-- Main navigation item with nested items -->
 
-  <li class="md-nav__item">
+  <li class="md-nav__item md-nav__item--active">
+    
+
+    <!-- Active checkbox expands items contained within nested section -->
+    <input
+      class="md-nav__toggle md-toggle"
+      data-md-toggle="toc"
+      type="checkbox"
+      id="__toc"
+    />
+
+    <!-- Hack: see partials/toc.html for more information -->
+    
+
+    <!-- Render table of contents, if not empty -->
+    
     <a
-      href="docs/index.md"
+      href="."
       title="Home"
-      class="md-nav__link"
+      class="md-nav__link md-nav__link--active"
     >
       Home
     </a>
+
+    <!-- Show table of contents -->
+    
   </li>
+
+<!-- Main navigation item -->
 
       
       
