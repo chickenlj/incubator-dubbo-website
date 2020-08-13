@@ -1,0 +1,4675 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="现代的分布式服务框架的基本概念与 RMI 是类似的，同样是使用 Java 的 Interface 作为服务契约，通过注册中心来完成服务的注册和发现，远程通讯的细节也是通过代理类来屏蔽。">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.6">
+    
+    
+      
+        <title>第一个 Dubbo 应用 - Apache Dubbo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.63b94e9e.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7f672a1f.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dubbo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Application header -->
+<header class="md-header" data-md-component="header">
+
+  <!-- Top-level navigation -->
+  <nav class="md-header-nav md-grid" aria-label="Header">
+
+    <!-- Link to home -->
+    <a
+      href="../.."
+      title="Apache Dubbo"
+      class="md-header-nav__button md-logo"
+      aria-label="Apache Dubbo"
+    >
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Apache Dubbo
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              第一个 Dubbo 应用
+            
+          </span>
+        </div>
+      
+    </div>
+
+    <!-- Button to open search dialogue -->
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <div>
+      <div class="langChange" id="translate" title="中文|English">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+    </svg>
+</div>
+
+<script>
+    var translate = document.getElementById('translate');
+    translate.addEventListener('click', changeHref, false);
+    function changeHref() {
+        if (window.location.href.search('en-us') !== -1) {
+            var changeHref = window.location.href.replace('en-us', 'zh-cn');
+
+        } else {
+            var changeHref = window.location.href.replace('zh-cn', 'en-us');
+        }
+        window.location.href = changeHref
+    }
+</script>
+
+<style>
+    .langChange {
+        display: inline-block;
+        width: 2.4rem;
+        height: 2.4rem;
+        vertical-align: middle;
+        margin-left: .5rem;
+    }
+
+    .langChange svg {
+        fill: rgba(255, 255, 255, 0.548);
+        display: block;
+        width: 1.2rem;
+        height: 1.2rem;
+        margin: 0 auto;
+        margin-top: .6rem;
+        margin-left: .6rem;
+    }
+
+    .langChange :hover {
+        fill: white;
+        cursor: pointer;
+    }
+</style>
+    </div>
+
+    <!-- Repository containing source -->
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/apache/dubbo-website/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <li class="md-tabs__item">Docs
+      <ul class="md-tabs__list">
+        
+          
+
+          <!-- Recurse, if the first item has nested items -->
+          
+          
+          <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    
+    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../docs/2.7/user/user/preface/background.md"
+              class="md-tabs__link"
+      >
+        Docs
+      </a>
+      
+    </li>
+    
+  
+
+
+    <!-- Render item -->
+    
+  
+
+
+          <!-- Render item -->
+          
+        
+          
+
+          <!-- Recurse, if the first item has nested items -->
+          
+          
+          <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    
+    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../docs/3.0/user/preface/background/"
+              class="md-tabs__link"
+      >
+        Docs
+      </a>
+      
+    </li>
+    
+  
+
+
+    <!-- Render item -->
+    
+  
+
+
+          <!-- Render item -->
+          
+        
+      </ul>
+    </li>
+  
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../apache-dubbo-2019-2020/"
+              class="md-tabs__link"
+      >
+        Blog
+      </a>
+      
+    </li>
+    
+  
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../developers/developers_dev/"
+              class="md-tabs__link"
+      >
+        Developers
+      </a>
+      
+    </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Main navigation -->
+<nav
+  class="md-nav md-nav--primary"
+  aria-label="Navigation"
+  data-md-level="0"
+>
+
+  <!-- Site title -->
+  <label class="md-nav__title" for="__drawer">
+    <a
+      href="../.."
+      title="Apache Dubbo"
+      class="md-nav__button md-logo"
+      aria-label="Apache Dubbo"
+    >
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+    Apache Dubbo
+  </label>
+
+  <!-- Repository containing source -->
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/apache/dubbo-website/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+
+  <!-- Render item list -->
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/index.md"
+      title="Home"
+      class="md-nav__link"
+    >
+      Home
+    </a>
+  </li>
+
+      
+      
+    
+      
+        
+          
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      2.7
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="2.7"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.7
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1"
+        type="checkbox"
+        id="nav-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1">
+      User's Guide
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="User's Guide"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        User's Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-1"
+        type="checkbox"
+        id="nav-1-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-1">
+      Preface
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Preface"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Preface
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/preface/background.md"
+      title="Bakcground"
+      class="md-nav__link"
+    >
+      Bakcground
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/preface/background.md"
+      title="Requirements"
+      class="md-nav__link"
+    >
+      Requirements
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/preface/architecture.md"
+      title="Architecture"
+      class="md-nav__link"
+    >
+      Architecture
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/preface/usage.md"
+      title="Usage"
+      class="md-nav__link"
+    >
+      Usage
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/quick-start.md"
+      title="Quick Start"
+      class="md-nav__link"
+    >
+      Quick Start
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/dependencies.md"
+      title="Dependencies"
+      class="md-nav__link"
+    >
+      Dependencies
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/maturity.md"
+      title="Maturity"
+      class="md-nav__link"
+    >
+      Maturity
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-5"
+        type="checkbox"
+        id="nav-1-1-5"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-5">
+      Configuration
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Configuration"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Configuration
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/configuration/xml.md"
+      title="XML Configuration"
+      class="md-nav__link"
+    >
+      XML Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/configuration/api.md"
+      title="API Configuration"
+      class="md-nav__link"
+    >
+      API Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/configuration/annotation.md"
+      title="Annotation Configuration"
+      class="md-nav__link"
+    >
+      Annotation Configuration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-6"
+        type="checkbox"
+        id="nav-1-1-6"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-6">
+      Demos
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Demos"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Demos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/preflight-check.md"
+      title="Check on start"
+      class="md-nav__link"
+    >
+      Check on start
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/fault-tolerent-strategy.md"
+      title="Fault tolerance"
+      class="md-nav__link"
+    >
+      Fault tolerance
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/loadbalance.md"
+      title="Load balance"
+      class="md-nav__link"
+    >
+      Load balance
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/thread-model.md"
+      title="Thread model"
+      class="md-nav__link"
+    >
+      Thread model
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/explicit-target.md"
+      title="Connecting certain provider straightly"
+      class="md-nav__link"
+    >
+      Connecting certain provider straightly
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/subscribe-only.md"
+      title="Subscribe only"
+      class="md-nav__link"
+    >
+      Subscribe only
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/registry-only.md"
+      title="Register only"
+      class="md-nav__link"
+    >
+      Register only
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/static-service.md"
+      title="Static service"
+      class="md-nav__link"
+    >
+      Static service
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/multi-protocols.md"
+      title="Multi-protocols"
+      class="md-nav__link"
+    >
+      Multi-protocols
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/multi-registry.md"
+      title="Multi-registries"
+      class="md-nav__link"
+    >
+      Multi-registries
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/service-group.md"
+      title="Grouping"
+      class="md-nav__link"
+    >
+      Grouping
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/multi-versions.md"
+      title="Versions"
+      class="md-nav__link"
+    >
+      Versions
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/group-merger.md"
+      title="Group merger"
+      class="md-nav__link"
+    >
+      Group merger
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/parameter-validation.md"
+      title="Parameter validation"
+      class="md-nav__link"
+    >
+      Parameter validation
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/result-cache.md"
+      title="Result cache"
+      class="md-nav__link"
+    >
+      Result cache
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/generic-reference.md"
+      title="Generic call"
+      class="md-nav__link"
+    >
+      Generic call
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/generic-service.md"
+      title="Generic implementation"
+      class="md-nav__link"
+    >
+      Generic implementation
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/echo-service.md"
+      title="Echo service"
+      class="md-nav__link"
+    >
+      Echo service
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/context.md"
+      title="Context"
+      class="md-nav__link"
+    >
+      Context
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/attachment.md"
+      title="Attachment"
+      class="md-nav__link"
+    >
+      Attachment
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/async-call.md"
+      title="Async call"
+      class="md-nav__link"
+    >
+      Async call
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/local-call.md"
+      title="Local call"
+      class="md-nav__link"
+    >
+      Local call
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/callback-parameter.md"
+      title="Parameter callback"
+      class="md-nav__link"
+    >
+      Parameter callback
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/events-notify.md"
+      title="Event callback"
+      class="md-nav__link"
+    >
+      Event callback
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/local-stub.md"
+      title="Local stub"
+      class="md-nav__link"
+    >
+      Local stub
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/local-mock.md"
+      title="Local mock"
+      class="md-nav__link"
+    >
+      Local mock
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/delay-publish.md"
+      title="Delay publish"
+      class="md-nav__link"
+    >
+      Delay publish
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/concurrency-control.md"
+      title="Concurrency limit"
+      class="md-nav__link"
+    >
+      Concurrency limit
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/config-connection.md"
+      title="Connection limit"
+      class="md-nav__link"
+    >
+      Connection limit
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/lazy-connect.md"
+      title="Lazy connec"
+      class="md-nav__link"
+    >
+      Lazy connec
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/stickiness.md"
+      title="Stickness connection"
+      class="md-nav__link"
+    >
+      Stickness connection
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/token-authorization.md"
+      title="Token authorization"
+      class="md-nav__link"
+    >
+      Token authorization
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/routing-rule.md"
+      title="Routing rule"
+      class="md-nav__link"
+    >
+      Routing rule
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/config-rule.md"
+      title="Config rule"
+      class="md-nav__link"
+    >
+      Config rule
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/service-downgrade.md"
+      title="Service downgrade"
+      class="md-nav__link"
+    >
+      Service downgrade
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/graceful-shutdown.md"
+      title="Graceful shutdown"
+      class="md-nav__link"
+    >
+      Graceful shutdown
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/hostname-binding.md"
+      title="Host binding"
+      class="md-nav__link"
+    >
+      Host binding
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/logger-strategy.md"
+      title="Logger"
+      class="md-nav__link"
+    >
+      Logger
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/accesslog.md"
+      title="Accesslog"
+      class="md-nav__link"
+    >
+      Accesslog
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/service-container.md"
+      title="Container"
+      class="md-nav__link"
+    >
+      Container
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/distributed-transaction.md"
+      title="Transaction"
+      class="md-nav__link"
+    >
+      Transaction
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/dump.md"
+      title="Thread dump"
+      class="md-nav__link"
+    >
+      Thread dump
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/netty4.md"
+      title="Netty4"
+      class="md-nav__link"
+    >
+      Netty4
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/serialization.md"
+      title="Kryo&FST serialization"
+      class="md-nav__link"
+    >
+      Kryo&FST serialization
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/simplify-registry-data.md"
+      title="Simplified registry URL"
+      class="md-nav__link"
+    >
+      Simplified registry URL
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/demos/api.md"
+      title="API reference"
+      class="md-nav__link"
+    >
+      API reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-7"
+        type="checkbox"
+        id="nav-1-1-7"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-7">
+      Schema reference
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Schema reference"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Schema reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-service.md"
+      title="dubbo:service"
+      class="md-nav__link"
+    >
+      dubbo:service
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-reference.md"
+      title="dubbo:reference"
+      class="md-nav__link"
+    >
+      dubbo:reference
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-protocol.md"
+      title="dubbo:protocol"
+      class="md-nav__link"
+    >
+      dubbo:protocol
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-registry.md"
+      title="dubbo:registry"
+      class="md-nav__link"
+    >
+      dubbo:registry
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-monitor.md"
+      title="dubbo:monitor"
+      class="md-nav__link"
+    >
+      dubbo:monitor
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-application.md"
+      title="dubbo:application"
+      class="md-nav__link"
+    >
+      dubbo:application
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-module.md"
+      title="dubbo:module"
+      class="md-nav__link"
+    >
+      dubbo:module
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-provider.md"
+      title="dubbo:provider"
+      class="md-nav__link"
+    >
+      dubbo:provider
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-consumer.md"
+      title="dubbo:consumer"
+      class="md-nav__link"
+    >
+      dubbo:consumer
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-method.md"
+      title="dubbo:method"
+      class="md-nav__link"
+    >
+      dubbo:method
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-argument.md"
+      title="dubbo:argument"
+      class="md-nav__link"
+    >
+      dubbo:argument
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-parameter.md"
+      title="dubbo:parameter"
+      class="md-nav__link"
+    >
+      dubbo:parameter
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/xml/dubbo-config-center.md"
+      title="dubbo:config-center"
+      class="md-nav__link"
+    >
+      dubbo:config-center
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-8"
+        type="checkbox"
+        id="nav-1-1-8"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-8">
+      Protocol reference
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Protocol reference"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Protocol reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/protocol/dubbo.md"
+      title="dubbo://"
+      class="md-nav__link"
+    >
+      dubbo://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/protocol/rmi.md"
+      title="rmi://"
+      class="md-nav__link"
+    >
+      rmi://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/protocol/hessian.md"
+      title="hessian://"
+      class="md-nav__link"
+    >
+      hessian://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/protocol/http.md"
+      title="http://"
+      class="md-nav__link"
+    >
+      http://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/protocol/thrift.md"
+      title="thrift://"
+      class="md-nav__link"
+    >
+      thrift://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/protocol/rest.md"
+      title="rest://"
+      class="md-nav__link"
+    >
+      rest://
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-9"
+        type="checkbox"
+        id="nav-1-1-9"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-9">
+      Registry reference
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Registry reference"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-9">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Registry reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/registry/multicast.md"
+      title="Multicast"
+      class="md-nav__link"
+    >
+      Multicast
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/registry/zookeeper.md"
+      title="Zookeeper"
+      class="md-nav__link"
+    >
+      Zookeeper
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/registry/redis.md"
+      title="Redis"
+      class="md-nav__link"
+    >
+      Redis
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/registry/simple.md"
+      title="Simple"
+      class="md-nav__link"
+    >
+      Simple
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-10"
+        type="checkbox"
+        id="nav-1-1-10"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-10">
+      Metadata reference
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Metadata reference"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-10">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Metadata reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/metadata/metadata-redis.md"
+      title="Redis"
+      class="md-nav__link"
+    >
+      Redis
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/registry/metadata-zookeeper.md"
+      title="Zookeeper"
+      class="md-nav__link"
+    >
+      Zookeeper
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/telnet.md"
+      title="Telnet reference"
+      class="md-nav__link"
+    >
+      Telnet reference
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/references/maven.md"
+      title="Maven plugin reference"
+      class="md-nav__link"
+    >
+      Maven plugin reference
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/best-practice.md"
+      title="Best practice"
+      class="md-nav__link"
+    >
+      Best practice
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/recommend.md"
+      title="Recommendation"
+      class="md-nav__link"
+    >
+      Recommendation
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/capacity-plan.md"
+      title="Capacity plan"
+      class="md-nav__link"
+    >
+      Capacity plan
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/perf-test.md"
+      title="Benchmark"
+      class="md-nav__link"
+    >
+      Benchmark
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/2.7/user/user/covergence.md"
+      title="Code coverange"
+      class="md-nav__link"
+    >
+      Code coverange
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2"
+        type="checkbox"
+        id="nav-1-2"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2">
+      Developer's Guide
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Developer's Guide"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Developer's Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/build.md"
+      title="How to Build"
+      class="md-nav__link"
+    >
+      How to Build
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/design.md"
+      title="Architecture"
+      class="md-nav__link"
+    >
+      Architecture
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/SPI.md"
+      title="How SPI Works"
+      class="md-nav__link"
+    >
+      How SPI Works
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/implementation.md"
+      title="Init, Process, Protocols"
+      class="md-nav__link"
+    >
+      Init, Process, Protocols
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2-5"
+        type="checkbox"
+        id="nav-1-2-5"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2-5">
+      SPI Extensions
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="SPI Extensions"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-2-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        SPI Extensions
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/protocol.md"
+      title="Protocol"
+      class="md-nav__link"
+    >
+      Protocol
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/filter.md"
+      title="Filter"
+      class="md-nav__link"
+    >
+      Filter
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/invoker-listener.md"
+      title="Invoker Listener"
+      class="md-nav__link"
+    >
+      Invoker Listener
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/exporter-listener.md"
+      title="Exporter Listener"
+      class="md-nav__link"
+    >
+      Exporter Listener
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/cluster.md"
+      title="Cluster"
+      class="md-nav__link"
+    >
+      Cluster
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/router.md"
+      title="Router"
+      class="md-nav__link"
+    >
+      Router
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/load-balance.md"
+      title="Load Balance"
+      class="md-nav__link"
+    >
+      Load Balance
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/merger.md"
+      title="Merge"
+      class="md-nav__link"
+    >
+      Merge
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/registry.md"
+      title="Registry"
+      class="md-nav__link"
+    >
+      Registry
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/monitor.md"
+      title="Monitor"
+      class="md-nav__link"
+    >
+      Monitor
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/extension-factory.md"
+      title="Extension Factory"
+      class="md-nav__link"
+    >
+      Extension Factory
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/proxy-factory.md"
+      title="Proxy Factory"
+      class="md-nav__link"
+    >
+      Proxy Factory
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/compiler.md"
+      title="Compiler"
+      class="md-nav__link"
+    >
+      Compiler
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/dispatcher.md"
+      title="Dispatcher"
+      class="md-nav__link"
+    >
+      Dispatcher
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/threadpool.md"
+      title="Threadpool"
+      class="md-nav__link"
+    >
+      Threadpool
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/serialize.md"
+      title="Serialize"
+      class="md-nav__link"
+    >
+      Serialize
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/remoting.md"
+      title="Remoting"
+      class="md-nav__link"
+    >
+      Remoting
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/exchanger.md"
+      title="Exchanger"
+      class="md-nav__link"
+    >
+      Exchanger
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/networker.md"
+      title="Networker"
+      class="md-nav__link"
+    >
+      Networker
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/telnet-handler.md"
+      title="Telnet Handler"
+      class="md-nav__link"
+    >
+      Telnet Handler
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/status-checker.md"
+      title="Status Checker"
+      class="md-nav__link"
+    >
+      Status Checker
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/container.md"
+      title="Container"
+      class="md-nav__link"
+    >
+      Container
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/page.md"
+      title="Page"
+      class="md-nav__link"
+    >
+      Page
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/cache.md"
+      title="Cache"
+      class="md-nav__link"
+    >
+      Cache
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/validation.md"
+      title="Validation"
+      class="md-nav__link"
+    >
+      Validation
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/impls/logger-adapter.md"
+      title="Logger Adapter"
+      class="md-nav__link"
+    >
+      Logger Adapter
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/contract.md"
+      title="Contract"
+      class="md-nav__link"
+    >
+      Contract
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/coding.md"
+      title="Coding"
+      class="md-nav__link"
+    >
+      Coding
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/release.md"
+      title="Release"
+      class="md-nav__link"
+    >
+      Release
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/contribution.md"
+      title="Contribution"
+      class="md-nav__link"
+    >
+      Contribution
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/checklist.md"
+      title="Checklist"
+      class="md-nav__link"
+    >
+      Checklist
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/code-smell.md"
+      title="Code Smell"
+      class="md-nav__link"
+    >
+      Code Smell
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../dev/TCK.md"
+      title="TCK"
+      class="md-nav__link"
+    >
+      TCK
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-3"
+        type="checkbox"
+        id="nav-1-3"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-3">
+      Admin's Guide
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Admin's Guide"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Admin's Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../admin/introduction.md"
+      title="Dubbo Admin Overview"
+      class="md-nav__link"
+    >
+      Dubbo Admin Overview
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../admin/serviceSearch.md"
+      title="Search & Details"
+      class="md-nav__link"
+    >
+      Search & Details
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../admin/serviceGovernance.md"
+      title="Governance"
+      class="md-nav__link"
+    >
+      Governance
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../admin/serviceTest.md"
+      title="Testing"
+      class="md-nav__link"
+    >
+      Testing
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+          
+        
+          
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      3.0
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="3.0"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        3.0
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1"
+        type="checkbox"
+        id="nav-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1">
+      User's Guide
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="User's Guide"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        User's Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-1"
+        type="checkbox"
+        id="nav-1-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-1">
+      Preface
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Preface"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Preface
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../docs/3.0/user/preface/background/"
+      title="Bakcground"
+      class="md-nav__link"
+    >
+      Bakcground
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+          
+        
+      
+      
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      Blog
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Blog"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../apache-dubbo-2019-2020/"
+      title="2019-2020 回顾"
+      class="md-nav__link"
+    >
+      2019-2020 回顾
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+      
+      
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      Developers
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Developers"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../developers/developers_dev/"
+      title="开发者指引"
+      class="md-nav__link"
+    >
+      开发者指引
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+      
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#java-rmi" class="md-nav__link">
+    Java RMI 简介
+  </a>
+  
+    <nav class="md-nav" aria-label="Java RMI 简介">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-rmi_1" class="md-nav__link">
+    Java RMI 工作原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java-rmi_2" class="md-nav__link">
+    Java RMI 基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="Java RMI 基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    服务端的服务注册
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    客户端的服务发现
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dubbo_1" class="md-nav__link">
+    Dubbo 基本概念
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-dubbo" class="md-nav__link">
+    基于 API 的 Dubbo 应用
+  </a>
+  
+    <nav class="md-nav" aria-label="基于 API 的 Dubbo 应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    定义服务契约
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    提供契约的实现
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dubbo_2" class="md-nav__link">
+    实现 Dubbo 服务提供方
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dubbo_3" class="md-nav__link">
+    实现 Dubbo 服务调用方
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    运行
+  </a>
+  
+    <nav class="md-nav" aria-label="运行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    构建示例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    运行服务端
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    运行客户端
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dubbo_4" class="md-nav__link">
+    快速生成 Dubbo 应用
+  </a>
+  
+    <nav class="md-nav" aria-label="快速生成 Dubbo 应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    运行
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#telnet" class="md-nav__link">
+    通过 Telnet 管理服务
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/apache/dubbo-website/edit/master/documentations/2.7/en-us/docs/blog/dubbo-101.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="dubbo">第一个 Dubbo 应用<a class="headerlink" href="#dubbo" title="Permanent link">&para;</a></h1>
+<h2 id="java-rmi">Java RMI 简介<a class="headerlink" href="#java-rmi" title="Permanent link">&para;</a></h2>
+<p>Java RMI （Remote Method Invocation）- 远程方法调用，能够让客户端像使用本地调用一样调用服务端 Java 虚拟机中的对象方法。RMI 是面向对象语言领域对 RPC （Remote Procedure Call）的完善，用户无需依靠 IDL 的帮助来完成分布式调用，而是通过依赖接口这种更简单自然的方式。</p>
+<h3 id="java-rmi_1">Java RMI 工作原理<a class="headerlink" href="#java-rmi_1" title="Permanent link">&para;</a></h3>
+<p>一个典型的 RMI 调用如下图所示：</p>
+<ol>
+<li>服务端向 RMI 注册服务绑定自己的地址，</li>
+<li>客户端通过 RMI 注册服务获取目标地址，</li>
+<li>客户端调用本地的 Stub 对象上的方法，和调用本地对象上的方法一致，</li>
+<li>本地存根对象将调用信息打包，通过网络发送到服务端，</li>
+<li>服务端的 Skeleton 对象收到网络请求之后，将调用信息解包，</li>
+<li>然后找到真正的服务对象发起调用，并将返回结果打包通过网络发送回客户端。</li>
+</ol>
+<p><img alt="RMI Flow" src="../../img/blog/rmi-flow.png" /></p>
+<p>(来源：<a href="https://www.cs.rutgers.edu/~pxk/417/notes/images/rpc-rmi_flow.png">https://www.cs.rutgers.edu/~pxk/417/notes/images/rpc-rmi_flow.png</a>)</p>
+<h3 id="java-rmi_2">Java RMI 基本概念<a class="headerlink" href="#java-rmi_2" title="Permanent link">&para;</a></h3>
+<p>Java RMI 是 Java 领域创建分布式应用的技术基石。后续的 EJB 技术，以及现代的分布式服务框架，其中的基本理念依旧是 Java RMI 的延续。在 RMI 调用中，有以下几个核心的概念：</p>
+<ol>
+<li>
+<p>通过**接口**进行远程调用</p>
+</li>
+<li>
+<p>通过客户端的 **Stub 对象**和服务端的 **Skeleton 对象**的帮助将远程调用伪装成本地调用</p>
+</li>
+<li>通过 **RMI 注册服务**完成服务的注册和发现</li>
+</ol>
+<p>对于第一点，客户端需要依赖接口，而服务端需要提供该接口的实现。</p>
+<p>对于第二点，在 J2SE 1.5 版本之前需要通过 rmic 预先编译好客户端的 Stub 对象和服务端的 Skeleton 对象。在之后的版本中，不再需要事先生成 Stub 和 Skeleton 对象。</p>
+<p>下面通过示例代码简单的展示 RMI 中的服务注册和发现</p>
+<h4 id="_1">服务端的服务注册<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">Hello</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HelloImpl</span><span class="p">();</span> <span class="c1">// #1</span>
+<span class="n">Hello</span> <span class="n">stub</span> <span class="o">=</span> <span class="p">(</span><span class="n">Hello</span><span class="p">)</span> <span class="n">UnicastRemoteObject</span><span class="p">.</span><span class="na">exportObject</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// #2</span>
+<span class="n">Registry</span> <span class="n">registry</span> <span class="o">=</span> <span class="n">LocateRegistry</span><span class="p">.</span><span class="na">createRegistry</span><span class="p">(</span><span class="mi">1099</span><span class="p">);</span> <span class="c1">// #3</span>
+<span class="n">registry</span><span class="p">.</span><span class="na">rebind</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">,</span> <span class="n">stub</span><span class="p">);</span> <span class="c1">// #4</span>
+</code></pre></div>
+
+<p>说明：</p>
+<ol>
+<li>初始化服务对象实例，</li>
+<li>通过 <em>UnicastRemoteObject.exportObject</em> 生成可以与服务端通讯的 Stub 对象，</li>
+<li>创建一个本地的 RMI 注册服务，监听端口为 1099。该注册服务运行在服务端，也可以单独启动一个注册服务的进程，</li>
+<li>将 Stub 对象绑定到注册服务上，这样，客户端可以通过 <em>Hello</em> 这个名字查找到该远程对象。</li>
+</ol>
+<h4 id="_2">客户端的服务发现<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">Registry</span> <span class="n">registry</span> <span class="o">=</span> <span class="n">LocateRegistry</span><span class="p">.</span><span class="na">getRegistry</span><span class="p">();</span> <span class="c1">// #1</span>
+<span class="n">Hello</span> <span class="n">stub</span> <span class="o">=</span> <span class="p">(</span><span class="n">Hello</span><span class="p">)</span> <span class="n">registry</span><span class="p">.</span><span class="na">lookup</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">);</span> <span class="c1">// #2</span>
+<span class="n">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">stub</span><span class="p">.</span><span class="na">sayHello</span><span class="p">();</span> <span class="c1">// #3</span>
+</code></pre></div>
+
+<p>说明：</p>
+<ol>
+<li>获取注册服务实例，在本例中，由于没有传入任何参数，假定要获取的注册服务实例部署在本机，并监听在 1099 端口上，</li>
+<li>从注册服务中查找服务名为 <em>Hello</em> 的远程对象，</li>
+<li>通过获取的 Stub 对象发起一次 RMI 调用并获得结果。</li>
+</ol>
+<p>理解 RMI 的工作原理和基本概念，对掌握现代分布式服务框架很有帮助，建议进一步的阅读 RMI 官方教材 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>。</p>
+<h2 id="dubbo_1">Dubbo 基本概念<a class="headerlink" href="#dubbo_1" title="Permanent link">&para;</a></h2>
+<p>现代的分布式服务框架的基本概念与 RMI 是类似的，同样是使用 Java 的 Interface 作为服务契约，通过注册中心来完成服务的注册和发现，远程通讯的细节也是通过代理类来屏蔽。具体来说，Dubbo 在工作时有以下四个角色参与：</p>
+<ol>
+<li>服务提供者 - 启动时在指定端口上暴露服务，并将服务地址和端口注册到注册中心上</li>
+<li>服务消费者 - 启动时向注册中心订阅自己感兴趣的服务，以便获得服务提供方的地址列表</li>
+<li>注册中心 - 负责服务的注册和发现，负责保存服务提供方上报的地址信息，并向服务消费方推送</li>
+<li>监控中心 - 负责收集服务提供方和消费方的运行状态，比如服务调用次数、延迟等，用于监控</li>
+<li>运行容器 - 负责服务提供方的初始化、加载以及运行的生命周期管理</li>
+</ol>
+<p><img alt="dubbo-architecture" src="../../img/blog/dubbo-architecture.png" /></p>
+<p><strong>部署阶段</strong></p>
+<ul>
+<li>服务提供者在指定端口暴露服务，并向注册中心注册服务信息。</li>
+<li>服务消费者向注册中心发起服务地址列表的订阅。</li>
+</ul>
+<p><strong>运行阶段</strong></p>
+<ul>
+<li>注册中心向服务消费者推送地址列表信息。</li>
+<li>服务消费者收到地址列表后，从其中选取一个向目标服务发起调用。</li>
+<li>调用过程服务消费者和服务提供者的运行状态上报给监控中心。</li>
+</ul>
+<h2 id="api-dubbo">基于 API 的 Dubbo 应用<a class="headerlink" href="#api-dubbo" title="Permanent link">&para;</a></h2>
+<p>Dubbo 的应用一般都是通过 Spring 来组装的。为了快速获得一个可以工作的 Dubbo 应用，这里的示例摒弃了复杂的配置，而改用面向 Dubbo API 的方式来构建服务提供者和消费者，另外，注册中心和监控中心在本示例中也不需要安装和配置。</p>
+<p>在生产环境，Dubbo 的服务需要一个分布式的服务注册中心与之配合，比如，ZooKeeper。为了方便开发，Dubbo 提供了直连<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>以及组播<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>两种方式，从而避免额外搭建注册中心的工作。在本例中，将使用组播的方式来完成服务的注册和发现。</p>
+<h3 id="_3">定义服务契约<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">GreetingsService</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="nf">sayHi</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">);</span> <span class="c1">// #1</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>说明</strong>：</p>
+<ol>
+<li>定义了一个简单的服务契约 <em>GreetingsService</em>，其中只有一个方法 <em>sayHi</em> 可供调用，入参是 <em>String</em> 类型，返回值也是 <em>String</em> 类型。</li>
+</ol>
+<h3 id="_4">提供契约的实现<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GreetingsServiceImpl</span> <span class="kd">implements</span> <span class="n">GreetingsService</span> <span class="p">{</span> <span class="c1">// #1</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHi</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;hi, &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">;</span> <span class="c1">// #2</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>说明</strong>：</p>
+<ol>
+<li>服务提供者需要实现服务契约 <em>GreetingsService</em> 接口。</li>
+<li>该实现简单的返回一个欢迎信息，如果入参是 <em>dubbo</em>，则返回 <em>hi, dubbo</em>。</li>
+</ol>
+<h3 id="dubbo_2">实现 Dubbo 服务提供方<a class="headerlink" href="#dubbo_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="n">ServiceConfig</span><span class="o">&lt;</span><span class="n">GreetingsService</span><span class="o">&gt;</span> <span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServiceConfig</span><span class="o">&lt;&gt;</span><span class="p">();</span> <span class="c1">// #1</span>
+        <span class="n">service</span><span class="p">.</span><span class="na">setApplication</span><span class="p">(</span><span class="k">new</span> <span class="n">ApplicationConfig</span><span class="p">(</span><span class="s">&quot;first-dubbo-provider&quot;</span><span class="p">));</span> <span class="c1">// #2</span>
+        <span class="n">service</span><span class="p">.</span><span class="na">setRegistry</span><span class="p">(</span><span class="k">new</span> <span class="n">RegistryConfig</span><span class="p">(</span><span class="s">&quot;multicast://224.5.6.7:1234&quot;</span><span class="p">));</span> <span class="c1">// #3</span>
+        <span class="n">service</span><span class="p">.</span><span class="na">setInterface</span><span class="p">(</span><span class="n">GreetingsService</span><span class="p">.</span><span class="na">class</span><span class="p">);</span> <span class="c1">// #4</span>
+        <span class="n">service</span><span class="p">.</span><span class="na">setRef</span><span class="p">(</span><span class="k">new</span> <span class="n">GreetingsServiceImpl</span><span class="p">());</span> <span class="c1">// #5</span>
+        <span class="n">service</span><span class="p">.</span><span class="na">export</span><span class="p">();</span> <span class="c1">// #6</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">in</span><span class="p">.</span><span class="na">read</span><span class="p">();</span> <span class="c1">// #7</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>说明</strong>：</p>
+<ol>
+<li>创建一个 <em>ServiceConfig</em> 的实例，泛型参数信息是服务接口类型，即 <em>GreetingsService</em>。</li>
+<li>生成一个 <em>ApplicationConfig</em> 的实例，并将其装配进 <em>ServiceConfig</em>。</li>
+<li>生成一个 <em>RegistryConfig</em> 实例，并将其装配进 <em>ServiceConfig</em>，这里使用的是组播方式，参数是 <code>multicast://224.5.6.7:1234</code>。合法的组播地址范围为：<em>224.0.0.0 - 239.255.255.255</em></li>
+<li>将服务契约 <em>GreetingsService</em> 装配进 <em>ServiceConfig</em>。</li>
+<li>将服务提供者提供的实现 <em>GreetingsServiceImpl</em> 的实例装配进 <em>ServiceConfig</em>。</li>
+<li><em>ServiceConfig</em> 已经具备足够的信息，开始对外暴露服务，默认监听端口是 <em>20880</em>。</li>
+<li>为了防止服务端退出，按任意键或者 <em>ctrl-c</em> 退出。 </li>
+</ol>
+<h3 id="dubbo_3">实现 Dubbo 服务调用方<a class="headerlink" href="#dubbo_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ReferenceConfig</span><span class="o">&lt;</span><span class="n">GreetingsService</span><span class="o">&gt;</span> <span class="n">reference</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReferenceConfig</span><span class="o">&lt;&gt;</span><span class="p">();</span> <span class="c1">// #1</span>
+        <span class="n">reference</span><span class="p">.</span><span class="na">setApplication</span><span class="p">(</span><span class="k">new</span> <span class="n">ApplicationConfig</span><span class="p">(</span><span class="s">&quot;first-dubbo-client&quot;</span><span class="p">));</span> <span class="c1">// #2</span>
+        <span class="n">reference</span><span class="p">.</span><span class="na">setRegistry</span><span class="p">(</span><span class="k">new</span> <span class="n">RegistryConfig</span><span class="p">(</span><span class="s">&quot;multicast://224.5.6.7:1234&quot;</span><span class="p">));</span> <span class="c1">// #3</span>
+        <span class="n">reference</span><span class="p">.</span><span class="na">setInterface</span><span class="p">(</span><span class="n">GreetingsService</span><span class="p">.</span><span class="na">class</span><span class="p">);</span> <span class="c1">// #4</span>
+        <span class="n">GreetingsService</span> <span class="n">greetingsService</span> <span class="o">=</span> <span class="n">reference</span><span class="p">.</span><span class="na">get</span><span class="p">();</span> <span class="c1">// #5</span>
+        <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="n">greetingsService</span><span class="p">.</span><span class="na">sayHi</span><span class="p">(</span><span class="s">&quot;dubbo&quot;</span><span class="p">);</span> <span class="c1">// #6</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span> <span class="c1">// #7</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>说明</strong>：</p>
+<ol>
+<li>创建一个 <em>ReferenceConfig</em> 的实例，同样，泛型参数信息是服务接口类型，即 <em>GreetingService</em>。</li>
+<li>生成一个 <em>ApplicationConfig</em> 的实例，并将其装配进 <em>ReferenceConfig</em>。</li>
+<li>生成一个 <em>RegistryConfig</em> 实例，并将其装配进 <em>ReferenceConfig</em>，注意这里的组播地址信息需要与服务提供方的相同。</li>
+<li>将服务契约 <em>GreetingsService</em> 装配进 <em>ReferenceConfig</em>。</li>
+<li>从 <em>ReferenceConfig</em> 中获取到 <em>GreetingService</em> 的代理。</li>
+<li>通过 <em>GreetingService</em> 的代理发起远程调用，传入的参数为 <em>dubbo</em>。</li>
+<li>打印返回结果 <em>hi, dubbo</em>。</li>
+</ol>
+<h3 id="_5">运行<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>完整的示例在 <a href="https://github.com/apache/dubbo-samples/tree/master/java/dubbo-samples-api">https://github.com/apache/dubbo-samples/tree/master/java/dubbo-samples-api</a> 上提供。在完整的示例中，由于配置了 <em>exec-maven-plugin</em>，可以很方便的在命令行下通过 maven 的方式执行。当然，您也可以在 IDE 里直接执行，但是需要注意的是，由于使用了组播的方式来发现服务，运行时需要指定 <em>-Djava.net.preferIPv4Stack=true</em>。 </p>
+<h4 id="_6">构建示例<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>通过以下的命令来同步示例代码并完成构建：</p>
+<ol>
+<li>同步代码：git clone <a href="https://github.com/apache/dubbo-samples.git">https://github.com/apache/dubbo-samples.git</a></li>
+<li>构建：mvn clean package</li>
+</ol>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/apache/dubbo-samples.git
+$ <span class="nb">cd</span> dubbo-samples/java/dubbo-samples-api/
+$ mvn clean package
+INFO<span class="o">]</span> Scanning <span class="k">for</span> projects...
+<span class="o">[</span>INFO<span class="o">]</span>
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> Building dubbo-samples-api <span class="m">1</span>.0-SNAPSHOT
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span>
+<span class="o">[</span>INFO<span class="o">]</span> --- maven-clean-plugin:2.5:clean <span class="o">(</span>default-clean<span class="o">)</span> @ dubbo-samples-api ---
+...
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> BUILD SUCCESS
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> Total time: <span class="m">2</span>.182 s
+<span class="o">[</span>INFO<span class="o">]</span> Finished at: <span class="m">2018</span>-05-28T14:56:08+08:00
+<span class="o">[</span>INFO<span class="o">]</span> Final Memory: 20M/353M
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+</code></pre></div>
+
+<p>当看到 <em>BUILD SUCCESS</em> 的时候表明构建完成，下面就可以开始进入运行阶段了。</p>
+<h4 id="_7">运行服务端<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>通过运行以下的 maven 命令来启动服务提供者：</p>
+<div class="highlight"><pre><span></span><code>$ mvn -Djava.net.preferIPv4Stack<span class="o">=</span><span class="nb">true</span> -Dexec.mainClass<span class="o">=</span>com.alibaba.dubbo.samples.server.Application exec:java
+<span class="o">[</span>INFO<span class="o">]</span> Scanning <span class="k">for</span> projects...
+<span class="o">[</span>INFO<span class="o">]</span>                                                                         
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> Building dubbo-samples-api <span class="m">1</span>.0-SNAPSHOT
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> 
+<span class="o">[</span>INFO<span class="o">]</span> --- exec-maven-plugin:1.6.0:java <span class="o">(</span>default-cli<span class="o">)</span> @ dubbo-samples-api ---
+log4j:WARN No appenders could be found <span class="k">for</span> logger <span class="o">(</span>com.alibaba.dubbo.common.logger.LoggerFactory<span class="o">)</span>.
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig <span class="k">for</span> more info.
+first-dubbo-provider is running.
+</code></pre></div>
+
+<p>当 <em>first-dubbo-provider is running.</em> 出现时，代表服务提供者已经启动就绪，等待客户端的调用。</p>
+<h4 id="_8">运行客户端<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<p>通过运行以下的 maven 命令来调用服务：</p>
+<div class="highlight"><pre><span></span><code>$ mvn -Djava.net.preferIPv4Stack<span class="o">=</span><span class="nb">true</span> -Dexec.mainClass<span class="o">=</span>com.alibaba.dubbo.samples.client.Application exec:java
+<span class="o">[</span>INFO<span class="o">]</span> Scanning <span class="k">for</span> projects...
+<span class="o">[</span>INFO<span class="o">]</span>                                                                         
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> Building dubbo-samples-api <span class="m">1</span>.0-SNAPSHOT
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> 
+<span class="o">[</span>INFO<span class="o">]</span> --- exec-maven-plugin:1.6.0:java <span class="o">(</span>default-cli<span class="o">)</span> @ dubbo-samples-api ---
+log4j:WARN No appenders could be found <span class="k">for</span> logger <span class="o">(</span>com.alibaba.dubbo.common.logger.LoggerFactory<span class="o">)</span>.
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig <span class="k">for</span> more info.
+hi, dubbo
+</code></pre></div>
+
+<p>可以看到， <em>hi, dubbo</em> 是从服务提供者返回的执行结果。 </p>
+<h2 id="dubbo_4">快速生成 Dubbo 应用<a class="headerlink" href="#dubbo_4" title="Permanent link">&para;</a></h2>
+<p>Dubbo 还提供了一个公共服务快速搭建基于 Spring Boot 的 Dubbo 应用。访问 <a href="http://start.dubbo.io">http://start.dubbo.io</a> 并按照下图所示来生成示例工程：</p>
+<p><img alt="dubbo initializr" src="../../img/blog/dubbo-initializr.png" /></p>
+<p><strong>说明</strong>：</p>
+<ol>
+<li>在 <em>Group</em> 中提供 maven groupId，默认值是 <em>com.example</em>。</li>
+<li>在 <em>Artifact</em> 中提供 maven artifactId，默认值是 <em>demo</em>。</li>
+<li>在 <em>DubboServiceName</em> 中提供服务名，默认值是 <em>com.example.HelloService</em>。</li>
+<li>在 <em>DubboServiceVersion</em> 中提供服务的版本，默认值是 <em>1.0.0</em>。</li>
+<li>在 <em>Client/Server</em> 中选取本次构建的工程是服务提供者 (Server) 还是服务消费者 (Client)，默认值是 <em>server</em>。</li>
+<li>使用 <em>embeddedZookeeper</em> 作为服务注册发现，默认为勾选。</li>
+<li>是否激活 qos 端口，默认为不勾选，如果勾选可以通过 <em>22222</em> 端口访问。</li>
+<li>点击 <em>Generate Project</em> 即可下载生成好的工程。</li>
+</ol>
+<p>在本例中展示的是服务提供者，同样的，通过在生成界面选取 <em>client</em> 来生成对应的服务消费者。</p>
+<h3 id="_9">运行<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>用 IDE 打开生成好的工程，可以发现应用是一个典型的 Spring Boot 应用。程序的入口如下所示：</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoApplication</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">new</span> <span class="n">EmbeddedZooKeeper</span><span class="p">(</span><span class="mi">2181</span><span class="p">,</span> <span class="kc">false</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>  <span class="c1">// #1</span>
+        <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">DemoApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span> <span class="c1">// #2</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>说明</strong>：</p>
+<ol>
+<li>在 <em>2181</em> 端口上启动嵌入式 <em>ZooKeeper</em>。</li>
+<li>启动 <em>Spring Boot</em> 上下文。</li>
+</ol>
+<p>可以直接在 IDE 中运行，输出结果如下：</p>
+<div class="highlight"><pre><span></span><code><span class="m">2018</span>-05-28 <span class="m">16</span>:59:38.072  INFO <span class="m">59943</span> --- <span class="o">[</span>           main<span class="o">]</span> a.b.d.c.e.WelcomeLogoApplicationListener : 
+
+  ████████▄  ███    █▄  ▀█████████▄  ▀█████████▄   ▄██████▄  
+  ███   ▀███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ███    ███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ███    ███ ███    ███  ▄███▄▄▄██▀   ▄███▄▄▄██▀  ███    ███ 
+  ███    ███ ███    ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀██▄  ███    ███ 
+  ███    ███ ███    ███   ███    ██▄   ███    ██▄ ███    ███ 
+  ███   ▄███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ████████▀  ████████▀  ▄█████████▀  ▄█████████▀   ▀██████▀  
+
+
+ :: Dubbo Spring Boot <span class="o">(</span>v0.1.0<span class="o">)</span> : https://github.com/dubbo/dubbo-spring-boot-project
+ :: Dubbo <span class="o">(</span>v2.0.1<span class="o">)</span> : https://github.com/alibaba/dubbo
+ :: Google group : http://groups.google.com/group/dubbo
+
+<span class="m">2018</span>-05-28 <span class="m">16</span>:59:38.079  INFO <span class="m">59943</span> --- <span class="o">[</span>           main<span class="o">]</span> e.OverrideDubboConfigApplicationListener : Dubbo Config was overridden by externalized configuration <span class="o">{</span>dubbo.application.name<span class="o">=</span>dubbo-demo-server, dubbo.application.qosAcceptForeignIp<span class="o">=</span>false, dubbo.application.qosEnable<span class="o">=</span>true, dubbo.application.qosPort<span class="o">=</span><span class="m">22222</span>, dubbo.registry.address<span class="o">=</span>zookeeper://localhost:2181?client<span class="o">=</span>curator, dubbo.registry.id<span class="o">=</span>my-registry, dubbo.scan.basePackages<span class="o">=</span>com.example<span class="o">}</span> <span class="c1">#1</span>
+
+...
+
+<span class="m">2018</span>-05-28 <span class="m">16</span>:59:39.624  INFO <span class="m">59943</span> --- <span class="o">[</span>           main<span class="o">]</span> com.example.demo.DemoApplication         : Started DemoApplication in <span class="m">1</span>.746 seconds <span class="o">(</span>JVM running <span class="k">for</span> <span class="m">2</span>.963<span class="o">)</span>
+</code></pre></div>
+
+<p><strong>说明</strong>：</p>
+<ol>
+<li>输出中打印的以 <em>dubbo.</em> 开头的配置信息，定义在 <em>main/resources/application.properties</em> 中。</li>
+</ol>
+<h3 id="telnet">通过 Telnet 管理服务<a class="headerlink" href="#telnet" title="Permanent link">&para;</a></h3>
+<p>生成工程的时候如果选择了激活 <em>qos</em> 的话，就可以通过 <em>telnet</em> 或者 <em>nc</em> 来管理服务、查看服务状态。</p>
+<div class="highlight"><pre><span></span><code>$ telnet localhost <span class="m">22222</span>
+Trying <span class="m">127</span>.0.0.1...
+Connected to localhost.
+Escape character is <span class="s1">&#39;^]&#39;</span>.
+  ████████▄  ███    █▄  ▀█████████▄  ▀█████████▄   ▄██████▄  
+  ███   ▀███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ███    ███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ███    ███ ███    ███  ▄███▄▄▄██▀   ▄███▄▄▄██▀  ███    ███ 
+  ███    ███ ███    ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀██▄  ███    ███ 
+  ███    ███ ███    ███   ███    ██▄   ███    ██▄ ███    ███ 
+  ███   ▄███ ███    ███   ███    ███   ███    ███ ███    ███ 
+  ████████▀  ████████▀  ▄█████████▀  ▄█████████▀   ▀██████▀  
+
+
+dubbo&gt;
+dubbo&gt;ls
+As Provider side:
++------------------------------+---+
+<span class="p">|</span>     Provider Service Name    <span class="p">|</span>PUB<span class="p">|</span>
++------------------------------+---+
+<span class="p">|</span>com.example.HelloService:1.0.0<span class="p">|</span> Y <span class="p">|</span>
++------------------------------+---+
+As Consumer side:
++---------------------+---+
+<span class="p">|</span>Consumer Service Name<span class="p">|</span>NUM<span class="p">|</span>
++---------------------+---+
+</code></pre></div>
+
+<p>目前 <em>qos</em> 支持以下几个命令，更详细的信息请查阅官方文档<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>：</p>
+<ul>
+<li><em>ls</em>：列出消费者、提供者信息</li>
+<li><em>online</em>：上线服务</li>
+<li><em>offline</em>：下线服务</li>
+<li><em>help</em>：联机帮助</li>
+</ul>
+<h2 id="_10">总结<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p>在本文中，从 RMI 开始，介绍了 Java 领域分布式调用的基本概念，也就是基于接口编程、通过代理将远程调用伪装成本地、通过注册中心完成服务的注册和发现。</p>
+<p>然后为了简单起见，使用简单的组播注册方式和直接面向 Dubbo API 编程的方式介绍了如何开发一个 Dubbo 的完整应用。深入的了解 <em>ServiceConfig</em> 和 <em>ReferenceConfig</em> 的用法，对于进一步的使用 Spring XML 配置、乃至 Spring Boot 的编程方式有这很大的帮助。</p>
+<p>最后，简单的介绍了如何通过 Dubbo 团队提供的公共服务 start.dubbo.io 快速搭建基于 Spring Boot 的 Dubbo 应用，并通过 <em>qos</em> 来做 Dubbo 服务的简单运维。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://docs.oracle.com/javase/6/docs/technotes/guides/rmi/hello/hello-world.html">Getting Started Using JavaTM RMI</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="http://dubbo.apache.org/zh-cn/docs/user/demos/explicit-target.html">直连提供者</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="http://dubbo.apache.org/zh-cn/docs/user/references/registry/multicast.html">Multicast 注册中心</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="http://dubbo.apache.org/zh-cn/docs/user/references/qos.html">在线运维命令</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/squidfunk" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://gitter.im/squidfunk/mkdocs-material" target="_blank" rel="noopener" title="gitter.im" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M66.4 322.5H16V0h50.4v322.5zM166.9 76.1h-50.4V512h50.4V76.1zm100.6 0h-50.4V512h50.4V76.1zM368 76h-50.4v247H368V76z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://hub.docker.com/r/squidfunk/mkdocs-material/" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/squidfunk" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://linkedin.com/in/squidfunk/" target="_blank" rel="noopener" title="linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://instagram.com/squidfunk" target="_blank" rel="noopener" title="instagram.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d1f5a259.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d5fec882.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.fae956e7.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,5096 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apache Dubbo™ 是一款微服务框架（Microservices Framework），它提供高性能 RPC 通信、服务发现、流量管理等服务治理能力，为你提供构建大规模微服务集群所需的全套解决方案。">
+      
+      
+      
+      <link rel="shortcut icon" href="../../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.6">
+    
+    
+      
+        <title>Router - Dubbo 2.7.8</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.63b94e9e.min.css">
+      
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.7f672a1f.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../../css/dropdown.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Application header -->
+<header class="md-header" data-md-component="header">
+
+  <!-- Top-level navigation -->
+  <nav class="md-header-nav md-grid" aria-label="Header">
+
+    <!-- Link to home -->
+    <a
+      href="../../../.."
+      title="Dubbo 2.7.8"
+      class="md-header-nav__button md-logo"
+      aria-label="Dubbo 2.7.8"
+    >
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Dubbo 2.7.8
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Router
+            
+          </span>
+        </div>
+      
+    </div>
+
+    <!-- Button to open search dialogue -->
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <div>
+      <div class="langChange" id="translate" title="中文|English">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+    </svg>
+</div>
+
+<script>
+    var translate = document.getElementById('translate');
+    translate.addEventListener('click', changeHref, false);
+    function changeHref() {
+        if (window.location.href.search('en-us') !== -1) {
+            var changeHref = window.location.href.replace('en-us', 'zh-cn');
+
+        } else {
+            var changeHref = window.location.href.replace('zh-cn', 'en-us');
+        }
+        window.location.href = changeHref
+    }
+</script>
+
+<style>
+    .langChange {
+        display: inline-block;
+        width: 2.4rem;
+        height: 2.4rem;
+        vertical-align: middle;
+        margin-left: .5rem;
+    }
+
+    .langChange svg {
+        fill: rgba(255, 255, 255, 0.548);
+        display: block;
+        width: 1.2rem;
+        height: 1.2rem;
+        margin: 0 auto;
+        margin-top: .6rem;
+        margin-left: .6rem;
+    }
+
+    .langChange :hover {
+        fill: white;
+        cursor: pointer;
+    }
+</style>
+    </div>
+
+    <!-- Repository containing source -->
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/apache/dubbo-website/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  <li class="md-tabs__item">
+    
+      <a
+        href="../../../.."
+        class="md-tabs__link md-tabs__link--active"
+      >
+        Home
+      </a>
+    
+  </li>
+
+<!-- Main navigation item with nested items -->
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <li class="md-tabs__item">Docs
+      <ul class="md-tabs__list">
+        
+          
+
+          <!-- Recurse, if the first item has nested items -->
+          
+          
+          <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    
+    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../user/preface/background/"
+              class="md-tabs__link"
+      >
+        Docs
+      </a>
+      
+    </li>
+    
+  
+
+
+    <!-- Render item -->
+    
+  
+
+
+          <!-- Render item -->
+          
+        
+          
+
+          <!-- Recurse, if the first item has nested items -->
+          
+          
+          <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    
+    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../../3.0/user/preface/background/"
+              class="md-tabs__link"
+      >
+        Docs
+      </a>
+      
+    </li>
+    
+  
+
+
+    <!-- Render item -->
+    
+  
+
+
+          <!-- Render item -->
+          
+        
+      </ul>
+    </li>
+  
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../../../blog/apache-dubbo-2019-2020/"
+              class="md-tabs__link"
+      >
+        Blog
+      </a>
+      
+    </li>
+    
+  
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../../../developers/developers_dev/"
+              class="md-tabs__link"
+      >
+        Developers
+      </a>
+      
+    </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Main navigation -->
+<nav
+  class="md-nav md-nav--primary"
+  aria-label="Navigation"
+  data-md-level="0"
+>
+
+  <!-- Site title -->
+  <label class="md-nav__title" for="__drawer">
+    <a
+      href="../../../.."
+      title="Dubbo 2.7.8"
+      class="md-nav__button md-logo"
+      aria-label="Dubbo 2.7.8"
+    >
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+    Dubbo 2.7.8
+  </label>
+
+  <!-- Repository containing source -->
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/apache/dubbo-website/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+
+  <!-- Render item list -->
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../.."
+      title="Home"
+      class="md-nav__link"
+    >
+      Home
+    </a>
+  </li>
+
+      
+      
+    
+      
+        
+          
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      2.7
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="2.7"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.7
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1"
+        type="checkbox"
+        id="nav-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1">
+      用户手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="用户手册"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        用户手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-1"
+        type="checkbox"
+        id="nav-1-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-1">
+      入门
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="入门"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        入门
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/preface/background/"
+      title="背景"
+      class="md-nav__link"
+    >
+      背景
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/preface/requirements/"
+      title="需求"
+      class="md-nav__link"
+    >
+      需求
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/preface/architecture/"
+      title="架构"
+      class="md-nav__link"
+    >
+      架构
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/preface/usage/"
+      title="用法"
+      class="md-nav__link"
+    >
+      用法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/quick-start/"
+      title="快速启动"
+      class="md-nav__link"
+    >
+      快速启动
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/dependencies/"
+      title="依赖"
+      class="md-nav__link"
+    >
+      依赖
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/maturity/"
+      title="成熟度"
+      class="md-nav__link"
+    >
+      成熟度
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-5"
+        type="checkbox"
+        id="nav-1-1-5"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-5">
+      配置
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="配置"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        配置
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/configuration/xml/"
+      title="XML 配置"
+      class="md-nav__link"
+    >
+      XML 配置
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/configuration/api/"
+      title="API 配置"
+      class="md-nav__link"
+    >
+      API 配置
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/configuration/annotation/"
+      title="Annotation 配置"
+      class="md-nav__link"
+    >
+      Annotation 配置
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/configuration/annotation/"
+      title="动态配置中心"
+      class="md-nav__link"
+    >
+      动态配置中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/configuration/configuration-load-process/"
+      title="配置加载流程"
+      class="md-nav__link"
+    >
+      配置加载流程
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/configuration/environment-variables/"
+      title="自动加载环境变量"
+      class="md-nav__link"
+    >
+      自动加载环境变量
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-6"
+        type="checkbox"
+        id="nav-1-1-6"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-6">
+      示例
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="示例"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        示例
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/preflight-check/"
+      title="启动时检查"
+      class="md-nav__link"
+    >
+      启动时检查
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/fault-tolerent-strategy/"
+      title="集群容错"
+      class="md-nav__link"
+    >
+      集群容错
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/loadbalance/"
+      title="负载均衡"
+      class="md-nav__link"
+    >
+      负载均衡
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/thread-model/"
+      title="线程模型"
+      class="md-nav__link"
+    >
+      线程模型
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/explicit-target/"
+      title="直连提供者"
+      class="md-nav__link"
+    >
+      直连提供者
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/subscribe-only/"
+      title="只订阅"
+      class="md-nav__link"
+    >
+      只订阅
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/registry-only/"
+      title="只注册"
+      class="md-nav__link"
+    >
+      只注册
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/static-service/"
+      title="静态服务"
+      class="md-nav__link"
+    >
+      静态服务
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/multi-protocols/"
+      title="多协议"
+      class="md-nav__link"
+    >
+      多协议
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/multi-registry/"
+      title="多注册中心"
+      class="md-nav__link"
+    >
+      多注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/service-group/"
+      title="服务分组"
+      class="md-nav__link"
+    >
+      服务分组
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/multi-versions/"
+      title="多版本"
+      class="md-nav__link"
+    >
+      多版本
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/group-merger/"
+      title="分组聚合"
+      class="md-nav__link"
+    >
+      分组聚合
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/parameter-validation/"
+      title="参数验证"
+      class="md-nav__link"
+    >
+      参数验证
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/result-cache/"
+      title="结果缓存"
+      class="md-nav__link"
+    >
+      结果缓存
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/generic-reference/"
+      title="泛化引用"
+      class="md-nav__link"
+    >
+      泛化引用
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/generic-service/"
+      title="泛化实现"
+      class="md-nav__link"
+    >
+      泛化实现
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/echo-service/"
+      title="回声测试"
+      class="md-nav__link"
+    >
+      回声测试
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/context/"
+      title="上下文信息"
+      class="md-nav__link"
+    >
+      上下文信息
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/attachment/"
+      title="隐式参数"
+      class="md-nav__link"
+    >
+      隐式参数
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/async-call/"
+      title="异步调用"
+      class="md-nav__link"
+    >
+      异步调用
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/async-execute-on-provider/"
+      title="服务端异步"
+      class="md-nav__link"
+    >
+      服务端异步
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/local-call/"
+      title="本地调用"
+      class="md-nav__link"
+    >
+      本地调用
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/callback-parameter/"
+      title="参数回调"
+      class="md-nav__link"
+    >
+      参数回调
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/events-notify/"
+      title="事件通知"
+      class="md-nav__link"
+    >
+      事件通知
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/local-stub/"
+      title="本地存根"
+      class="md-nav__link"
+    >
+      本地存根
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/local-mock/"
+      title="本地伪装"
+      class="md-nav__link"
+    >
+      本地伪装
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/delay-publish/"
+      title="延迟暴露"
+      class="md-nav__link"
+    >
+      延迟暴露
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/concurrency-control/"
+      title="并发控制"
+      class="md-nav__link"
+    >
+      并发控制
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/config-connection.md"
+      title="连接控制"
+      class="md-nav__link"
+    >
+      连接控制
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/lazy-connect/"
+      title="延迟连接"
+      class="md-nav__link"
+    >
+      延迟连接
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/stickiness/"
+      title="粘滞连接"
+      class="md-nav__link"
+    >
+      粘滞连接
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/token-authorization/"
+      title="令牌验证"
+      class="md-nav__link"
+    >
+      令牌验证
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/routing-rule/"
+      title="路由规则"
+      class="md-nav__link"
+    >
+      路由规则
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/config-rule/"
+      title="配置规则"
+      class="md-nav__link"
+    >
+      配置规则
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/service-downgrade/"
+      title="服务降级"
+      class="md-nav__link"
+    >
+      服务降级
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/graceful-shutdown/"
+      title="优雅停机"
+      class="md-nav__link"
+    >
+      优雅停机
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/hostname-binding/"
+      title="主机绑定"
+      class="md-nav__link"
+    >
+      主机绑定
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/logger-strategy/"
+      title="日志适配"
+      class="md-nav__link"
+    >
+      日志适配
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/accesslog/"
+      title="访问日志"
+      class="md-nav__link"
+    >
+      访问日志
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/service-container/"
+      title="服务容器"
+      class="md-nav__link"
+    >
+      服务容器
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/distributed-transaction/"
+      title="分布式事务"
+      class="md-nav__link"
+    >
+      分布式事务
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/dump/"
+      title="线程栈自动dump"
+      class="md-nav__link"
+    >
+      线程栈自动dump
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/netty4/"
+      title="Netty4"
+      class="md-nav__link"
+    >
+      Netty4
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/serialization/"
+      title="Kryo和FST序列化"
+      class="md-nav__link"
+    >
+      Kryo和FST序列化
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/simplify-registry-data/"
+      title="简化注册中心URL"
+      class="md-nav__link"
+    >
+      简化注册中心URL
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/demos/api.md"
+      title="API 参考手册"
+      class="md-nav__link"
+    >
+      API 参考手册
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-7"
+        type="checkbox"
+        id="nav-1-1-7"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-7">
+      schema 配置参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="schema 配置参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        schema 配置参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-service/"
+      title="dubbo:service"
+      class="md-nav__link"
+    >
+      dubbo:service
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-reference/"
+      title="dubbo:reference"
+      class="md-nav__link"
+    >
+      dubbo:reference
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-protocol/"
+      title="dubbo:protocol"
+      class="md-nav__link"
+    >
+      dubbo:protocol
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-registry/"
+      title="dubbo:registry"
+      class="md-nav__link"
+    >
+      dubbo:registry
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-monitor/"
+      title="dubbo:monitor"
+      class="md-nav__link"
+    >
+      dubbo:monitor
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-application/"
+      title="dubbo:application"
+      class="md-nav__link"
+    >
+      dubbo:application
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-module/"
+      title="dubbo:module"
+      class="md-nav__link"
+    >
+      dubbo:module
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-provider/"
+      title="dubbo:provider"
+      class="md-nav__link"
+    >
+      dubbo:provider
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-consumer/"
+      title="dubbo:consumer"
+      class="md-nav__link"
+    >
+      dubbo:consumer
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-method/"
+      title="dubbo:method"
+      class="md-nav__link"
+    >
+      dubbo:method
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-argument/"
+      title="dubbo:argument"
+      class="md-nav__link"
+    >
+      dubbo:argument
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-parameter/"
+      title="dubbo:parameter"
+      class="md-nav__link"
+    >
+      dubbo:parameter
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/xml/dubbo-config-center/"
+      title="dubbo:config-center"
+      class="md-nav__link"
+    >
+      dubbo:config-center
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-8"
+        type="checkbox"
+        id="nav-1-1-8"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-8">
+      协议参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="协议参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        协议参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/protocol/dubbo/"
+      title="dubbo://"
+      class="md-nav__link"
+    >
+      dubbo://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/protocol/rmi/"
+      title="rmi://"
+      class="md-nav__link"
+    >
+      rmi://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/protocol/hessian/"
+      title="hessian://"
+      class="md-nav__link"
+    >
+      hessian://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/protocol/http/"
+      title="http://"
+      class="md-nav__link"
+    >
+      http://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/protocol/thrift/"
+      title="thrift://"
+      class="md-nav__link"
+    >
+      thrift://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/protocol/rest/"
+      title="rest://"
+      class="md-nav__link"
+    >
+      rest://
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-9"
+        type="checkbox"
+        id="nav-1-1-9"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-9">
+      注册中心参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="注册中心参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-9">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        注册中心参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/registry/multicast/"
+      title="Multicast 注册中心"
+      class="md-nav__link"
+    >
+      Multicast 注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/registry/zookeeper/"
+      title="Zookeeper 注册中心"
+      class="md-nav__link"
+    >
+      Zookeeper 注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/registry/redis/"
+      title="Redis 注册中心"
+      class="md-nav__link"
+    >
+      Redis 注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/registry/simple/"
+      title="Simple 注册中心"
+      class="md-nav__link"
+    >
+      Simple 注册中心
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-10"
+        type="checkbox"
+        id="nav-1-1-10"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-10">
+      元数据中心参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="元数据中心参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-10">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        元数据中心参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/metadata/metadata-redis/"
+      title="Redis 元数据中心"
+      class="md-nav__link"
+    >
+      Redis 元数据中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/metadata/metadata-zookeeper/"
+      title="Zookeeper 元数据中心"
+      class="md-nav__link"
+    >
+      Zookeeper 元数据中心
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/telnet/"
+      title="telnet 命令参考手册"
+      class="md-nav__link"
+    >
+      telnet 命令参考手册
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/qos/"
+      title="在线运维命令-QOS"
+      class="md-nav__link"
+    >
+      在线运维命令-QOS
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/references/maven/"
+      title="maven 插件参考手册"
+      class="md-nav__link"
+    >
+      maven 插件参考手册
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/best-practice/"
+      title="服务化最佳实践"
+      class="md-nav__link"
+    >
+      服务化最佳实践
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/recommend/"
+      title="推荐用法"
+      class="md-nav__link"
+    >
+      推荐用法
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/capacity-plan/"
+      title="容量规划"
+      class="md-nav__link"
+    >
+      容量规划
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/perf-test/"
+      title="性能测试报告"
+      class="md-nav__link"
+    >
+      性能测试报告
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/covergence.md"
+      title="测试覆盖率报告"
+      class="md-nav__link"
+    >
+      测试覆盖率报告
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-19"
+        type="checkbox"
+        id="nav-1-1-19"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-19">
+      版本与升级
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="版本与升级"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-19">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        版本与升级
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../user/versions/version-270/"
+      title="2.7.x升级步骤及注意事项"
+      class="md-nav__link"
+    >
+      2.7.x升级步骤及注意事项
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2"
+        type="checkbox"
+        id="nav-1-2"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2">
+      开发手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="开发手册"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        开发手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/build.md"
+      title="源码构建"
+      class="md-nav__link"
+    >
+      源码构建
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/design.md"
+      title="框架设计"
+      class="md-nav__link"
+    >
+      框架设计
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/SPI.md"
+      title="扩展点加载"
+      class="md-nav__link"
+    >
+      扩展点加载
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/implementation.md"
+      title="实现细节"
+      class="md-nav__link"
+    >
+      实现细节
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2-5"
+        type="checkbox"
+        id="nav-1-2-5"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2-5">
+      SPI 扩展实现
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="SPI 扩展实现"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-2-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        SPI 扩展实现
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/protocol.md"
+      title="协议扩展"
+      class="md-nav__link"
+    >
+      协议扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/filter.md"
+      title="调用拦截扩展"
+      class="md-nav__link"
+    >
+      调用拦截扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/invoker-listener.md"
+      title="引用监听扩展"
+      class="md-nav__link"
+    >
+      引用监听扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/exporter-listener.md"
+      title="暴露监听扩展"
+      class="md-nav__link"
+    >
+      暴露监听扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/cluster.md"
+      title="集群扩展"
+      class="md-nav__link"
+    >
+      集群扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/router.md"
+      title="路由扩展"
+      class="md-nav__link"
+    >
+      路由扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/load-balance.md"
+      title="负载均衡扩展"
+      class="md-nav__link"
+    >
+      负载均衡扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/merger.md"
+      title="合并结果扩展"
+      class="md-nav__link"
+    >
+      合并结果扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/registry.md"
+      title="注册中心扩展"
+      class="md-nav__link"
+    >
+      注册中心扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/monitor.md"
+      title="监控中心扩展"
+      class="md-nav__link"
+    >
+      监控中心扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/extension-factory.md"
+      title="扩展点加载扩展"
+      class="md-nav__link"
+    >
+      扩展点加载扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/proxy-factory.md"
+      title="动态代理扩展"
+      class="md-nav__link"
+    >
+      动态代理扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/compiler.md"
+      title="编译器扩展"
+      class="md-nav__link"
+    >
+      编译器扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/dispatcher.md"
+      title="消息派发扩展"
+      class="md-nav__link"
+    >
+      消息派发扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/threadpool.md"
+      title="线程池扩展"
+      class="md-nav__link"
+    >
+      线程池扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/serialize.md"
+      title="序列化扩展"
+      class="md-nav__link"
+    >
+      序列化扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/remoting.md"
+      title="网络传输扩展"
+      class="md-nav__link"
+    >
+      网络传输扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/exchanger.md"
+      title="信息交换扩展"
+      class="md-nav__link"
+    >
+      信息交换扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/networker.md"
+      title="组网扩展"
+      class="md-nav__link"
+    >
+      组网扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/telnet-handler.md"
+      title="Telnet 命令扩展"
+      class="md-nav__link"
+    >
+      Telnet 命令扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/status-checker.md"
+      title="状态检查扩展"
+      class="md-nav__link"
+    >
+      状态检查扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/container.md"
+      title="容器扩展"
+      class="md-nav__link"
+    >
+      容器扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/page.md"
+      title="页面扩展"
+      class="md-nav__link"
+    >
+      页面扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/cache.md"
+      title="缓存扩展"
+      class="md-nav__link"
+    >
+      缓存扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/validation.md"
+      title="验证扩展"
+      class="md-nav__link"
+    >
+      验证扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/logger-adapter.md"
+      title="日志适配扩展"
+      class="md-nav__link"
+    >
+      日志适配扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/impls/config-center.md"
+      title="配置中心"
+      class="md-nav__link"
+    >
+      配置中心
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/contract.md"
+      title="公共契约"
+      class="md-nav__link"
+    >
+      公共契约
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/coding.md"
+      title="编码约定"
+      class="md-nav__link"
+    >
+      编码约定
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2-8"
+        type="checkbox"
+        id="nav-1-2-8"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2-8">
+      设计原则
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="设计原则"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-2-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        设计原则
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/principals/code-detail.md"
+      title="魔鬼在细节"
+      class="md-nav__link"
+    >
+      魔鬼在细节
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/principals/general-knowledge.md"
+      title="一些设计上的基本常识"
+      class="md-nav__link"
+    >
+      一些设计上的基本常识
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/principals/expansibility.md"
+      title="谈谈扩充式扩展与增量式扩展"
+      class="md-nav__link"
+    >
+      谈谈扩充式扩展与增量式扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/principals/configuration.md"
+      title="配置设计"
+      class="md-nav__link"
+    >
+      配置设计
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/principals/robustness.md"
+      title="设计实现的健壮性"
+      class="md-nav__link"
+    >
+      设计实现的健壮性
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/principals/dummy.md"
+      title="防痴呆设计"
+      class="md-nav__link"
+    >
+      防痴呆设计
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/principals/extension.md"
+      title="扩展点重构"
+      class="md-nav__link"
+    >
+      扩展点重构
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/release.md"
+      title="版本发布"
+      class="md-nav__link"
+    >
+      版本发布
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/contribution.md"
+      title="贡献代码"
+      class="md-nav__link"
+    >
+      贡献代码
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/checklist.md"
+      title="检查列表"
+      class="md-nav__link"
+    >
+      检查列表
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/code-smell.md"
+      title="坏味道"
+      class="md-nav__link"
+    >
+      坏味道
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../dev/TCK.md"
+      title="兼容性测试"
+      class="md-nav__link"
+    >
+      兼容性测试
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-3"
+        type="checkbox"
+        id="nav-1-3"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-3">
+      管理者文档
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="管理者文档"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        管理者文档
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../admin/introduction.md"
+      title="Dubbo Admin介绍"
+      class="md-nav__link"
+    >
+      Dubbo Admin介绍
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../admin/serviceSearch.md"
+      title="服务搜索和详情"
+      class="md-nav__link"
+    >
+      服务搜索和详情
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../admin/serviceGovernance.md"
+      title="服务治理"
+      class="md-nav__link"
+    >
+      服务治理
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../admin/serviceTest.md"
+      title="服务测试"
+      class="md-nav__link"
+    >
+      服务测试
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+          
+        
+          
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      3.0
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="3.0"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        3.0
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1"
+        type="checkbox"
+        id="nav-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1">
+      用户手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="用户手册"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        用户手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-1"
+        type="checkbox"
+        id="nav-1-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-1">
+      入门
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="入门"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        入门
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../3.0/user/preface/background/"
+      title="背景"
+      class="md-nav__link"
+    >
+      背景
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../3.0/user/preface/background/"
+      title="需求"
+      class="md-nav__link"
+    >
+      需求
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../3.0/user/preface/architecture/"
+      title="架构"
+      class="md-nav__link"
+    >
+      架构
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../3.0/user/preface/usage/"
+      title="用法"
+      class="md-nav__link"
+    >
+      用法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+          
+        
+      
+      
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      Blog
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Blog"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../blog/apache-dubbo-2019-2020/"
+      title="2019-2020 回顾"
+      class="md-nav__link"
+    >
+      2019-2020 回顾
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+      
+      
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      Developers
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Developers"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../../developers/developers_dev/"
+      title="开发者指引"
+      class="md-nav__link"
+    >
+      开发者指引
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+      
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 简介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 源码分析
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 源码分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 表达式解析
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 服务路由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3. 总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/apache/dubbo-website/edit/master/documentations/2.7/zh-cn/docs/docs/2.7/source_code_guide/router.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                  <h1>Router</h1>
+                
+                <h2 id="1">1. 简介<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>上一篇文章分析了集群容错的第一部分 — 服务目录 Directory。服务目录在刷新 Invoker 列表的过程中，会通过 Router 进行服务路由，筛选出符合路由规则的服务提供者。在详细分析服务路由的源码之前，先来介绍一下服务路由是什么。服务路由包含一条路由规则，路由规则决定了服务消费者的调用目标，即规定了服务消费者可调用哪些服务提供者。Dubbo 目前提供了三种服务路由实现，分别为条件路由 ConditionRouter、脚本路由 ScriptRouter 和标签路由 TagRouter。其中条件路由是我们最常使用的，标签路由是一个新的实现，暂时还未发布，该实现预计会在 2.7.x 版本中发布。本篇文章将分析条件路由相关源码，脚本路由和标签路由这里就不分析了。</p>
+<h2 id="2">2. 源码分析<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>条件路由规则由两个条件组成，分别用于对服务消费者和提供者进行匹配。比如有这样一条规则：</p>
+<p><code>host = 10.20.153.10 =&gt; host = 10.20.153.11</code></p>
+<p>该条规则表示 IP 为 10.20.153.10 的服务消费者**只可**调用 IP 为 10.20.153.11 机器上的服务，不可调用其他机器上的服务。条件路由规则的格式如下：</p>
+<p><code>[服务消费者匹配条件] =&gt; [服务提供者匹配条件]</code></p>
+<p>如果服务消费者匹配条件为空，表示不对服务消费者进行限制。如果服务提供者匹配条件为空，表示对某些服务消费者禁用服务。官方文档中对条件路由进行了比较详细的介绍，大家可以参考下，这里就不过多说明了。</p>
+<p>条件路由实现类 ConditionRouter 在进行工作前，需要先对用户配置的路由规则进行解析，得到一系列的条件。然后再根据这些条件对服务进行路由。本章将分两节进行说明，2.1节介绍表达式解析过程。2.2 节介绍服务路由的过程。下面，我们先从表达式解析过程看起。</p>
+<h3 id="21">2.1 表达式解析<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>条件路由规则是一条字符串，对于 Dubbo 来说，它并不能直接理解字符串的意思，需要将其解析成内部格式才行。条件表达式的解析过程始于 ConditionRouter 的构造方法，下面一起看一下：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="nf">ConditionRouter</span><span class="p">(</span><span class="n">URL</span> <span class="n">url</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">url</span> <span class="o">=</span> <span class="n">url</span><span class="p">;</span>
+    <span class="c1">// 获取 priority 和 force 配置</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">priority</span> <span class="o">=</span> <span class="n">url</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="n">Constants</span><span class="p">.</span><span class="na">PRIORITY_KEY</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">force</span> <span class="o">=</span> <span class="n">url</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="n">Constants</span><span class="p">.</span><span class="na">FORCE_KEY</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="c1">// 获取路由规则</span>
+        <span class="n">String</span> <span class="n">rule</span> <span class="o">=</span> <span class="n">url</span><span class="p">.</span><span class="na">getParameterAndDecoded</span><span class="p">(</span><span class="n">Constants</span><span class="p">.</span><span class="na">RULE_KEY</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rule</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">rule</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Illegal route rule!&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">rule</span> <span class="o">=</span> <span class="n">rule</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;consumer.&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">).</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;provider.&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+        <span class="c1">// 定位 =&gt; 分隔符</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">rule</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;=&gt;&quot;</span><span class="p">);</span>
+        <span class="c1">// 分别获取服务消费者和提供者匹配规则</span>
+        <span class="n">String</span> <span class="n">whenRule</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="n">rule</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">).</span><span class="na">trim</span><span class="p">();</span>
+        <span class="n">String</span> <span class="n">thenRule</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">rule</span><span class="p">.</span><span class="na">trim</span><span class="p">()</span> <span class="p">:</span> <span class="n">rule</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">).</span><span class="na">trim</span><span class="p">();</span>
+        <span class="c1">// 解析服务消费者匹配规则</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span> <span class="n">when</span> <span class="o">=</span> 
+            <span class="n">StringUtils</span><span class="p">.</span><span class="na">isBlank</span><span class="p">(</span><span class="n">whenRule</span><span class="p">)</span> <span class="o">||</span> <span class="s">&quot;true&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">whenRule</span><span class="p">)</span> 
+                <span class="o">?</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">:</span> <span class="n">parseRule</span><span class="p">(</span><span class="n">whenRule</span><span class="p">);</span>
+        <span class="c1">// 解析服务提供者匹配规则</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span> <span class="n">then</span> <span class="o">=</span> 
+            <span class="n">StringUtils</span><span class="p">.</span><span class="na">isBlank</span><span class="p">(</span><span class="n">thenRule</span><span class="p">)</span> <span class="o">||</span> <span class="s">&quot;false&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">thenRule</span><span class="p">)</span> 
+                <span class="o">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="n">parseRule</span><span class="p">(</span><span class="n">thenRule</span><span class="p">);</span>
+        <span class="c1">// 将解析出的匹配规则分别赋值给 whenCondition 和 thenCondition 成员变量</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">whenCondition</span> <span class="o">=</span> <span class="n">when</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">thenCondition</span> <span class="o">=</span> <span class="n">then</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">ParseException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">(),</span> <span class="n">e</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>如上，ConditionRouter 构造方法先是对路由规则做预处理，然后调用 parseRule 方法分别对服务提供者和消费者规则进行解析，最后将解析结果赋值给 whenCondition 和 thenCondition 成员变量。ConditionRouter 构造方法不是很复杂，这里就不多说了。下面我们把重点放在 parseRule 方法上，在详细介绍这个方法之前，我们先来看一个内部类。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">MatchPair</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">matches</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="kd">final</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">mismatches</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>MatchPair 内部包含了两个 Set 类型的成员变量，分别用于存放匹配和不匹配的条件。这个类两个成员变量会在 parseRule 方法中被用到，下面来看一下。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="kd">static</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span> <span class="nf">parseRule</span><span class="p">(</span><span class="n">String</span> <span class="n">rule</span><span class="p">)</span>
+        <span class="kd">throws</span> <span class="n">ParseException</span> <span class="p">{</span>
+    <span class="c1">// 定义条件映射集合</span>
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span> <span class="n">condition</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">StringUtils</span><span class="p">.</span><span class="na">isBlank</span><span class="p">(</span><span class="n">rule</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">condition</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">MatchPair</span> <span class="n">pair</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">values</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="c1">// 通过正则表达式匹配路由规则，ROUTE_PATTERN = ([&amp;!=,]*)\s*([^&amp;!=,\s]+)</span>
+    <span class="c1">// 这个表达式看起来不是很好理解，第一个括号内的表达式用于匹配&quot;&amp;&quot;, &quot;!&quot;, &quot;=&quot; 和 &quot;,&quot; 等符号。</span>
+    <span class="c1">// 第二括号内的用于匹配英文字母，数字等字符。举个例子说明一下：</span>
+    <span class="c1">//    host = 2.2.2.2 &amp; host != 1.1.1.1 &amp; method = hello</span>
+    <span class="c1">// 匹配结果如下：</span>
+    <span class="c1">//     括号一      括号二</span>
+    <span class="c1">// 1.  null       host</span>
+    <span class="c1">// 2.   =         2.2.2.2</span>
+    <span class="c1">// 3.   &amp;         host</span>
+    <span class="c1">// 4.   !=        1.1.1.1 </span>
+    <span class="c1">// 5.   &amp;         method</span>
+    <span class="c1">// 6.   =         hello</span>
+    <span class="kd">final</span> <span class="n">Matcher</span> <span class="n">matcher</span> <span class="o">=</span> <span class="n">ROUTE_PATTERN</span><span class="p">.</span><span class="na">matcher</span><span class="p">(</span><span class="n">rule</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">matcher</span><span class="p">.</span><span class="na">find</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// 获取括号一内的匹配结果</span>
+        <span class="n">String</span> <span class="n">separator</span> <span class="o">=</span> <span class="n">matcher</span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="c1">// 获取括号二内的匹配结果</span>
+        <span class="n">String</span> <span class="n">content</span> <span class="o">=</span> <span class="n">matcher</span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+        <span class="c1">// 分隔符为空，表示匹配的是表达式的开始部分</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">separator</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">separator</span><span class="p">.</span><span class="na">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 创建 MatchPair 对象</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MatchPair</span><span class="p">();</span>
+            <span class="c1">// 存储 &lt;匹配项, MatchPair&gt; 键值对，比如 &lt;host, MatchPair&gt;</span>
+            <span class="n">condition</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pair</span><span class="p">);</span> 
+        <span class="p">}</span> 
+
+        <span class="c1">// 如果分隔符为 &amp;，表明接下来也是一个条件</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s">&quot;&amp;&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// 尝试从 condition 获取 MatchPair</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// 未获取到 MatchPair，重新创建一个，并放入 condition 中</span>
+                <span class="n">pair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MatchPair</span><span class="p">();</span>
+                <span class="n">condition</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pair</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">pair</span> <span class="o">=</span> <span class="n">condition</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> 
+
+        <span class="c1">// 分隔符为 =</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s">&quot;=&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pair</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ParseException</span><span class="p">(</span><span class="s">&quot;Illegal route rule ...&quot;</span><span class="p">);</span>
+
+            <span class="n">values</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="na">matches</span><span class="p">;</span>
+            <span class="c1">// 将 content 存入到 MatchPair 的 matches 集合中</span>
+            <span class="n">values</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+        <span class="p">}</span> 
+
+        <span class="c1">//  分隔符为 != </span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s">&quot;!=&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pair</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ParseException</span><span class="p">(</span><span class="s">&quot;Illegal route rule ...&quot;</span><span class="p">);</span>
+
+            <span class="n">values</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="na">mismatches</span><span class="p">;</span>
+            <span class="c1">// 将 content 存入到 MatchPair 的 mismatches 集合中</span>
+            <span class="n">values</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 分隔符为 ,</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">values</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">values</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ParseException</span><span class="p">(</span><span class="s">&quot;Illegal route rule ...&quot;</span><span class="p">);</span>
+            <span class="c1">// 将 content 存入到上一步获取到的 values 中，可能是 matches，也可能是 mismatches</span>
+            <span class="n">values</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">content</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">ParseException</span><span class="p">(</span><span class="s">&quot;Illegal route rule ...&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">condition</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>以上就是路由规则的解析逻辑，该逻辑由正则表达式和一个 while 循环以及数个条件分支组成。下面通过一个示例对解析逻辑进行演绎。示例为 <code>host = 2.2.2.2 &amp; host != 1.1.1.1 &amp; method = hello</code>。正则解析结果如下：</p>
+<div class="highlight"><pre><span></span><code>    括号一      括号二
+1.  null       host
+2.   =         2.2.2.2
+3.   &amp;         host
+4.   !=        1.1.1.1
+5.   &amp;         method
+6.   =         hello
+</code></pre></div>
+
+<p>现在线程进入 while 循环：</p>
+<p>第一次循环：分隔符 separator = null，content = "host"。此时创建 MatchPair 对象，并存入到 condition 中，condition = {"host": MatchPair@123}</p>
+<p>第二次循环：分隔符 separator = "="，content = "2.2.2.2"，pair = MatchPair@123。此时将 2.2.2.2 放入到 MatchPair@123 对象的 matches 集合中。</p>
+<p>第三次循环：分隔符 separator = "&amp;"，content = "host"。host 已存在于 condition 中，因此 pair = MatchPair@123。</p>
+<p>第四次循环：分隔符 separator = "!="，content = "1.1.1.1"，pair = MatchPair@123。此时将 1.1.1.1 放入到 MatchPair@123 对象的 mismatches 集合中。</p>
+<p>第五次循环：分隔符 separator = "&amp;"，content = "method"。condition.get("method") = null，因此新建一个 MatchPair 对象，并放入到 condition 中。此时 condition = {"host": MatchPair@123, "method": MatchPair@ 456}</p>
+<p>第六次循环：分隔符 separator = "="，content = "2.2.2.2"，pair = MatchPair@456。此时将 hello 放入到 MatchPair@456 对象的 matches 集合中。</p>
+<p>循环结束，此时 condition 的内容如下：</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;matches&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2.2.2.2&quot;</span><span class="p">],</span>
+        <span class="nt">&quot;mismatches&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;1.1.1.1&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;method&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;matches&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">],</span>
+        <span class="nt">&quot;mismatches&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>路由规则的解析过程稍微有点复杂，大家可通过 ConditionRouter 的测试类对该逻辑进行测试。并且找一个表达式，对照上面的代码走一遍，加深理解。</p>
+<h3 id="22">2.2 服务路由<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>服务路由的入口方法是 ConditionRouter 的 route 方法，该方法定义在 Router 接口中。实现代码如下：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Invoker</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="nf">route</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Invoker</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">invokers</span><span class="p">,</span> <span class="n">URL</span> <span class="n">url</span><span class="p">,</span> <span class="n">Invocation</span> <span class="n">invocation</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">RpcException</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">invokers</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">invokers</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">invokers</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="c1">// 先对服务消费者条件进行匹配，如果匹配失败，表明服务消费者 url 不符合匹配规则，</span>
+        <span class="c1">// 无需进行后续匹配，直接返回 Invoker 列表即可。比如下面的规则：</span>
+        <span class="c1">//     host = 10.20.153.10 =&gt; host = 10.0.0.10</span>
+        <span class="c1">// 这条路由规则希望 IP 为 10.20.153.10 的服务消费者调用 IP 为 10.0.0.10 机器上的服务。</span>
+        <span class="c1">// 当消费者 ip 为 10.20.153.11 时，matchWhen 返回 false，表明当前这条路由规则不适用于</span>
+        <span class="c1">// 当前的服务消费者，此时无需再进行后续匹配，直接返回即可。</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">matchWhen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">invocation</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">invokers</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Invoker</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Invoker</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+        <span class="c1">// 服务提供者匹配条件未配置，表明对指定的服务消费者禁用服务，也就是服务消费者在黑名单中</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">thenCondition</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;The current consumer in the service blacklist...&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// 这里可以简单的把 Invoker 理解为服务提供者，现在使用服务提供者匹配规则对 </span>
+        <span class="c1">// Invoker 列表进行匹配</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Invoker</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">invoker</span> <span class="p">:</span> <span class="n">invokers</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 若匹配成功，表明当前 Invoker 符合服务提供者匹配规则。</span>
+            <span class="c1">// 此时将 Invoker 添加到 result 列表中</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">matchThen</span><span class="p">(</span><span class="n">invoker</span><span class="p">.</span><span class="na">getUrl</span><span class="p">(),</span> <span class="n">url</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">invoker</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 返回匹配结果，如果 result 为空列表，且 force = true，表示强制返回空列表，</span>
+        <span class="c1">// 否则路由结果为空的路由规则将自动失效</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">force</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;The route result is empty and force execute ...&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Throwable</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Failed to execute condition router rule: ...&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 原样返回，此时 force = false，表示该条路由规则失效</span>
+    <span class="k">return</span> <span class="n">invokers</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>route 方法先是调用 matchWhen 对服务消费者进行匹配，如果匹配失败，直接返回 Invoker 列表。如果匹配成功，再对服务提供者进行匹配，匹配逻辑封装在了 matchThen 方法中。下面来看一下这两个方法的逻辑：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">boolean</span> <span class="nf">matchWhen</span><span class="p">(</span><span class="n">URL</span> <span class="n">url</span><span class="p">,</span> <span class="n">Invocation</span> <span class="n">invocation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 服务消费者条件为 null 或空，均返回 true，比如：</span>
+    <span class="c1">//     =&gt; host != 172.22.3.91</span>
+    <span class="c1">// 表示所有的服务消费者都不得调用 IP 为 172.22.3.91 的机器上的服务</span>
+    <span class="k">return</span> <span class="n">whenCondition</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">whenCondition</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span> 
+        <span class="o">||</span> <span class="n">matchCondition</span><span class="p">(</span><span class="n">whenCondition</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="n">invocation</span><span class="p">);</span>  <span class="c1">// 进行条件匹配</span>
+<span class="p">}</span>
+
+<span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">matchThen</span><span class="p">(</span><span class="n">URL</span> <span class="n">url</span><span class="p">,</span> <span class="n">URL</span> <span class="n">param</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 服务提供者条件为 null 或空，表示禁用服务</span>
+    <span class="k">return</span> <span class="o">!</span><span class="p">(</span><span class="n">thenCondition</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">thenCondition</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> 
+        <span class="o">&amp;&amp;</span> <span class="n">matchCondition</span><span class="p">(</span><span class="n">thenCondition</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>  <span class="c1">// 进行条件匹配</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>这两个方法长的有点像，不过逻辑上还是有差别的，大家注意看。这两个方法均调用了 matchCondition 方法，但它们所传入的参数是不同的。这个需要特别注意一下，不然后面的逻辑不好弄懂。下面我们对这几个参数进行溯源。matchWhen 方法向 matchCondition 方法传入的参数为 [whenCondition, url, null, invocation]，第一个参数 whenCondition 为服务消费者匹配条件，这个前面分析过。第二个参数 url 源自 route 方法的参数列表，该参数由外部类调用 route 方法时传入。比如：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Invoker</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="nf">route</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Invoker</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">invokers</span><span class="p">,</span> <span class="n">String</span> <span class="n">method</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Invocation</span> <span class="n">invocation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RpcInvocation</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="k">new</span> <span class="n">Class</span><span class="o">&lt;?&gt;[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Router</span><span class="o">&gt;</span> <span class="n">routers</span> <span class="o">=</span> <span class="n">getRouters</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">routers</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Router</span> <span class="n">router</span> <span class="p">:</span> <span class="n">routers</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">router</span><span class="p">.</span><span class="na">getUrl</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// 注意第二个参数</span>
+                <span class="n">invokers</span> <span class="o">=</span> <span class="n">router</span><span class="p">.</span><span class="na">route</span><span class="p">(</span><span class="n">invokers</span><span class="p">,</span> <span class="n">getConsumerUrl</span><span class="p">(),</span> <span class="n">invocation</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">invokers</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>上面这段代码来自 RegistryDirectory，第二个参数表示的是服务消费者 url。matchCondition 的 invocation 参数也是从这里传入的。</p>
+<p>接下来再来看看 matchThen 向 matchCondition 方法传入的参数 [thenCondition, url, param, null]。第一个参数不用解释了。第二个和第三个参数来自 matchThen 方法的参数列表，这两个参数分别为服务提供者 url 和服务消费者 url。搞清楚这些参数来源后，接下来就可以分析 matchCondition 方法了。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">matchCondition</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span> <span class="n">condition</span><span class="p">,</span> <span class="n">URL</span> <span class="n">url</span><span class="p">,</span> <span class="n">URL</span> <span class="n">param</span><span class="p">,</span> <span class="n">Invocation</span> <span class="n">invocation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 将服务提供者或消费者 url 转成 Map</span>
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">sample</span> <span class="o">=</span> <span class="n">url</span><span class="p">.</span><span class="na">toMap</span><span class="p">();</span>
+    <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="c1">// 遍历 condition 列表</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">Map</span><span class="p">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">MatchPair</span><span class="o">&gt;</span> <span class="n">matchPair</span> <span class="p">:</span> <span class="n">condition</span><span class="p">.</span><span class="na">entrySet</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// 获取匹配项名称，比如 host、method 等</span>
+        <span class="n">String</span> <span class="n">key</span> <span class="o">=</span> <span class="n">matchPair</span><span class="p">.</span><span class="na">getKey</span><span class="p">();</span>
+        <span class="n">String</span> <span class="n">sampleValue</span><span class="p">;</span>
+        <span class="c1">// 如果 invocation 不为空，且 key 为 mehtod(s)，表示进行方法匹配</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">invocation</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">Constants</span><span class="p">.</span><span class="na">METHOD_KEY</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">||</span> <span class="n">Constants</span><span class="p">.</span><span class="na">METHODS_KEY</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="c1">// 从 invocation 获取被调用方法的名称</span>
+            <span class="n">sampleValue</span> <span class="o">=</span> <span class="n">invocation</span><span class="p">.</span><span class="na">getMethodName</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// 从服务提供者或消费者 url 中获取指定字段值，比如 host、application 等</span>
+            <span class="n">sampleValue</span> <span class="o">=</span> <span class="n">sample</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">sampleValue</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// 尝试通过 default.xxx 获取相应的值</span>
+                <span class="n">sampleValue</span> <span class="o">=</span> <span class="n">sample</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">Constants</span><span class="p">.</span><span class="na">DEFAULT_KEY_PREFIX</span> <span class="o">+</span> <span class="n">key</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// --------------------✨ 分割线 ✨-------------------- //</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">sampleValue</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 调用 MatchPair 的 isMatch 方法进行匹配</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">matchPair</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">isMatch</span><span class="p">(</span><span class="n">sampleValue</span><span class="p">,</span> <span class="n">param</span><span class="p">))</span> <span class="p">{</span>
+                <span class="c1">// 只要有一个规则匹配失败，立即返回 false 结束方法逻辑</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// sampleValue 为空，表明服务提供者或消费者 url 中不包含相关字段。此时如果 </span>
+            <span class="c1">// MatchPair 的 matches 不为空，表示匹配失败，返回 false。比如我们有这样</span>
+            <span class="c1">// 一条匹配条件 loadbalance = random，假设 url 中并不包含 loadbalance 参数，</span>
+            <span class="c1">// 此时 sampleValue = null。既然路由规则里限制了 loadbalance 必须为 random，</span>
+            <span class="c1">// 但 sampleValue = null，明显不符合规则，因此返回 false</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">matchPair</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">matches</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>如上，matchCondition 方法看起来有点复杂，这里简单说明一下。分割线以上的代码实际上用于获取 sampleValue 的值，分割线以下才是进行条件匹配。条件匹配调用的逻辑封装在 isMatch 中，代码如下：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isMatch</span><span class="p">(</span><span class="n">String</span> <span class="n">value</span><span class="p">,</span> <span class="n">URL</span> <span class="n">param</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 情况一：matches 非空，mismatches 为空</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">matches</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">mismatches</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// 遍历 matches 集合，检测入参 value 是否能被 matches 集合元素匹配到。</span>
+        <span class="c1">// 举个例子，如果 value = 10.20.153.11，matches = [10.20.153.*],</span>
+        <span class="c1">// 此时 isMatchGlobPattern 方法返回 true</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">match</span> <span class="p">:</span> <span class="n">matches</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">UrlUtils</span><span class="p">.</span><span class="na">isMatchGlobPattern</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">param</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 如果所有匹配项都无法匹配到入参，则返回 false</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 情况二：matches 为空，mismatches 非空</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">mismatches</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">matches</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">mismatch</span> <span class="p">:</span> <span class="n">mismatches</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 只要入参被 mismatches 集合中的任意一个元素匹配到，就返回 false</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">UrlUtils</span><span class="p">.</span><span class="na">isMatchGlobPattern</span><span class="p">(</span><span class="n">mismatch</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">param</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// mismatches 集合中所有元素都无法匹配到入参，此时返回 true</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 情况三：matches 非空，mismatches 非空</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">matches</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">mismatches</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// matches 和 mismatches 均为非空，此时优先使用 mismatches 集合元素对入参进行匹配。</span>
+        <span class="c1">// 只要 mismatches 集合中任意一个元素与入参匹配成功，就立即返回 false，结束方法逻辑</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">mismatch</span> <span class="p">:</span> <span class="n">mismatches</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">UrlUtils</span><span class="p">.</span><span class="na">isMatchGlobPattern</span><span class="p">(</span><span class="n">mismatch</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">param</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// mismatches 集合元素无法匹配到入参，此时再使用 matches 继续匹配</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">match</span> <span class="p">:</span> <span class="n">matches</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 只要 matches 集合中任意一个元素与入参匹配成功，就立即返回 true</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">UrlUtils</span><span class="p">.</span><span class="na">isMatchGlobPattern</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">param</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 全部失配，则返回 false</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 情况四：matches 和 mismatches 均为空，此时返回 false</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>isMatch 方法逻辑比较清晰，由三个条件分支组成，用于处理四种情况。这里对四种情况下的匹配逻辑进行简单的总结，如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>条件</th>
+<th>过程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>情况一</td>
+<td>matches 非空，mismatches 为空</td>
+<td>遍历 matches 集合元素，并与入参进行匹配。只要有一个元素成功匹配入参，即可返回 true。若全部失配，则返回 false。</td>
+</tr>
+<tr>
+<td>情况二</td>
+<td>matches 为空，mismatches 非空</td>
+<td>遍历 mismatches 集合元素，并与入参进行匹配。只要有一个元素成功匹配入参，立即 false。若全部失配，则返回 true。</td>
+</tr>
+<tr>
+<td>情况三</td>
+<td>matches 非空，mismatches 非空</td>
+<td>优先使用 mismatches 集合元素对入参进行匹配，只要任一元素与入参匹配成功，就立即返回 false，结束方法逻辑。否则再使用 matches 中的集合元素进行匹配，只要有任意一个元素匹配成功，即可返回 true。若全部失配，则返回 false</td>
+</tr>
+<tr>
+<td>情况四</td>
+<td>matches 为空，mismatches 为空</td>
+<td>直接返回 false</td>
+</tr>
+</tbody>
+</table>
+<p>isMatch 方法是通过 UrlUtils 的 isMatchGlobPattern 方法进行匹配，因此下面我们再来看看 isMatchGlobPattern 方法的逻辑。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isMatchGlobPattern</span><span class="p">(</span><span class="n">String</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">String</span> <span class="n">value</span><span class="p">,</span> <span class="n">URL</span> <span class="n">param</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">param</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">pattern</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="s">&quot;$&quot;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// 引用服务消费者参数，param 参数为服务消费者 url</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">param</span><span class="p">.</span><span class="na">getRawParameter</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="c1">// 调用重载方法继续比较</span>
+    <span class="k">return</span> <span class="n">isMatchGlobPattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isMatchGlobPattern</span><span class="p">(</span><span class="n">String</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">String</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 对 * 通配符提供支持</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
+        <span class="c1">// 匹配规则为通配符 *，直接返回 true 即可</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">pattern</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">pattern</span><span class="p">.</span><span class="na">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">value</span><span class="p">.</span><span class="na">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="c1">// pattern 和 value 均为空，此时可认为两者相等，返回 true</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">pattern</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">pattern</span><span class="p">.</span><span class="na">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="o">||</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">value</span><span class="p">.</span><span class="na">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="c1">// pattern 和 value 其中有一个为空，表明两者不相等，返回 false</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="c1">// 定位 * 通配符位置</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">.</span><span class="na">lastIndexOf</span><span class="p">(</span><span class="sc">&#39;*&#39;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 匹配规则中不包含通配符，此时直接比较 value 和 pattern 是否相等即可，并返回比较结果</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">pattern</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// 通配符 &quot;*&quot; 在匹配规则尾部，比如 10.0.21.*</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">pattern</span><span class="p">.</span><span class="na">length</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 检测 value 是否以“不含通配符的匹配规则”开头，并返回结果。比如:</span>
+        <span class="c1">// pattern = 10.0.21.*，value = 10.0.21.12，此时返回 true</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="c1">// 通配符 &quot;*&quot; 在匹配规则头部</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 检测 value 是否以“不含通配符的匹配规则”结尾，并返回结果</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">.</span><span class="na">endsWith</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="c1">// 通配符 &quot;*&quot; 在匹配规则中间位置</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 通过通配符将 pattern 分成两半，得到 prefix 和 suffix</span>
+        <span class="n">String</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">String</span> <span class="n">suffix</span> <span class="o">=</span> <span class="n">pattern</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="c1">// 检测 value 是否以 prefix 开头，且以 suffix 结尾，并返回结果</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">value</span><span class="p">.</span><span class="na">endsWith</span><span class="p">(</span><span class="n">suffix</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>以上就是 isMatchGlobPattern 两个重载方法的全部逻辑，这两个方法分别对普通的匹配过程，以及”引用消费者参数“和通配符匹配等特性提供了支持。这两个方法的逻辑不是很复杂，且代码中也进行了比较详细的注释，因此就不多说了。</p>
+<h2 id="3">3. 总结<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>本篇文章对条件路由的表达式解析和服务路由过程进行了较为细致的分析。总的来说，条件路由的代码还是有一些复杂的，需要静下心来看。在阅读条件路由代码的过程中，要多调试。一般的框架都会有单元测试，Dubbo 也不例外，因此大家可以直接通过 ConditionRouterTest 对条件路由进行调试，无需重头构建测试用例。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/squidfunk" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://gitter.im/squidfunk/mkdocs-material" target="_blank" rel="noopener" title="gitter.im" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M66.4 322.5H16V0h50.4v322.5zM166.9 76.1h-50.4V512h50.4V76.1zm100.6 0h-50.4V512h50.4V76.1zM368 76h-50.4v247H368V76z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://hub.docker.com/r/squidfunk/mkdocs-material/" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/squidfunk" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://linkedin.com/in/squidfunk/" target="_blank" rel="noopener" title="linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://instagram.com/squidfunk" target="_blank" rel="noopener" title="instagram.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../../assets/javascripts/vendor.d1f5a259.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.d5fec882.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../../..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../../../../assets/javascripts/worker/search.fae956e7.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

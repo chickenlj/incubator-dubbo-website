@@ -1,0 +1,5217 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apache Dubbo™ 是一款微服务框架（Microservices Framework），它提供高性能 RPC 通信、服务发现、流量管理等服务治理能力，为你提供构建大规模微服务集群所需的全套解决方案。">
+      
+      
+      
+      <link rel="shortcut icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.6">
+    
+    
+      
+        <title>如何准备Apache Release - Dubbo 2.7.8</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.63b94e9e.min.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.7f672a1f.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/dropdown.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#apache-release" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Application header -->
+<header class="md-header" data-md-component="header">
+
+  <!-- Top-level navigation -->
+  <nav class="md-header-nav md-grid" aria-label="Header">
+
+    <!-- Link to home -->
+    <a
+      href="../../.."
+      title="Dubbo 2.7.8"
+      class="md-header-nav__button md-logo"
+      aria-label="Dubbo 2.7.8"
+    >
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Dubbo 2.7.8
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              如何准备Apache Release
+            
+          </span>
+        </div>
+      
+    </div>
+
+    <!-- Button to open search dialogue -->
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <div>
+      <div class="langChange" id="translate" title="中文|English">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+    </svg>
+</div>
+
+<script>
+    var translate = document.getElementById('translate');
+    translate.addEventListener('click', changeHref, false);
+    function changeHref() {
+        if (window.location.href.search('en-us') !== -1) {
+            var changeHref = window.location.href.replace('en-us', 'zh-cn');
+
+        } else {
+            var changeHref = window.location.href.replace('zh-cn', 'en-us');
+        }
+        window.location.href = changeHref
+    }
+</script>
+
+<style>
+    .langChange {
+        display: inline-block;
+        width: 2.4rem;
+        height: 2.4rem;
+        vertical-align: middle;
+        margin-left: .5rem;
+    }
+
+    .langChange svg {
+        fill: rgba(255, 255, 255, 0.548);
+        display: block;
+        width: 1.2rem;
+        height: 1.2rem;
+        margin: 0 auto;
+        margin-top: .6rem;
+        margin-left: .6rem;
+    }
+
+    .langChange :hover {
+        fill: white;
+        cursor: pointer;
+    }
+</style>
+    </div>
+
+    <!-- Repository containing source -->
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/apache/dubbo-website/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  <li class="md-tabs__item">
+    
+      <a
+        href="../../.."
+        class="md-tabs__link md-tabs__link--active"
+      >
+        Home
+      </a>
+    
+  </li>
+
+<!-- Main navigation item with nested items -->
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <li class="md-tabs__item">Docs
+      <ul class="md-tabs__list">
+        
+          
+
+          <!-- Recurse, if the first item has nested items -->
+          
+          
+          <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    
+    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../../docs/2.7/user/preface/background/"
+              class="md-tabs__link"
+      >
+        Docs
+      </a>
+      
+    </li>
+    
+  
+
+
+    <!-- Render item -->
+    
+  
+
+
+          <!-- Render item -->
+          
+        
+          
+
+          <!-- Recurse, if the first item has nested items -->
+          
+          
+          <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    
+    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../../docs/3.0/user/preface/background/"
+              class="md-tabs__link"
+      >
+        Docs
+      </a>
+      
+    </li>
+    
+  
+
+
+    <!-- Render item -->
+    
+  
+
+
+          <!-- Render item -->
+          
+        
+      </ul>
+    </li>
+  
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../../blog/apache-dubbo-2019-2020/"
+              class="md-tabs__link"
+      >
+        Blog
+      </a>
+      
+    </li>
+    
+  
+
+      
+        <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Home page -->
+
+  
+  
+    <!-- Recurse, if the first item has nested items -->
+    
+    <li class="md-tabs__item">
+      
+      <a
+              href="../../developers_dev/"
+              class="md-tabs__link"
+      >
+        Developers
+      </a>
+      
+    </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <!--
+  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Main navigation -->
+<nav
+  class="md-nav md-nav--primary"
+  aria-label="Navigation"
+  data-md-level="0"
+>
+
+  <!-- Site title -->
+  <label class="md-nav__title" for="__drawer">
+    <a
+      href="../../.."
+      title="Dubbo 2.7.8"
+      class="md-nav__button md-logo"
+      aria-label="Dubbo 2.7.8"
+    >
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+    Dubbo 2.7.8
+  </label>
+
+  <!-- Repository containing source -->
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/apache/dubbo-website/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+
+  <!-- Render item list -->
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../.."
+      title="Home"
+      class="md-nav__link"
+    >
+      Home
+    </a>
+  </li>
+
+      
+      
+    
+      
+        
+          
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      2.7
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="2.7"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.7
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1"
+        type="checkbox"
+        id="nav-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1">
+      用户手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="用户手册"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        用户手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-1"
+        type="checkbox"
+        id="nav-1-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-1">
+      入门
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="入门"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        入门
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/preface/background/"
+      title="背景"
+      class="md-nav__link"
+    >
+      背景
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/preface/requirements/"
+      title="需求"
+      class="md-nav__link"
+    >
+      需求
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/preface/architecture/"
+      title="架构"
+      class="md-nav__link"
+    >
+      架构
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/preface/usage/"
+      title="用法"
+      class="md-nav__link"
+    >
+      用法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/quick-start/"
+      title="快速启动"
+      class="md-nav__link"
+    >
+      快速启动
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/dependencies/"
+      title="依赖"
+      class="md-nav__link"
+    >
+      依赖
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/maturity/"
+      title="成熟度"
+      class="md-nav__link"
+    >
+      成熟度
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-5"
+        type="checkbox"
+        id="nav-1-1-5"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-5">
+      配置
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="配置"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        配置
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/configuration/xml/"
+      title="XML 配置"
+      class="md-nav__link"
+    >
+      XML 配置
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/configuration/api/"
+      title="API 配置"
+      class="md-nav__link"
+    >
+      API 配置
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/configuration/annotation/"
+      title="Annotation 配置"
+      class="md-nav__link"
+    >
+      Annotation 配置
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/configuration/annotation/"
+      title="动态配置中心"
+      class="md-nav__link"
+    >
+      动态配置中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/configuration/configuration-load-process/"
+      title="配置加载流程"
+      class="md-nav__link"
+    >
+      配置加载流程
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/configuration/environment-variables/"
+      title="自动加载环境变量"
+      class="md-nav__link"
+    >
+      自动加载环境变量
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-6"
+        type="checkbox"
+        id="nav-1-1-6"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-6">
+      示例
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="示例"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        示例
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/preflight-check/"
+      title="启动时检查"
+      class="md-nav__link"
+    >
+      启动时检查
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/fault-tolerent-strategy/"
+      title="集群容错"
+      class="md-nav__link"
+    >
+      集群容错
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/loadbalance/"
+      title="负载均衡"
+      class="md-nav__link"
+    >
+      负载均衡
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/thread-model/"
+      title="线程模型"
+      class="md-nav__link"
+    >
+      线程模型
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/explicit-target/"
+      title="直连提供者"
+      class="md-nav__link"
+    >
+      直连提供者
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/subscribe-only/"
+      title="只订阅"
+      class="md-nav__link"
+    >
+      只订阅
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/registry-only/"
+      title="只注册"
+      class="md-nav__link"
+    >
+      只注册
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/static-service/"
+      title="静态服务"
+      class="md-nav__link"
+    >
+      静态服务
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/multi-protocols/"
+      title="多协议"
+      class="md-nav__link"
+    >
+      多协议
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/multi-registry/"
+      title="多注册中心"
+      class="md-nav__link"
+    >
+      多注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/service-group/"
+      title="服务分组"
+      class="md-nav__link"
+    >
+      服务分组
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/multi-versions/"
+      title="多版本"
+      class="md-nav__link"
+    >
+      多版本
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/group-merger/"
+      title="分组聚合"
+      class="md-nav__link"
+    >
+      分组聚合
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/parameter-validation/"
+      title="参数验证"
+      class="md-nav__link"
+    >
+      参数验证
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/result-cache/"
+      title="结果缓存"
+      class="md-nav__link"
+    >
+      结果缓存
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/generic-reference/"
+      title="泛化引用"
+      class="md-nav__link"
+    >
+      泛化引用
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/generic-service/"
+      title="泛化实现"
+      class="md-nav__link"
+    >
+      泛化实现
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/echo-service/"
+      title="回声测试"
+      class="md-nav__link"
+    >
+      回声测试
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/context/"
+      title="上下文信息"
+      class="md-nav__link"
+    >
+      上下文信息
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/attachment/"
+      title="隐式参数"
+      class="md-nav__link"
+    >
+      隐式参数
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/async-call/"
+      title="异步调用"
+      class="md-nav__link"
+    >
+      异步调用
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/async-execute-on-provider/"
+      title="服务端异步"
+      class="md-nav__link"
+    >
+      服务端异步
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/local-call/"
+      title="本地调用"
+      class="md-nav__link"
+    >
+      本地调用
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/callback-parameter/"
+      title="参数回调"
+      class="md-nav__link"
+    >
+      参数回调
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/events-notify/"
+      title="事件通知"
+      class="md-nav__link"
+    >
+      事件通知
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/local-stub/"
+      title="本地存根"
+      class="md-nav__link"
+    >
+      本地存根
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/local-mock/"
+      title="本地伪装"
+      class="md-nav__link"
+    >
+      本地伪装
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/delay-publish/"
+      title="延迟暴露"
+      class="md-nav__link"
+    >
+      延迟暴露
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/concurrency-control/"
+      title="并发控制"
+      class="md-nav__link"
+    >
+      并发控制
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/config-connection.md"
+      title="连接控制"
+      class="md-nav__link"
+    >
+      连接控制
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/lazy-connect/"
+      title="延迟连接"
+      class="md-nav__link"
+    >
+      延迟连接
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/stickiness/"
+      title="粘滞连接"
+      class="md-nav__link"
+    >
+      粘滞连接
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/token-authorization/"
+      title="令牌验证"
+      class="md-nav__link"
+    >
+      令牌验证
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/routing-rule/"
+      title="路由规则"
+      class="md-nav__link"
+    >
+      路由规则
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/config-rule/"
+      title="配置规则"
+      class="md-nav__link"
+    >
+      配置规则
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/service-downgrade/"
+      title="服务降级"
+      class="md-nav__link"
+    >
+      服务降级
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/graceful-shutdown/"
+      title="优雅停机"
+      class="md-nav__link"
+    >
+      优雅停机
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/hostname-binding/"
+      title="主机绑定"
+      class="md-nav__link"
+    >
+      主机绑定
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/logger-strategy/"
+      title="日志适配"
+      class="md-nav__link"
+    >
+      日志适配
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/accesslog/"
+      title="访问日志"
+      class="md-nav__link"
+    >
+      访问日志
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/service-container/"
+      title="服务容器"
+      class="md-nav__link"
+    >
+      服务容器
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/distributed-transaction/"
+      title="分布式事务"
+      class="md-nav__link"
+    >
+      分布式事务
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/dump/"
+      title="线程栈自动dump"
+      class="md-nav__link"
+    >
+      线程栈自动dump
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/netty4/"
+      title="Netty4"
+      class="md-nav__link"
+    >
+      Netty4
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/serialization/"
+      title="Kryo和FST序列化"
+      class="md-nav__link"
+    >
+      Kryo和FST序列化
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/simplify-registry-data/"
+      title="简化注册中心URL"
+      class="md-nav__link"
+    >
+      简化注册中心URL
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/demos/api.md"
+      title="API 参考手册"
+      class="md-nav__link"
+    >
+      API 参考手册
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-7"
+        type="checkbox"
+        id="nav-1-1-7"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-7">
+      schema 配置参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="schema 配置参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        schema 配置参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-service/"
+      title="dubbo:service"
+      class="md-nav__link"
+    >
+      dubbo:service
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-reference/"
+      title="dubbo:reference"
+      class="md-nav__link"
+    >
+      dubbo:reference
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-protocol/"
+      title="dubbo:protocol"
+      class="md-nav__link"
+    >
+      dubbo:protocol
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-registry/"
+      title="dubbo:registry"
+      class="md-nav__link"
+    >
+      dubbo:registry
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-monitor/"
+      title="dubbo:monitor"
+      class="md-nav__link"
+    >
+      dubbo:monitor
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-application/"
+      title="dubbo:application"
+      class="md-nav__link"
+    >
+      dubbo:application
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-module/"
+      title="dubbo:module"
+      class="md-nav__link"
+    >
+      dubbo:module
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-provider/"
+      title="dubbo:provider"
+      class="md-nav__link"
+    >
+      dubbo:provider
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-consumer/"
+      title="dubbo:consumer"
+      class="md-nav__link"
+    >
+      dubbo:consumer
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-method/"
+      title="dubbo:method"
+      class="md-nav__link"
+    >
+      dubbo:method
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-argument/"
+      title="dubbo:argument"
+      class="md-nav__link"
+    >
+      dubbo:argument
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-parameter/"
+      title="dubbo:parameter"
+      class="md-nav__link"
+    >
+      dubbo:parameter
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/xml/dubbo-config-center/"
+      title="dubbo:config-center"
+      class="md-nav__link"
+    >
+      dubbo:config-center
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-8"
+        type="checkbox"
+        id="nav-1-1-8"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-8">
+      协议参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="协议参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        协议参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/protocol/dubbo/"
+      title="dubbo://"
+      class="md-nav__link"
+    >
+      dubbo://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/protocol/rmi/"
+      title="rmi://"
+      class="md-nav__link"
+    >
+      rmi://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/protocol/hessian/"
+      title="hessian://"
+      class="md-nav__link"
+    >
+      hessian://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/protocol/http/"
+      title="http://"
+      class="md-nav__link"
+    >
+      http://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/protocol/thrift/"
+      title="thrift://"
+      class="md-nav__link"
+    >
+      thrift://
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/protocol/rest/"
+      title="rest://"
+      class="md-nav__link"
+    >
+      rest://
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-9"
+        type="checkbox"
+        id="nav-1-1-9"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-9">
+      注册中心参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="注册中心参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-9">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        注册中心参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/registry/multicast/"
+      title="Multicast 注册中心"
+      class="md-nav__link"
+    >
+      Multicast 注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/registry/zookeeper/"
+      title="Zookeeper 注册中心"
+      class="md-nav__link"
+    >
+      Zookeeper 注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/registry/redis/"
+      title="Redis 注册中心"
+      class="md-nav__link"
+    >
+      Redis 注册中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/registry/simple/"
+      title="Simple 注册中心"
+      class="md-nav__link"
+    >
+      Simple 注册中心
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-10"
+        type="checkbox"
+        id="nav-1-1-10"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-10">
+      元数据中心参考手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="元数据中心参考手册"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-10">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        元数据中心参考手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/metadata/metadata-redis/"
+      title="Redis 元数据中心"
+      class="md-nav__link"
+    >
+      Redis 元数据中心
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/metadata/metadata-zookeeper/"
+      title="Zookeeper 元数据中心"
+      class="md-nav__link"
+    >
+      Zookeeper 元数据中心
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/telnet/"
+      title="telnet 命令参考手册"
+      class="md-nav__link"
+    >
+      telnet 命令参考手册
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/qos/"
+      title="在线运维命令-QOS"
+      class="md-nav__link"
+    >
+      在线运维命令-QOS
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/references/maven/"
+      title="maven 插件参考手册"
+      class="md-nav__link"
+    >
+      maven 插件参考手册
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/best-practice/"
+      title="服务化最佳实践"
+      class="md-nav__link"
+    >
+      服务化最佳实践
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/recommend/"
+      title="推荐用法"
+      class="md-nav__link"
+    >
+      推荐用法
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/capacity-plan/"
+      title="容量规划"
+      class="md-nav__link"
+    >
+      容量规划
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/perf-test/"
+      title="性能测试报告"
+      class="md-nav__link"
+    >
+      性能测试报告
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/covergence.md"
+      title="测试覆盖率报告"
+      class="md-nav__link"
+    >
+      测试覆盖率报告
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-19"
+        type="checkbox"
+        id="nav-1-1-19"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-19">
+      版本与升级
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="版本与升级"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-19">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        版本与升级
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/2.7/user/versions/version-270/"
+      title="2.7.x升级步骤及注意事项"
+      class="md-nav__link"
+    >
+      2.7.x升级步骤及注意事项
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2"
+        type="checkbox"
+        id="nav-1-2"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2">
+      开发手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="开发手册"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        开发手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/build.md"
+      title="源码构建"
+      class="md-nav__link"
+    >
+      源码构建
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/design.md"
+      title="框架设计"
+      class="md-nav__link"
+    >
+      框架设计
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/SPI.md"
+      title="扩展点加载"
+      class="md-nav__link"
+    >
+      扩展点加载
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/implementation.md"
+      title="实现细节"
+      class="md-nav__link"
+    >
+      实现细节
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2-5"
+        type="checkbox"
+        id="nav-1-2-5"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2-5">
+      SPI 扩展实现
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="SPI 扩展实现"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-2-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        SPI 扩展实现
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/protocol.md"
+      title="协议扩展"
+      class="md-nav__link"
+    >
+      协议扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/filter.md"
+      title="调用拦截扩展"
+      class="md-nav__link"
+    >
+      调用拦截扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/invoker-listener.md"
+      title="引用监听扩展"
+      class="md-nav__link"
+    >
+      引用监听扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/exporter-listener.md"
+      title="暴露监听扩展"
+      class="md-nav__link"
+    >
+      暴露监听扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/cluster.md"
+      title="集群扩展"
+      class="md-nav__link"
+    >
+      集群扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/router.md"
+      title="路由扩展"
+      class="md-nav__link"
+    >
+      路由扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/load-balance.md"
+      title="负载均衡扩展"
+      class="md-nav__link"
+    >
+      负载均衡扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/merger.md"
+      title="合并结果扩展"
+      class="md-nav__link"
+    >
+      合并结果扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/registry.md"
+      title="注册中心扩展"
+      class="md-nav__link"
+    >
+      注册中心扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/monitor.md"
+      title="监控中心扩展"
+      class="md-nav__link"
+    >
+      监控中心扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/extension-factory.md"
+      title="扩展点加载扩展"
+      class="md-nav__link"
+    >
+      扩展点加载扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/proxy-factory.md"
+      title="动态代理扩展"
+      class="md-nav__link"
+    >
+      动态代理扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/compiler.md"
+      title="编译器扩展"
+      class="md-nav__link"
+    >
+      编译器扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/dispatcher.md"
+      title="消息派发扩展"
+      class="md-nav__link"
+    >
+      消息派发扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/threadpool.md"
+      title="线程池扩展"
+      class="md-nav__link"
+    >
+      线程池扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/serialize.md"
+      title="序列化扩展"
+      class="md-nav__link"
+    >
+      序列化扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/remoting.md"
+      title="网络传输扩展"
+      class="md-nav__link"
+    >
+      网络传输扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/exchanger.md"
+      title="信息交换扩展"
+      class="md-nav__link"
+    >
+      信息交换扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/networker.md"
+      title="组网扩展"
+      class="md-nav__link"
+    >
+      组网扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/telnet-handler.md"
+      title="Telnet 命令扩展"
+      class="md-nav__link"
+    >
+      Telnet 命令扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/status-checker.md"
+      title="状态检查扩展"
+      class="md-nav__link"
+    >
+      状态检查扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/container.md"
+      title="容器扩展"
+      class="md-nav__link"
+    >
+      容器扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/page.md"
+      title="页面扩展"
+      class="md-nav__link"
+    >
+      页面扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/cache.md"
+      title="缓存扩展"
+      class="md-nav__link"
+    >
+      缓存扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/validation.md"
+      title="验证扩展"
+      class="md-nav__link"
+    >
+      验证扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/logger-adapter.md"
+      title="日志适配扩展"
+      class="md-nav__link"
+    >
+      日志适配扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/impls/config-center.md"
+      title="配置中心"
+      class="md-nav__link"
+    >
+      配置中心
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/contract.md"
+      title="公共契约"
+      class="md-nav__link"
+    >
+      公共契约
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/coding.md"
+      title="编码约定"
+      class="md-nav__link"
+    >
+      编码约定
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-2-8"
+        type="checkbox"
+        id="nav-1-2-8"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-2-8">
+      设计原则
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="设计原则"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-2-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        设计原则
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/principals/code-detail.md"
+      title="魔鬼在细节"
+      class="md-nav__link"
+    >
+      魔鬼在细节
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/principals/general-knowledge.md"
+      title="一些设计上的基本常识"
+      class="md-nav__link"
+    >
+      一些设计上的基本常识
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/principals/expansibility.md"
+      title="谈谈扩充式扩展与增量式扩展"
+      class="md-nav__link"
+    >
+      谈谈扩充式扩展与增量式扩展
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/principals/configuration.md"
+      title="配置设计"
+      class="md-nav__link"
+    >
+      配置设计
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/principals/robustness.md"
+      title="设计实现的健壮性"
+      class="md-nav__link"
+    >
+      设计实现的健壮性
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/principals/dummy.md"
+      title="防痴呆设计"
+      class="md-nav__link"
+    >
+      防痴呆设计
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/principals/extension.md"
+      title="扩展点重构"
+      class="md-nav__link"
+    >
+      扩展点重构
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/release.md"
+      title="版本发布"
+      class="md-nav__link"
+    >
+      版本发布
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/contribution.md"
+      title="贡献代码"
+      class="md-nav__link"
+    >
+      贡献代码
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/checklist.md"
+      title="检查列表"
+      class="md-nav__link"
+    >
+      检查列表
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/code-smell.md"
+      title="坏味道"
+      class="md-nav__link"
+    >
+      坏味道
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../dev/TCK.md"
+      title="兼容性测试"
+      class="md-nav__link"
+    >
+      兼容性测试
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-3"
+        type="checkbox"
+        id="nav-1-3"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-3">
+      管理者文档
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="管理者文档"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        管理者文档
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../admin/introduction.md"
+      title="Dubbo Admin介绍"
+      class="md-nav__link"
+    >
+      Dubbo Admin介绍
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../admin/serviceSearch.md"
+      title="服务搜索和详情"
+      class="md-nav__link"
+    >
+      服务搜索和详情
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../admin/serviceGovernance.md"
+      title="服务治理"
+      class="md-nav__link"
+    >
+      服务治理
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../admin/serviceTest.md"
+      title="服务测试"
+      class="md-nav__link"
+    >
+      服务测试
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+          
+        
+          
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      3.0
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="3.0"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        3.0
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1"
+        type="checkbox"
+        id="nav-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1">
+      用户手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="用户手册"
+      data-md-level="2"
+    >
+      <label class="md-nav__title" for="nav-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        用户手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1-1-1"
+        type="checkbox"
+        id="nav-1-1-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1-1-1">
+      入门
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="入门"
+      data-md-level="3"
+    >
+      <label class="md-nav__title" for="nav-1-1-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        入门
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/3.0/user/preface/background/"
+      title="背景"
+      class="md-nav__link"
+    >
+      背景
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/3.0/user/preface/background/"
+      title="需求"
+      class="md-nav__link"
+    >
+      需求
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/3.0/user/preface/architecture/"
+      title="架构"
+      class="md-nav__link"
+    >
+      架构
+    </a>
+  </li>
+
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../docs/3.0/user/preface/usage/"
+      title="用法"
+      class="md-nav__link"
+    >
+      用法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+          
+        
+      
+      
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      Blog
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Blog"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../../blog/apache-dubbo-2019-2020/"
+      title="2019-2020 回顾"
+      class="md-nav__link"
+    >
+      2019-2020 回顾
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+      
+      
+    
+      
+        
+        
+        <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item md-nav__item--nested">
+
+    <!-- Active checkbox expands items contained within nested section -->
+    
+      <input
+        class="md-nav__toggle md-toggle"
+        data-md-toggle="nav-1"
+        type="checkbox"
+        id="nav-1"
+      />
+    
+
+    <!-- Expand active pages -->
+    <label class="md-nav__link" for="nav-1">
+      Developers
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav
+      class="md-nav"
+      aria-label="Developers"
+      data-md-level="1"
+    >
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+
+        <!-- Render nested item list -->
+        
+        
+          
+          
+          <!-- Determine class according to level -->
+
+
+
+<!-- Main navigation item with nested items -->
+
+  <li class="md-nav__item">
+    <a
+      href="../../developers_dev/"
+      title="开发者指引"
+      class="md-nav__link"
+    >
+      开发者指引
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+<!-- Currently active page -->
+
+      
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#apache" class="md-nav__link">
+    理解Apache发布的内容和流程
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    本地构建环境准备
+  </a>
+  
+    <nav class="md-nav" aria-label="本地构建环境准备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpg" class="md-nav__link">
+    安装GPG
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpgkey" class="md-nav__link">
+    用gpg生成key
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-id" class="md-nav__link">
+    查看key id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apache_1" class="md-nav__link">
+    设置Apache中央仓库
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    打包&amp;上传
+  </a>
+  
+    <nav class="md-nav" aria-label="打包&amp;上传">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    准备分支
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    编译打包
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maven-release-plugin" class="md-nav__link">
+    用maven-release-plugin发布 (废弃，参考后一步)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mvn-deploydeploy" class="md-nav__link">
+    使用mvn deploy进行deploy
+  </a>
+  
+    <nav class="md-nav" aria-label="使用mvn deploy进行deploy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    注意点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apache_2" class="md-nav__link">
+    准备Apache发布
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-candidates" class="md-nav__link">
+    验证Release Candidates
+  </a>
+  
+    <nav class="md-nav" aria-label="验证Release Candidates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hash" class="md-nav__link">
+    检查签名和hash等信息
+  </a>
+  
+    <nav class="md-nav" aria-label="检查签名和hash等信息">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sha512" class="md-nav__link">
+    检查sha512哈希
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpg_1" class="md-nav__link">
+    检查gpg签名
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    检查二进制包的文件内容
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    进入投票
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    正式发布
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maven-convenient-binary" class="md-nav__link">
+    完成Maven Convenient Binary发布（可选）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    FAQ
+  </a>
+  
+    <nav class="md-nav" aria-label="FAQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpg-signing-failed-inappropriate-ioctl-for-device" class="md-nav__link">
+    gpg: signing failed: Inappropriate ioctl for device
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/apache/dubbo-website/edit/master/documentations/2.7/zh-cn/docs/developers/committer-guide/release-guide_dev.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="apache-release">如何准备Apache Release<a class="headerlink" href="#apache-release" title="Permanent link">&para;</a></h1>
+<h2 id="apache">理解Apache发布的内容和流程<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h2>
+<p>总的来说，Source Release是Apache关注的重点，也是发布的必须内容；而Binary Release是可选项，Dubbo可以选择是否发布二进制包到Apache仓库或者发布到Maven中央仓库。</p>
+<p>请参考以下链接，找到更多关于ASF的发布指南:</p>
+<ul>
+<li><a href="http://www.apache.org/dev/release-publishing">Apache Release Guide</a></li>
+<li><a href="http://www.apache.org/dev/release.html">Apache Release Policy</a></li>
+<li><a href="http://www.apache.org/dev/publishing-maven-artifacts.html">Maven Release Info</a></li>
+</ul>
+<h2 id="_1">本地构建环境准备<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>主要包括签名工具、Maven仓库认证相关准备</p>
+<h3 id="gpg">安装GPG<a class="headerlink" href="#gpg" title="Permanent link">&para;</a></h3>
+<p>详细文档请参见<a href="https://www.gnupg.org/download/index.html">这里</a>, Mac OS下配置如下</p>
+<div class="highlight"><pre><span></span><code>$ brew install gpg
+$ gpg --version <span class="c1">#检查版本，应该为2.x</span>
+</code></pre></div>
+
+<h3 id="gpgkey">用gpg生成key<a class="headerlink" href="#gpgkey" title="Permanent link">&para;</a></h3>
+<p>根据提示，生成key</p>
+<div class="highlight"><pre><span></span><code>$ gpg --full-gen-key
+gpg <span class="o">(</span>GnuPG<span class="o">)</span> <span class="m">2</span>.0.12<span class="p">;</span> Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">2009</span> Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please <span class="k">select</span> what kind of key you want:
+  <span class="o">(</span><span class="m">1</span><span class="o">)</span> RSA and RSA <span class="o">(</span>default<span class="o">)</span>
+  <span class="o">(</span><span class="m">2</span><span class="o">)</span> DSA and Elgamal
+  <span class="o">(</span><span class="m">3</span><span class="o">)</span> DSA <span class="o">(</span>sign only<span class="o">)</span>
+  <span class="o">(</span><span class="m">4</span><span class="o">)</span> RSA <span class="o">(</span>sign only<span class="o">)</span>
+Your selection? <span class="m">1</span>
+RSA keys may be between <span class="m">1024</span> and <span class="m">4096</span> bits long.
+What keysize <span class="k">do</span> you want? <span class="o">(</span><span class="m">2048</span><span class="o">)</span> <span class="m">4096</span>
+Requested keysize is <span class="m">4096</span> bits
+Please specify how long the key should be valid.
+        <span class="nv">0</span> <span class="o">=</span> key does not expire
+     &lt;n&gt;  <span class="o">=</span> key expires in n days
+     &lt;n&gt;w <span class="o">=</span> key expires in n weeks
+     &lt;n&gt;m <span class="o">=</span> key expires in n months
+     &lt;n&gt;y <span class="o">=</span> key expires in n years
+Key is valid <span class="k">for</span>? <span class="o">(</span><span class="m">0</span><span class="o">)</span> 
+Key does not expire at all
+Is this correct? <span class="o">(</span>y/N<span class="o">)</span> y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Robert Burrell Donkin
+Email address: rdonkin@apache.org
+Comment: CODE SIGNING KEY
+You selected this USER-ID:
+   <span class="s2">&quot;Robert Burrell Donkin (CODE SIGNING KEY) &lt;rdonkin@apache.org&gt;&quot;</span>
+
+Change <span class="o">(</span>N<span class="o">)</span>ame, <span class="o">(</span>C<span class="o">)</span>omment, <span class="o">(</span>E<span class="o">)</span>mail or <span class="o">(</span>O<span class="o">)</span>kay/<span class="o">(</span>Q<span class="o">)</span>uit? O
+You need a Passphrase to protect your secret key. <span class="c1"># 填入密码，以后打包过程中会经常用到</span>
+</code></pre></div>
+
+<h3 id="key-id">查看key id<a class="headerlink" href="#key-id" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code>$ gpg --list-keys
+pub   rsa4096/28681CB1 <span class="m">2018</span>-04-26 <span class="c1"># 28681CB1就是key id</span>
+uid       <span class="o">[</span>ultimate<span class="o">]</span> liujun <span class="o">(</span>apache-dubbo<span class="o">)</span> &lt;liujun@apache.org&gt;
+sub   rsa4096/D3D6984B <span class="m">2018</span>-04-26
+
+<span class="c1"># 通过key id发送public key到keyserver</span>
+$ gpg --keyserver pgpkeys.mit.edu --send-key 28681CB1
+<span class="c1"># 其中，pgpkeys.mit.edu为随意挑选的keyserver，keyserver列表为：https://sks-keyservers.net/status/，为相互之间是自动同步的，选任意一个都可以。</span>
+</code></pre></div>
+如果有多个public key，设置默认key。修改<code>~/.gnupg/gpg.conf</code></p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># If you have more than 1 secret key in your keyring, you may want to</span>
+<span class="c1"># uncomment the following option and set your preferred keyid.</span>
+default-key 28681CB1
+</code></pre></div>
+如果有多个public key, 也可以删除无用的key：</p>
+<div class="highlight"><pre><span></span><code><span class="c1">### 先删除私钥，再删除公钥</span>
+$ gpg --yes --delete-secret-keys shenglicao2@gmail.com   <span class="c1">###老的私钥，指明邮箱即可</span>
+$ gpg --delete-keys 1808C6444C781C0AEA0AAD4C4D6A8007D20DB8A4
+</code></pre></div>
+
+<blockquote>
+<p>PS: 最新版本经过实测，本地没有gpg.conf这个文件，因此如果在执行过程中遇到签名失败，可以参考这个文章：<a href="https://blog.csdn.net/wenbo20182/article/details/72850810">https://blog.csdn.net/wenbo20182/article/details/72850810</a> 或 <a href="https://d.sb/2016/11/gpg-inappropriate-ioctl-for-device-errors">https://d.sb/2016/11/gpg-inappropriate-ioctl-for-device-errors</a></p>
+</blockquote>
+<p>由于公钥服务器没有检查机制，任何人都可以用你的名义上传公钥，所以没有办法保证服务器上的公钥的可靠性。
+通常，你可以在网站上公布一个公钥指纹，让其他人核对下载到的公钥是否为真。
+<div class="highlight"><pre><span></span><code><span class="c1"># fingerprint参数生成公钥指纹：</span>
+$ gpg --fingerprint liujun
+pub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>SC<span class="o">]</span>
+      <span class="m">1376</span> A2FF 67E4 C477 <span class="m">5739</span>  09BD 7DB6 <span class="m">8550</span> D366 E4C0
+uid           <span class="o">[</span>ultimate<span class="o">]</span> liujun <span class="o">(</span>CODE SIGNING KEY<span class="o">)</span> &lt;liujun@apache.org&gt;
+sub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>E<span class="o">]</span>
+</code></pre></div>
+登录 <a href="https://id.apache.org">https://id.apache.org</a>, 将上面的 fingerprint （即 1376 A2FF 67E4 C477 5739  09BD 7DB6 8550 D366 E4C0）
+粘贴到自己的用户信息中 OpenPGP Public Key Primary Fingerprint</p>
+<h3 id="apache_1">设置Apache中央仓库<a class="headerlink" href="#apache_1" title="Permanent link">&para;</a></h3>
+<p>Dubbo项目的父pom为Apache pom(2.7.0以上版本需要，2.6.x发布版本不需要此操作)</p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">&lt;parent&gt;</span>
+<span class="nt">&lt;groupId&gt;</span>org.apache<span class="nt">&lt;/groupId&gt;</span>
+<span class="nt">&lt;artifactId&gt;</span>apache<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;version&gt;</span>19<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/parent&gt;</span>
+</code></pre></div>
+ 添加以下内容到.m2/settings.xml
+ 所有密码请使用<a href="http://maven.apache.org/guides/mini/guide-encryption.html">maven-encryption-plugin</a>加密后再填入
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;settings&gt;</span>
+...
+ <span class="nt">&lt;servers&gt;</span>
+   <span class="c">&lt;!-- To publish a snapshot of some part of Maven --&gt;</span>
+   <span class="nt">&lt;server&gt;</span>
+     <span class="nt">&lt;id&gt;</span>apache.snapshots.https<span class="nt">&lt;/id&gt;</span>
+     <span class="nt">&lt;username&gt;</span> <span class="c">&lt;!-- YOUR APACHE LDAP USERNAME --&gt;</span> <span class="nt">&lt;/username&gt;</span>
+     <span class="nt">&lt;password&gt;</span> <span class="c">&lt;!-- YOUR APACHE LDAP PASSWORD (encrypted) --&gt;</span> <span class="nt">&lt;/password&gt;</span>
+   <span class="nt">&lt;/server&gt;</span>
+   <span class="c">&lt;!-- To stage a release of some part of Maven --&gt;</span>
+   <span class="nt">&lt;server&gt;</span>
+     <span class="nt">&lt;id&gt;</span>apache.releases.https<span class="nt">&lt;/id&gt;</span>
+     <span class="nt">&lt;username&gt;</span> <span class="c">&lt;!-- YOUR APACHE LDAP USERNAME --&gt;</span> <span class="nt">&lt;/username&gt;</span>
+     <span class="nt">&lt;password&gt;</span> <span class="c">&lt;!-- YOUR APACHE LDAP PASSWORD (encrypted) --&gt;</span> <span class="nt">&lt;/password&gt;</span>
+   <span class="nt">&lt;/server&gt;</span>
+  ...
+     <span class="c">&lt;!-- gpg passphrase used when generate key --&gt;</span>
+    <span class="nt">&lt;server&gt;</span>
+     <span class="nt">&lt;id&gt;</span>gpg.passphrase<span class="nt">&lt;/id&gt;</span>
+     <span class="nt">&lt;passphrase&gt;</span><span class="c">&lt;!-- yourKeyPassword --&gt;</span><span class="nt">&lt;/passphrase&gt;</span>
+   <span class="nt">&lt;/server&gt;</span>
+ <span class="nt">&lt;/servers&gt;</span>
+<span class="nt">&lt;/settings&gt;</span>
+</code></pre></div></p>
+<h2 id="_2">打包&amp;上传<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">准备分支<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>从主干分支拉取新分支作为发布分支，如现在要发布$<code>{release_version}</code>版本，则从2.6.x拉出新分支<code>${release_version}-release</code>，此后<code>${release_version}</code> Release Candidates涉及的修改及打标签等都在<code>${release_version}-release</code>分支进行，最终发布完成后合入主干分支。</p>
+<h3 id="_4">编译打包<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>首先，在<code>${release_version}-release</code>分支验证maven组件打包、source源码打包、签名等是否都正常工作。<strong>2.6.x记得要使用1.6进行编译打包</strong></p>
+<div class="highlight"><pre><span></span><code>$ mvn clean install -Prelease
+$ mvn deploy
+</code></pre></div>
+
+<p>上述命令将snapshot包推送到maven中央仓库</p>
+<h3 id="maven-release-plugin"><del>用maven-release-plugin发布</del> (<code>废弃</code>，参考后一步)<a class="headerlink" href="#maven-release-plugin" title="Permanent link">&para;</a></h3>
+<p><del>先用dryRun验证是否ok</del></p>
+<div class="highlight"><pre><span></span><code>$ mvn release:prepare -Prelease -Darguments<span class="o">=</span><span class="s2">&quot;-DskipTests&quot;</span> -DautoVersionSubmodules<span class="o">=</span><span class="nb">true</span> -Dusername<span class="o">=</span>YOUR GITHUB ID-DdryRun<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+
+<p><del>验证通过后，执行release:prepare</del></p>
+<div class="highlight"><pre><span></span><code>$ mvn release:clean
+$ mvn release:prepare -Prelease -Darguments<span class="o">=</span><span class="s2">&quot;-DskipTests&quot;</span> -DautoVersionSubmodules<span class="o">=</span><span class="nb">true</span> -Dusername<span class="o">=</span>YOUR GITHUB ID -DpushChanges<span class="o">=</span><span class="nb">false</span>
+</code></pre></div>
+
+<blockquote>
+<p>执行release插件时，如果指定了<code>-DpushChanges=true</code>, 插件会自动提交到远端的GitHub仓库中，此时就需要输入GitHub的密码，注意不是输入web页面的登录密码，而是一个<code>Personal access tokens</code>，获取方式详见<a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line">这里</a></p>
+<p>这里有一点要注意的是tag， 在执行过程中，需要选择发布的artifactId, 下一个版本artifactId以及发布版本的tag, tag默认的是dubbo-parent-xxxx，需要改成dubbo-xxxx</p>
+</blockquote>
+<p>执行完上述步骤后，你会发现：
+1. <code>source-release.zip</code> 和 <code>bin-release.zip</code>包已经生成在<code>dubbo-distribution</code>目录下，请解压并检查文件是否完整
+2. 本地已经打出相应的tag，同时新增一个commit，名叫<code>[maven-release-plugin] prepare release dubbo-x.x.x</code>
+3. 分支版本自动升级为<code>${release_version+1}-SNAPSHOT</code>，同时新增一个commit，名叫<code>[[maven-release-plugin] prepare for next development iteration</code></p>
+<blockquote>
+<p>如果指定了<code>-DpushChanges=true</code>, 则本地提交会自动推送到远端的GitHub仓库。根据经验，建议不要指定为true，请设置为false，待本地检查通过之后再手动提交</p>
+</blockquote>
+<p><del>执行release:perform，做staging发布</del></p>
+<div class="highlight"><pre><span></span><code>$ mvn -Prelease release:perform -Darguments<span class="o">=</span><span class="s2">&quot;-DskipTests&quot;</span> -DautoVersionSubmodules<span class="o">=</span><span class="nb">true</span> -Dusername<span class="o">=</span>YOUR GITHUB ID
+</code></pre></div>
+
+<p>此时插件会自动下载远端的tag对应的源码，编译后，将所有Artifacts发布到配置的远程<a href="http://repository.apache.org">maven仓库</a>，处于staging状态。</p>
+<h3 id="mvn-deploydeploy">使用mvn deploy进行deploy<a class="headerlink" href="#mvn-deploydeploy" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>要求：maven 3.5+ </p>
+</blockquote>
+<p>修改pom文件中的版本号，从2.7.x-SNAPSHOT改为2.7.x， 目前有3个地方需要修改。建议全文搜索。</p>
+<div class="highlight"><pre><span></span><code>$ mvn clean install -Prelease
+$ mvn deploy -Prelease -DskipTests
+</code></pre></div>
+
+<p>所有被deploy到远程<a href="http://repository.apache.org">maven仓库</a>的Artifacts都会处于staging状态</p>
+<h4 id="_5">注意点<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>在deploy执行过程中，有可能因为网络等原因被中断，如果是这样，可以重新开始执行。</li>
+<li>deploy执行到maven仓库的时候，请确认下包的总量是否正确。多次出现了包丢失的情况，特别是dubbo-parent包。</li>
+</ul>
+<h2 id="apache_2">准备Apache发布<a class="headerlink" href="#apache_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>准备svn本机环境（Apache使用svn托管项目的发布内容）</p>
+</li>
+<li>
+<p>将dubbo checkout到本地目录</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>$ svn checkout https://dist.apache.org/repos/dist/dev/dubbo
+<span class="c1"># 假定本地目录为 ~/apache/dubbo</span>
+</code></pre></div>
+
+<ol>
+<li>当前发布版本为${release_version}，新建目录</li>
+</ol>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/apache/dubbo <span class="c1"># dubbo svn根目录</span>
+$ mkdir <span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>
+</code></pre></div>
+
+<ol>
+<li>添加public key到<a href="https://dist.apache.org/repos/dist/dev/dubbo/KEYS">KEYS</a>文件并提交到SVN仓库（第一次做发布的人需要做这个操作，具体操作参考KEYS文件里的说明）。KEYS主要是让参与投票的人在本地导入，用来校验sign的正确性</li>
+</ol>
+<div class="highlight"><pre><span></span><code>$ <span class="o">(</span>gpg --list-sigs &lt;your name&gt; <span class="o">&amp;&amp;</span> gpg --armor --export &lt;your name&gt;<span class="o">)</span> &gt;&gt; KEYS
+</code></pre></div>
+
+<ol>
+<li>
+<p>拷贝<code>distribution/target</code>下的source相关的包到svn本地仓库<code>dubbo/${release_version}</code></p>
+</li>
+<li>
+<p>生成sha512签名</p>
+</li>
+</ol>
+<p>针对<code>source-release.zip</code></p>
+<div class="highlight"><pre><span></span><code>$ shasum -a <span class="m">512</span> apache-dubbo-<span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>-source-release.zip &gt;&gt; apache-dubbo-<span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>-source-release.zip.sha512
+</code></pre></div>
+
+<p>针对<code>bin-release.zip</code>，需要增加<code>-b</code>参数，表明是一个二进制文件</p>
+<div class="highlight"><pre><span></span><code>$ shasum -b -a <span class="m">512</span> apache-dubbo-<span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>-bin-release.zip &gt;&gt; apache-dubbo-<span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>-bin-release.zip.sha512
+</code></pre></div>
+
+<ol>
+<li>如果有binary release要同时发布</li>
+</ol>
+<p>在<code>distribution/target</code>目录下，拷贝<code>bin-release.zip</code>以及<code>bin-release.zip.asc</code>到svn本地仓库<code>dubbo/${release_version}</code>，参考第6步，生成sha512签名。</p>
+<ol>
+<li>提交到Apache svn</li>
+</ol>
+<div class="highlight"><pre><span></span><code>$ svn status
+$ svn commit -m <span class="s1">&#39;prepare for ${release_version} RC1&#39;</span>
+</code></pre></div>
+
+<ol>
+<li>关闭Maven的staging仓库</li>
+</ol>
+<p>此步骤为发布2.7.0及以上版本必须要的步骤。在此之前请先确保所有的artifact都是ok的。登录http://repository.apache.org，点击左侧的<code>Staging repositories</code>，然后搜索Dubbo关键字，会出现一系列的仓库，选择你最近上传的仓库，然后点击上方的Close按钮，这个过程会进行一系列检查，检查通过以后，在下方的Summary标签页上出现一个连接，请保存好这个链接，需要放在接下来的投票邮件当中。链接应该是类似这样的: <a href="https://repository.apache.org/content/repositories/orgapachedubbo-1015">https://repository.apache.org/content/repositories/orgapachedubbo-1015</a></p>
+<blockquote>
+<p>请注意点击Close可能会出现失败，通常是网络原因，只要重试几次就可以了。可以点击Summary旁边的Activity标签来确认。  </p>
+</blockquote>
+<h2 id="release-candidates">验证Release Candidates<a class="headerlink" href="#release-candidates" title="Permanent link">&para;</a></h2>
+<p>详细的检查列表请参考官方的<a href="https://wiki.apache.org/incubator/IncubatorReleaseChecklist">check list</a></p>
+<p>首先，从一下地址下载要发布的Release Candidate到本地环境：</p>
+<pre>
+https://dist.apache.org/repos/dist/dev/dubbo/${release_version}/
+</pre>
+
+<p>然后，开始验证环节，验证包含但不限于以下内容和形式</p>
+<h3 id="hash">检查签名和hash等信息<a class="headerlink" href="#hash" title="Permanent link">&para;</a></h3>
+<h4 id="sha512">检查sha512哈希<a class="headerlink" href="#sha512" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>$ shasum -c apache-dubbo-<span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>-source-release.zip.sha512
+$ shasum -c apache-dubbo-<span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>-bin-release.zip.sha512
+</code></pre></div>
+
+<h4 id="gpg_1">检查gpg签名<a class="headerlink" href="#gpg_1" title="Permanent link">&para;</a></h4>
+<p>如果是第一次检查，需要首先导入公钥。 </p>
+<div class="highlight"><pre><span></span><code> $ curl https://dist.apache.org/repos/dist/dev/dubbo/KEYS &gt;&gt; KEYS <span class="c1"># download public keys to local directory</span>
+ $ gpg --import KEYS <span class="c1"># import keys</span>
+ $ gpg —edit-key liujun
+   &gt; trust <span class="c1"># type trust command</span>
+ <span class="sb">```</span>
+然后使用如下命令检查签名
+
+ <span class="sb">```</span>sh
+gpg --verify apache-dubbo-2.6.3-source-release.zip.asc apache-dubbo-2.6.3-source-release.zip
+gpg --verify apache-dubbo-2.6.3-bin-release.zip.asc apache-dubbo-2.6.3-bin-release.zip
+ <span class="sb">```</span> 
+
+
+<span class="c1">### 检查源码包的文件内容</span>
+
+解压缩<span class="sb">`</span>apache-dubbo-<span class="si">${</span><span class="nv">release_version</span><span class="si">}</span>-source-release.zip<span class="sb">`</span>，进行如下检查:
+
+- DISCLAIMER exists
+- LICENSE and NOTICE exists and contents are good
+- All files and no binary files exist
+- All files has standard ASF License header
+- Can compile from <span class="nb">source</span>
+- All unit tests can pass  
+  <span class="sb">```</span>sh
+  mvn clean <span class="nb">test</span> <span class="c1"># This will run all unit tests</span>
+  <span class="c1"># you can also open rat and style plugin to check if every file meets requirements.</span>
+  mvn clean <span class="nb">test</span> -Drat.skip<span class="o">=</span><span class="nb">false</span> -Dcheckstyle.skip<span class="o">=</span><span class="nb">false</span>
+  <span class="sb">```</span>
+- Release candidates match with corresponding tags, you can find tag link and <span class="nb">hash</span> in vote email.
+  - check the version number in pom.xml are the same
+  - check there are no extra files or directories in the <span class="nb">source</span> package, <span class="k">for</span> example, no empty directories or useless log files，这里需要注意换行符是否一致  
+    <span class="sb">`</span>diff -r a rc_dir tag_dir<span class="sb">`</span>
+  - check the top n tag commits, dive into the related files and check <span class="k">if</span> the <span class="nb">source</span> package has the same changes
+
+<span class="c1">### 检查三方依赖的合规性</span>
+
+按照Apache基金会合规性规定，源码或者是二进制分发包中均不能包含Category X的依赖，其中就常见的是包含了GPL/LGPL的依赖，即使是传递依赖也不行。因此在发版的时候需要通过以下的命令进行检查：
+
+<span class="sb">```</span>sh
+mvn license:add-third-party -Dlicense.useMissingFile
+find . -name THIRD-PARTY.txt <span class="p">|</span> xargs grep -E <span class="s1">&#39;GPL|General Public License&#39;</span> <span class="p">|</span> grep -v Apache <span class="p">|</span> grep -v MIT <span class="p">|</span> grep -v CDDL
+</code></pre></div>
+
+<p>如果一个依赖提供了双协议或多重协议，可以选择与Apache最兼容的一个协议。</p>
+<h3 id="_6">检查二进制包的文件内容<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>解压缩<code>apache-dubbo-${release_version}-bin-release.zip</code>，进行如下检查:</p>
+<ul>
+<li>Check signatures are good</li>
+<li>LICENSE and NOTICE exists and contents are good</li>
+</ul>
+<p>注意，如果二进制包里面引入了第三方依赖，则需要更新LICENSE，加入第三方依赖的LICENSE，如果第三方依赖的LICENSE是Apache 2.0，并且对应的项目中包含了NOTICE，还需要更新NOTICE文件</p>
+<h2 id="_7">进入投票<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>dubbo毕业之后，投票分只需要一次：</p>
+<ol>
+<li>Dubbo社区投票，发起投票邮件到<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#118;&#64;&#100;&#117;&#98;&#98;&#111;&#46;&#97;&#112;&#97;&#99;&#104;&#101;&#46;&#111;&#114;&#103;">&#100;&#101;&#118;&#64;&#100;&#117;&#98;&#98;&#111;&#46;&#97;&#112;&#97;&#99;&#104;&#101;&#46;&#111;&#114;&#103;</a>。在社区开发者Review，经过至少72小时并统计到3个同意发版的binding票后（只有PMC的票才是binding），即可进入下一阶段的投票。</li>
+</ol>
+<p>Dubbo社区投票邮件模板：</p>
+<div class="highlight"><pre><span></span><code>Hello Dubbo Community,
+
+This is a call for vote to release Apache Dubbo version 2.7.2.
+
+The release candidates:
+https://dist.apache.org/repos/dist/dev/dubbo/2.7.2/
+
+The staging repo:
+https://repository.apache.org/content/repositories/orgapachedubbo-1005
+
+Git tag for the release:
+https://github.com/apache/dubbo/tree/dubbo-2.7.2
+
+Hash for the release tag:
+afab04c53edab38d52275d2a198ea1aff7a4f41e
+
+Release Notes:
+https://github.com/apache/dubbo/releases/tag/untagged-4775c0a22c60fca55118
+
+The artifacts have been signed with Key : 28681CB1, which can be found in the keys file:
+https://dist.apache.org/repos/dist/dev/dubbo/KEYS
+
+The vote will be open for at least 72 hours or until necessary number of votes are reached.
+
+Please vote accordingly:
+
+[ ] +1 approve 
+[ ] +0 no opinion 
+[ ] -1 disapprove with the reason
+
+Thanks,
+The Apache Dubbo Team
+</code></pre></div>
+
+<p>宣布投票结果模板：
+<div class="highlight"><pre><span></span><code>We’ve received 3 +1 binding votes and one +1 non-binding vote:
+
++1 binding, Ian Luo
++1 binding, Huxing Zhang
++1 binding, Jun Liu
+
++1 non-binding, Jerrick
+
+I will start to release today.
+
+Best regards,
+The Apache Dubbo Team
+</code></pre></div></p>
+<h2 id="_8">正式发布<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>将<a href="https://dist.apache.org/repos/dist/dev/dubbo">dev</a>目录下的发布包添加到<a href="https://dist.apache.org/repos/dist/release/dubbo">release</a>目录下，KEYS有更新的，也需要同步更新。</li>
+<li>删除<a href="https://dist.apache.org/repos/dist/dev/dubbo">dev</a>目录下的发布包</li>
+<li>删除<a href="https://dist.apache.org/repos/dist/release/dubbo">release</a>目录下上一个版本的发布包，这些包会被自动保存在<a href="https://archive.apache.org/dist/dubbo">这里</a></li>
+<li>发布GitHub上的<a href="https://github.com/apache/dubbo/releases">release notes</a></li>
+<li>修改GitHub的Readme文件，将版本号更新到最新发布的版本</li>
+<li>在官网下载<a href="http://dubbo.apache.org/en-us/blog/download.html">页面</a>上添加最新版本的下载链接。最新的下载链接应该类似<a href="https://www.apache.org/dyn/closer.cgi?path=dubbo/\(VERSION/apache-dubbo-\)VERSION-source-release.zip">这样</a>. 同时更新以前版本的下载链接，改为类似<a href="https://archive.apache.org/dist/dubbo/\(VERSION/apache-dubbo-\)VERSION-bin-release.zip">这样</a>. 具体可以参考过往的<a href="https://github.com/apache/dubbo-website/blob/asf-site/blog/en-us/download.md">下载链接</a></li>
+<li>合并<code>${release-version}-release</code>分支到对应的主干分支， 然后删除相应的release分支，例如: <code>git push origin --delete 2.7.0-release</code></li>
+<li>发邮件到 <code>dev@dubbo.apache.org</code>
+宣布release邮件模板： </li>
+</ol>
+<div class="highlight"><pre><span></span><code>Hello Community,
+
+The Apache Dubbo team is pleased to announce that the
+2.6.6 has just been released.
+
+Apache Dubbo™  is a high-performance, java based, open source
+RPC framework. Dubbo offers three key functionalities, which include
+interface based remote call, fault tolerance &amp; load balancing, and
+automatic service registration &amp; discovery.
+
+Both the source release[1] and the maven binary release[2] are available
+now, you can also find the detailed release notes here[3].
+
+
+If you have any usage questions, or have problems when upgrading or find
+any problems about enhancements included in this release, please don’t
+hesitate to let us know by sending feedback to this mailing list or filing
+an issue on GitHub[4].
+
+
+[1] http://dubbo.apache.org/en-us/blog/download.html
+[2] https://repo1.maven.org/maven2/org/apache/dubbo/dubbo
+[3] https://github.com/apache/dubbo/releases
+[4] https://github.com/apache/dubbo/issues
+</code></pre></div>
+
+<h2 id="maven-convenient-binary">完成Maven Convenient Binary发布（可选）<a class="headerlink" href="#maven-convenient-binary" title="Permanent link">&para;</a></h2>
+<p><strong>repository.apache.org</strong> nexus仓库的权限已经申请，参见<a href="https://issues.apache.org/jira/browse/INFRA-16451">jira</a></p>
+<p>发布jar包到maven仓库，首先访问<a href="https://repository.apache.org">repository.apache.org</a>, 选择<code>staging repository</code>, 点击<code>release</code>按钮。等待一段时间之后，在<a href="https://repository.apache.org/content/repositories/releases/org/apache/dubbo/">这里</a>确认完整性和正确性. 发布到Maven中央仓库则还需要等待一段时间。可以在<a href="https://repo.maven.apache.org/maven2/org/apache/dubbo">这里</a>进行确认。</p>
+<h2 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h2>
+<h4 id="gpg-signing-failed-inappropriate-ioctl-for-device">gpg: signing failed: Inappropriate ioctl for device<a class="headerlink" href="#gpg-signing-failed-inappropriate-ioctl-for-device" title="Permanent link">&para;</a></h4>
+<p>If you've encountered this error, try the following commands:</p>
+<div class="highlight"><pre><span></span><code>export GPG_TTY=$(tty)
+</code></pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/squidfunk" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://gitter.im/squidfunk/mkdocs-material" target="_blank" rel="noopener" title="gitter.im" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M66.4 322.5H16V0h50.4v322.5zM166.9 76.1h-50.4V512h50.4V76.1zm100.6 0h-50.4V512h50.4V76.1zM368 76h-50.4v247H368V76z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://hub.docker.com/r/squidfunk/mkdocs-material/" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/squidfunk" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://linkedin.com/in/squidfunk/" target="_blank" rel="noopener" title="linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://instagram.com/squidfunk" target="_blank" rel="noopener" title="instagram.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.d1f5a259.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d5fec882.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.fae956e7.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
