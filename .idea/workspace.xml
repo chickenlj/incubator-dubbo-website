@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b8d74217-5ae8-4055-9333-1fb182788c63" name="Default Changelist" comment="change deploy directories">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="mkdocs" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1g29c3g4njdtFeWE8MWlo5T51HM" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/material/.icons/material" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/material/.icons/material" />
+      <recent name="$PROJECT_DIR$/material/overrides" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/overrides" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.index.html">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="home_zh_1.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/incubator-dubbo-website/overrides/home_zh_1.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/incubator-dubbo-website/site/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.home_zh_1.html" />
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.home_zh_1.html" />
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b8d74217-5ae8-4055-9333-1fb182788c63" name="Default Changelist" comment="" />
+      <created>1597301895908</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597301895908</updated>
+      <workItem from="1597301901157" duration="15774000" />
+      <workItem from="1597650457289" duration="6364000" />
+      <workItem from="1599630556117" duration="598000" />
+      <workItem from="1602678063296" duration="16119000" />
+      <workItem from="1602730884155" duration="6488000" />
+      <workItem from="1602820368693" duration="4076000" />
+      <workItem from="1603247085382" duration="26511000" />
+      <workItem from="1603355161577" duration="4549000" />
+    </task>
+    <task id="LOCAL-00001" summary="polish code config">
+      <created>1597302285087</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1597302285087</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add fake redirect page">
+      <created>1597302492777</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1597302492777</updated>
+    </task>
+    <task id="LOCAL-00003" summary="use checkout action v2">
+      <created>1597302849428</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1597302849428</updated>
+    </task>
+    <task id="LOCAL-00004" summary="mkdocs material 5.5.3">
+      <created>1597303378422</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1597303378422</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix typo">
+      <created>1597303982286</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1597303982286</updated>
+    </task>
+    <task id="LOCAL-00006" summary="customize redirect path">
+      <created>1597304297045</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1597304297045</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix mkdocs config">
+      <created>1597304936199</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1597304936199</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix user img path">
+      <created>1597305138901</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1597305138901</updated>
+    </task>
+    <task id="LOCAL-00009" summary="img replace svg">
+      <created>1597305347259</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1597305347259</updated>
+    </task>
+    <task id="LOCAL-00010" summary="customize 404 page">
+      <created>1597305568163</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1597305568163</updated>
+    </task>
+    <task id="LOCAL-00011" summary="customize 404 and home background">
+      <created>1597305819977</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1597305819977</updated>
+    </task>
+    <task id="LOCAL-00012" summary="customize search config">
+      <created>1597307306886</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1597307306886</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix nav and menu">
+      <created>1597372049793</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1597372049793</updated>
+    </task>
+    <task id="LOCAL-00014" summary="replace hardcoded 'Docs'">
+      <created>1597372467469</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1597372467469</updated>
+    </task>
+    <task id="LOCAL-00015" summary="override font block: try other CDN resource.">
+      <created>1597652633746</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1597652633746</updated>
+    </task>
+    <task id="LOCAL-00016" summary="remove microservices summit menu, will publish dubbo3 topic later on blog.">
+      <created>1598424070221</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1598424070221</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add css styles">
+      <created>1602689525203</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1602689525204</updated>
+    </task>
+    <task id="LOCAL-00018" summary="column names">
+      <created>1602690608028</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1602690608028</updated>
+    </task>
+    <task id="LOCAL-00019" summary="clear output files before build">
+      <created>1602727869466</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1602727869466</updated>
+    </task>
+    <task id="LOCAL-00020" summary="hard code font type">
+      <created>1602730794197</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1602730794197</updated>
+    </task>
+    <task id="LOCAL-00021" summary="hard code font type, fix compile error">
+      <created>1602733242877</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1602733242877</updated>
+    </task>
+    <task id="LOCAL-00022" summary="remove fonts block">
+      <created>1602740307267</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1602740307267</updated>
+    </task>
+    <task id="LOCAL-00023" summary="disable font">
+      <created>1602740638777</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1602740638777</updated>
+    </task>
+    <task id="LOCAL-00024" summary="remove main.html">
+      <created>1602741305480</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1602741305480</updated>
+    </task>
+    <task id="LOCAL-00025" summary="update zh home page">
+      <created>1603250322509</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1603250322509</updated>
+    </task>
+    <task id="LOCAL-00026" summary="test old page">
+      <created>1603251117402</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1603251117402</updated>
+    </task>
+    <task id="LOCAL-00027" summary="try shaded material theme">
+      <created>1603255948623</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1603255948623</updated>
+    </task>
+    <task id="LOCAL-00028" summary="commit missed files">
+      <created>1603256744389</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1603256744389</updated>
+    </task>
+    <task id="LOCAL-00029" summary="update indexes">
+      <created>1603274898803</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1603274898803</updated>
+    </task>
+    <task id="LOCAL-00030" summary="update home page">
+      <created>1603354081722</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1603354081722</updated>
+    </task>
+    <task id="LOCAL-00031" summary="change deploy directories">
+      <created>1603354310167</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1603354310167</updated>
+    </task>
+    <task id="LOCAL-00032" summary="add compatible static sources">
+      <created>1603354917954</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1603354917954</updated>
+    </task>
+    <task id="LOCAL-00033" summary="change new path to 'en_us'">
+      <created>1603354966097</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1603354966097</updated>
+    </task>
+    <task id="LOCAL-00034" summary="update doc links">
+      <created>1603356401484</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1603356401484</updated>
+    </task>
+    <task id="LOCAL-00035" summary="update en doc links">
+      <created>1603358142646</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1603358142646</updated>
+    </task>
+    <task id="LOCAL-00036" summary="update 404">
+      <created>1603359560314</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1603359560314</updated>
+    </task>
+    <task id="LOCAL-00037" summary="update href to redirect old urls">
+      <created>1603359695115</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1603359695115</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="2">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:/Users/ken.lj/aliware/dubboprojects/incubator-dubbo-website/overrides" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="3">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:/Users/ken.lj/aliware/dubboprojects/incubator-dubbo-website/material/overrides" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+        <option value="2" />
+        <option value="3" />
+      </set>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="fix nav and menu" />
+    <MESSAGE value="replace hardcoded 'Docs'" />
+    <MESSAGE value="override font block: try other CDN resource." />
+    <MESSAGE value="remove microservices summit menu, will publish dubbo3 topic later on blog." />
+    <MESSAGE value="add css styles" />
+    <MESSAGE value="column names" />
+    <MESSAGE value="clear output files before build" />
+    <MESSAGE value="hard code font type" />
+    <MESSAGE value="hard code font type, fix compile error" />
+    <MESSAGE value="remove fonts block" />
+    <MESSAGE value="disable font" />
+    <MESSAGE value="remove main.html" />
+    <MESSAGE value="update zh home page" />
+    <MESSAGE value="test old page" />
+    <MESSAGE value="try shaded material theme" />
+    <MESSAGE value="commit missed files" />
+    <MESSAGE value="update indexes" />
+    <MESSAGE value="update home page" />
+    <MESSAGE value="change deploy directories" />
+    <MESSAGE value="add compatible static sources" />
+    <MESSAGE value="change new path to 'en_us'" />
+    <MESSAGE value="update doc links" />
+    <MESSAGE value="update en doc links" />
+    <MESSAGE value="update 404" />
+    <MESSAGE value="update href to redirect old urls" />
+    <option name="LAST_COMMIT_MESSAGE" value="update href to redirect old urls" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="220" y="23" key="#Project_Structure" timestamp="1603359796440">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="220" y="23" key="#Project_Structure/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603359796440" />
+    <state x="220" y="23" key="#Project_Structure/0.23.1440.790@0.23.1440.790" timestamp="1602678069528" />
+    <state x="136" y="23" key="CommitChangelistDialog2" timestamp="1603359771062">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="136" y="23" key="CommitChangelistDialog2/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603359771062" />
+    <state x="1621" y="23" key="CommitChangelistDialog2/0.23.1440.790/1440.23.1920.1057@1440.23.1920.1057" timestamp="1603274897942" />
+    <state x="136" y="23" key="CommitChangelistDialog2/0.23.1440.790@0.23.1440.790" timestamp="1603342439675" />
+    <state x="136" y="23" key="CommitChangelistDialog2/0.23.1440.793/1440.23.1920.1057@0.23.1440.793" timestamp="1598424068867" />
+    <state x="0" y="23" width="1440" height="790" key="DiffContextDialog" timestamp="1603342422235">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="0" y="23" width="1440" height="790" key="DiffContextDialog/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603254889835" />
+    <state x="1440" y="23" width="1920" height="1057" key="DiffContextDialog/0.23.1440.790/1440.23.1920.1057@1440.23.1920.1057" timestamp="1603185768499" />
+    <state x="0" y="23" width="1440" height="790" key="DiffContextDialog/0.23.1440.790@0.23.1440.790" timestamp="1603342422235" />
+    <state x="100" y="123" width="1240" height="593" key="DiffContextDialog/0.23.1440.793/1440.23.1920.1057@0.23.1440.793" timestamp="1598424081647" />
+    <state width="1388" height="188" key="GridCell.Tab.0.bottom" timestamp="1602730824881">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.0.bottom/0.23.1440.790@0.23.1440.790" timestamp="1602730824881" />
+    <state width="1388" height="188" key="GridCell.Tab.0.center" timestamp="1602730824880">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.0.center/0.23.1440.790@0.23.1440.790" timestamp="1602730824880" />
+    <state width="1388" height="188" key="GridCell.Tab.0.left" timestamp="1602730824880">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.0.left/0.23.1440.790@0.23.1440.790" timestamp="1602730824880" />
+    <state width="1388" height="188" key="GridCell.Tab.0.right" timestamp="1602730824880">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.0.right/0.23.1440.790@0.23.1440.790" timestamp="1602730824880" />
+    <state width="1388" height="188" key="GridCell.Tab.1.bottom" timestamp="1602730824883">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.1.bottom/0.23.1440.790@0.23.1440.790" timestamp="1602730824883" />
+    <state width="1388" height="188" key="GridCell.Tab.1.center" timestamp="1602730824882">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.1.center/0.23.1440.790@0.23.1440.790" timestamp="1602730824882" />
+    <state width="1388" height="188" key="GridCell.Tab.1.left" timestamp="1602730824881">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.1.left/0.23.1440.790@0.23.1440.790" timestamp="1602730824881" />
+    <state width="1388" height="188" key="GridCell.Tab.1.right" timestamp="1602730824882">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state width="1388" height="188" key="GridCell.Tab.1.right/0.23.1440.790@0.23.1440.790" timestamp="1602730824882" />
+    <state x="378" y="87" key="NewModule_or_Project.wizard" timestamp="1603359621058">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="378" y="87" key="NewModule_or_Project.wizard/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603359621058" />
+    <state x="1944" y="188" key="NewModule_or_Project.wizard/0.23.1440.790/1440.23.1920.1057@1440.23.1920.1057" timestamp="1603272500546" />
+    <state x="1889" y="79" key="VCS.ChangeListViewerDialog" timestamp="1602730011437">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1889" y="79" key="VCS.ChangeListViewerDialog/0.23.1440.790/1440.23.1920.1057@1440.23.1920.1057" timestamp="1602730011437" />
+    <state x="337" y="65" key="VCS.ChangeListViewerDialog/0.23.1440.790@0.23.1440.790" timestamp="1602686473772" />
+    <state x="23" y="78" key="Vcs.Push.Dialog.v2" timestamp="1603359778639">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="23" y="78" key="Vcs.Push.Dialog.v2/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603359778639" />
+    <state x="1733" y="122" key="Vcs.Push.Dialog.v2/0.23.1440.790/1440.23.1920.1057@1440.23.1920.1057" timestamp="1603274928573" />
+    <state x="220" y="97" key="Vcs.Push.Dialog.v2/0.23.1440.790@0.23.1440.790" timestamp="1603251124339" />
+    <state x="220" y="97" key="Vcs.Push.Dialog.v2/0.23.1440.793/1440.23.1920.1057@0.23.1440.793" timestamp="1598424083071" />
+    <state x="100" y="123" width="1240" height="590" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1602689829481">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="100" y="123" width="1240" height="590" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.790@0.23.1440.790" timestamp="1602689829481" />
+    <state x="450" y="197" key="com.intellij.ide.util.TipDialog" timestamp="1602730884617">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="450" y="197" key="com.intellij.ide.util.TipDialog/0.23.1440.790@0.23.1440.790" timestamp="1602730884617" />
+    <state x="298" y="124" width="1031" height="670" key="find.popup" timestamp="1603357625939">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="298" y="124" width="1031" height="670" key="find.popup/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603357625939" />
+    <state x="1837" y="158" width="1140" height="787" key="find.popup/0.23.1440.790/1440.23.1920.1057@1440.23.1920.1057" timestamp="1603275497213" />
+    <state x="298" y="124" width="855" height="588" key="find.popup/0.23.1440.790@0.23.1440.790" timestamp="1603341005793" />
+    <state x="368" y="74" key="git4idea.branch.GitSmartOperationDialog" timestamp="1603359755954">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="368" y="74" key="git4idea.branch.GitSmartOperationDialog/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603359755954" />
+    <state x="299" y="175" key="git4idea.merge.GitPullDialog" timestamp="1603354446881">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="299" y="175" key="git4idea.merge.GitPullDialog/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603354446881" />
+    <state x="299" y="175" key="git4idea.merge.GitPullDialog/0.23.1440.790@0.23.1440.790" timestamp="1597302393293" />
+    <state x="301" y="23" width="838" height="1032" key="search.everywhere.popup" timestamp="1603355790123">
+      <screen x="0" y="23" width="1440" height="790" />
+    </state>
+    <state x="301" y="23" width="838" height="1032" key="search.everywhere.popup/0.23.1440.790/1440.23.1920.1057@0.23.1440.790" timestamp="1603355790123" />
+    <state x="1841" y="23" width="1118" height="1057" key="search.everywhere.popup/0.23.1440.790/1440.23.1920.1057@1440.23.1920.1057" timestamp="1603275523041" />
+    <state x="301" y="23" width="839" height="790" key="search.everywhere.popup/0.23.1440.790@0.23.1440.790" timestamp="1603346384746" />
+    <state x="301" y="23" width="838" height="1036" key="search.everywhere.popup/0.23.1440.793/1440.23.1920.1057@0.23.1440.793" timestamp="1598423943781" />
+  </component>
+</project>
