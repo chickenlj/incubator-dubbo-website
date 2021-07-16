@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 文档2.7</title><link>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/</link><description>Recent content in 文档2.7 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/index.xml" rel="self" type="application/rss+xml"/><item><title>Docsv2.7:</title><link>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/dev/impls/page/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/dev/impls/page/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 文档2.7</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/</link><description>Recent content in 文档2.7 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/index.xml" rel="self" type="application/rss+xml"/><item><title>Docsv2.7:</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/dev/impls/page/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/dev/impls/page/</guid><description>
 &lt;h1 id="页面扩展">页面扩展&lt;/h1>
 &lt;h2 id="扩展说明">扩展说明&lt;/h2>
 &lt;p>对等网络节点组网器。&lt;/p>
@@ -37,9 +37,9 @@
 &lt;span style="color:#719e07">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>META-INF/dubbo/org.apache.dubbo.container.page.PageHandler：&lt;/p>
 &lt;div class="highlight">&lt;pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">xxx=com.xxx.XxxPageHandler
-&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docsv2.7:</title><link>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/dev/principals/introduction/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/dev/principals/introduction/</guid><description>
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docsv2.7:</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/dev/principals/introduction/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/dev/principals/introduction/</guid><description>
 &lt;h1 id="设计原则">设计原则&lt;/h1>
-&lt;p>本章节的设计原则摘录自梁飞在 javaeye 上发表的系列文章。&lt;/p></description></item><item><title>Docsv2.7:</title><link>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/user/examples/auth/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/user/examples/auth/</guid><description>
+&lt;p>本章节的设计原则摘录自梁飞在 javaeye 上发表的系列文章。&lt;/p></description></item><item><title>Docsv2.7:</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/auth/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/auth/</guid><description>
 &lt;h1 id="服务鉴权">服务鉴权&lt;/h1>
 &lt;p>类似支付之类的对安全性敏感的业务可能会有限制匿名调用的需求。在加固安全性方面，2.7.5 引入了基于AK/SK机制的认证鉴权机制，并且引入了鉴权服务中心，主要原理是消费端在请求需要鉴权的服务时，会通过SK、请求元数据、时间戳、参数等信息来生成对应的请求签名，通过Dubbo的Attahcment机制携带到对端进行验签，验签通过才进行业务逻辑处理。如下图所示：&lt;/p>
 &lt;p>&lt;img src="https://raw.githubusercontent.com/Ooo0oO0o0oO/res/master/auth.png" alt="">&lt;/p>
@@ -60,7 +60,7 @@
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>服务消费端，只需要配置好对应的证书等信息即可，之后会自动地在对这些需要认证的接口发起调用前进行签名操作，通过与鉴权服务的交互，用户无需在代码中配置AK/SK这些敏感信息，并且在不重启应用的情况下刷新AK/SK，达到权限动态下发的目的。&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;p>该方案目前已经提交给Dubbo开源社区，并且完成了基本框架的合并，除了AK/SK的鉴权方式之外，通过SPI机制支持用户可定制化的鉴权认证以及适配公司内部基础设施的密钥存储。&lt;/p></description></item><item><title>Docsv2.7:</title><link>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/user/new-features-in-a-glance/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://github.com/chickenlj/incubator-dubbo-website/zh/docsv2.7/user/new-features-in-a-glance/</guid><description>
+&lt;p>该方案目前已经提交给Dubbo开源社区，并且完成了基本框架的合并，除了AK/SK的鉴权方式之外，通过SPI机制支持用户可定制化的鉴权认证以及适配公司内部基础设施的密钥存储。&lt;/p></description></item><item><title>Docsv2.7:</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/new-features-in-a-glance/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/new-features-in-a-glance/</guid><description>
 &lt;h1 id="dubbo-版本发布及新特性速览">Dubbo 版本发布及新特性速览&lt;/h1>
 &lt;h2 id="版本速览">版本速览&lt;/h2>
 &lt;p>Dubbo 社区目前主力维护的有 2.6.x 和 2.7.x 两大版本，其中，&lt;/p>
@@ -165,13 +165,13 @@
 &lt;li>&lt;a href="./demos/auth.md">服务鉴权&lt;/a>&lt;/li>
 &lt;li>性能优化
 &lt;ul>
-&lt;li>&lt;a href="https://github.com/chickenlj/incubator-dubbo-website/zh-cn/blog/2.7.5-release.html">调用链路提升 30%&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh-cn/blog/2.7.5-release.html">调用链路提升 30%&lt;/a>&lt;/li>
 &lt;li>&lt;a href="./demos/consumer-threadpool.md">消费端线程模型&lt;/a>&lt;/li>
 &lt;li>&lt;a href="">地址推送链路&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;/ul>
 &lt;h2 id="热门文章列表">热门文章列表&lt;/h2>
-&lt;p>&lt;a href="https://github.com/chickenlj/incubator-dubbo-website/zh-cn/blog/apache-dubbo-2019-2020.html">从 2019 到 2020，Apache Dubbo 年度总结&lt;/a>&lt;br>
-&lt;a href="https://github.com/chickenlj/incubator-dubbo-website/zh-cn/blog/2.7.5-release.html">Dubbo 2.7.5 里程碑版本发布&lt;/a>&lt;br>
-&lt;a href="https://github.com/chickenlj/incubator-dubbo-website/zh-cn/blog/Dubbo-supporting-gRPC-HTTP2-and-protobuf.html">Dubbo 在协议与多语言方向的探索：支持 gRPC、Protobuf&lt;/a>&lt;/p></description></item></channel></rss>
+&lt;p>&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh-cn/blog/apache-dubbo-2019-2020.html">从 2019 到 2020，Apache Dubbo 年度总结&lt;/a>&lt;br>
+&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh-cn/blog/2.7.5-release.html">Dubbo 2.7.5 里程碑版本发布&lt;/a>&lt;br>
+&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh-cn/blog/Dubbo-supporting-gRPC-HTTP2-and-protobuf.html">Dubbo 在协议与多语言方向的探索：支持 gRPC、Protobuf&lt;/a>&lt;/p></description></item></channel></rss>
