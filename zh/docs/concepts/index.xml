@@ -46,7 +46,7 @@ Dubbo3 特有的业务接口同步机制，是 Dubbo3 需要保留的优势，�
 则需要往注册中心中注册 100 个服务，如果这个应用被部署在了 100 台机器上，那这 100 个服务总共会产生 100 * 100 = 10000 个虚拟节点；而同样的应用，
 对于 Dubbo3 来说，新的注册发现模型只需要 1 个服务（只和应用有关和接口无关）， 只注册和机器实例数相等的 1 * 100 = 100 个虚拟节点到注册中心。
 在这个简单的示例中，Dubbo 所注册的地址数量下降到了原来的 1 / 100，对于注册中心、订阅方的存储压力都是一个极大的释放。更重要的是，
-地址发现容量彻底与业务 RPC 定义解藕开来，整个集群的容量评估对运维来说将变得更加透明：部署多少台机器就会有多大负载，不会像 Dubbo2 一样，
+地址发现容量彻底与业务 RPC 定义解耦开来，整个集群的容量评估对运维来说将变得更加透明：部署多少台机器就会有多大负载，不会像 Dubbo2 一样，
 因为业务 RPC 重构就会影响到整个集群服务发现的稳定性。&lt;/p>
 &lt;p>请通过以下 blog 了解更多应用级服务发现设计原则细节。&lt;/p></description></item><item><title>Docs: RPC 通信协议</title><link>https://dubbo.apache.org/zh/docs/concepts/rpc-protocol/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs/concepts/rpc-protocol/</guid><description>
 &lt;p>Dubbo3 提供了 Triple(Dubbo3)、Dubbo2 协议，这是 Dubbo 框架的原生协议。除此之外，Dubbo3 也对众多第三方协议进行了集成，并将它们纳入 Dubbo 的编程与服务治理体系，
@@ -71,7 +71,7 @@ Dubbo3 特有的业务接口同步机制，是 Dubbo3 需要保留的优势，�
 通用性和高性能通常无法同时达到，需要协议设计者进行一定的取舍。&lt;/li>
 &lt;/ul>
 &lt;h4 id="http11">HTTP/1.1&lt;/h4>
-&lt;p>比于直接构建与 TPC 传输层的私有 RPC 协议，构建于 HTTP 之上的远程调用解决方案会有更好的通用性，如WebServices 或 REST 架构，使用 HTTP + JSON 可以说是一个事实标准的解决方案。&lt;/p>
+&lt;p>比于直接构建于 TCP 传输层的私有 RPC 协议，构建于 HTTP 之上的远程调用解决方案会有更好的通用性，如WebServices 或 REST 架构，使用 HTTP + JSON 可以说是一个事实标准的解决方案。&lt;/p>
 &lt;p>选择构建在 HTTP 之上，有两个最大的优势：&lt;/p>
 &lt;ul>
 &lt;li>HTTP 的语义和可扩展性能很好的满足 RPC 调用需求。&lt;/li>
@@ -84,7 +84,7 @@ Dubbo3 特有的业务接口同步机制，是 Dubbo3 需要保留的优势，�
 &lt;li>无直接 Server Push 支持，需要使用 Polling Long-Polling 等变通模式&lt;/li>
 &lt;/ul>
 &lt;h4 id="grpc">gRPC&lt;/h4>
-&lt;p>上面提到了在 HTTP 及 TCP 协议之上构建 RPC 协议各自的优缺点，相比于 Dubbo 构建于 TPC 传输层之上，Google 选择将 gRPC 直接定义在 HTTP/2 协议之上。
+&lt;p>上面提到了在 HTTP 及 TCP 协议之上构建 RPC 协议各自的优缺点，相比于 Dubbo 构建于 TCP 传输层之上，Google 选择将 gRPC 直接定义在 HTTP/2 协议之上。
 gRPC 的优势由HTTP2 和 Protobuf 继承而来。&lt;/p>
 &lt;ul>
 &lt;li>基于 HTTP2 的协议足够简单，用户学习成本低，天然有 server push/ 多路复用 / 流量控制能力&lt;/li>
