@@ -5,7 +5,7 @@
 &lt;h2 id="扩展接口">扩展接口&lt;/h2>
 &lt;p>&lt;code>org.apache.dubbo.container.page.PageHandler&lt;/code>&lt;/p>
 &lt;h2 id="扩展配置">扩展配置&lt;/h2>
-&lt;div class="highlight">&lt;pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-xml" data-lang="xml">&lt;span style="color:#268bd2">&amp;lt;dubbo:protocol&lt;/span> page=&lt;span style="color:#2aa198">&amp;#34;xxx,yyy&amp;#34;&lt;/span> &lt;span style="color:#268bd2">/&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-xml" data-lang="xml">&lt;span style="color:#268bd2">&amp;lt;dubbo:protocol&lt;/span> page=&lt;span style="color:#2aa198">&amp;#34;xxx,yyy&amp;#34;&lt;/span> &lt;span style="color:#268bd2">/&amp;gt;&lt;/span>
 &lt;span style="color:#586e75">&amp;lt;!-- 缺省值设置，当&amp;lt;dubbo:protocol&amp;gt;没有配置page属性时，使用此配置 --&amp;gt;&lt;/span>
 &lt;span style="color:#268bd2">&amp;lt;dubbo:provider&lt;/span> page=&lt;span style="color:#2aa198">&amp;#34;xxx,yyy&amp;#34;&lt;/span> &lt;span style="color:#268bd2">/&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="已知扩展">已知扩展&lt;/h2>
@@ -17,7 +17,7 @@
 &lt;/ul>
 &lt;h2 id="扩展示例">扩展示例&lt;/h2>
 &lt;p>Maven 项目结构：&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">src
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">src
 |-main
 |-java
 |-com
@@ -28,7 +28,7 @@
 |-dubbo
 |-org.apache.dubbo.container.page.PageHandler (纯文本文件，内容为：xxx=com.xxx.XxxPageHandler)
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>XxxPageHandler.java：&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-java" data-lang="java">&lt;span style="color:#719e07">package&lt;/span> com.xxx&lt;span style="color:#719e07">;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-java" data-lang="java">&lt;span style="color:#719e07">package&lt;/span> com.xxx&lt;span style="color:#719e07">;&lt;/span>
 &lt;span style="color:#719e07">import&lt;/span> org.apache.dubbo.container.page.PageHandler&lt;span style="color:#719e07">;&lt;/span>
 &lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">XxxPageHandler&lt;/span> &lt;span style="color:#268bd2">implements&lt;/span> PageHandler &lt;span style="color:#719e07">{&lt;/span>
 &lt;span style="color:#268bd2">public&lt;/span> Group &lt;span style="color:#268bd2">lookup&lt;/span>&lt;span style="color:#719e07">(&lt;/span>URL url&lt;span style="color:#719e07">)&lt;/span> &lt;span style="color:#719e07">{&lt;/span>
@@ -36,7 +36,7 @@
 &lt;/span>&lt;span style="color:#586e75">&lt;/span> &lt;span style="color:#719e07">}&lt;/span>
 &lt;span style="color:#719e07">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>META-INF/dubbo/org.apache.dubbo.container.page.PageHandler：&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">xxx=com.xxx.XxxPageHandler
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-fallback" data-lang="fallback">xxx=com.xxx.XxxPageHandler
 &lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docsv2.7:</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/dev/principals/introduction/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/dev/principals/introduction/</guid><description>
 &lt;h1 id="设计原则">设计原则&lt;/h1>
 &lt;p>本章节的设计原则摘录自梁飞在 javaeye 上发表的系列文章。&lt;/p></description></item><item><title>Docsv2.7:</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/auth/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/auth/</guid><description>
@@ -54,7 +54,7 @@
 &lt;li>
 &lt;p>导入该证书到对应的应用下，并且进行配置。配置方式也十分简单，以注解方式为例：&lt;/p>
 &lt;p>服务提供端，只需要设置&lt;code>service.auth&lt;/code>为true，表示该服务的调用需要鉴权认证通过。&lt;code>param.sign&lt;/code>为&lt;code>true&lt;/code>表示需要对参数也进行校验。&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-java" data-lang="java">&lt;span style="color:#268bd2">@Service&lt;/span>&lt;span style="color:#719e07">(&lt;/span>parameters &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">{&lt;/span>&lt;span style="color:#2aa198">&amp;#34;service.auth&amp;#34;&lt;/span>&lt;span style="color:#719e07">,&lt;/span>&lt;span style="color:#2aa198">&amp;#34;true&amp;#34;&lt;/span>&lt;span style="color:#719e07">,&lt;/span>&lt;span style="color:#2aa198">&amp;#34;param.sign&amp;#34;&lt;/span>&lt;span style="color:#719e07">,&lt;/span>&lt;span style="color:#2aa198">&amp;#34;true&amp;#34;&lt;/span>&lt;span style="color:#719e07">})&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-java" data-lang="java">&lt;span style="color:#268bd2">@Service&lt;/span>&lt;span style="color:#719e07">(&lt;/span>parameters &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">{&lt;/span>&lt;span style="color:#2aa198">&amp;#34;service.auth&amp;#34;&lt;/span>&lt;span style="color:#719e07">,&lt;/span>&lt;span style="color:#2aa198">&amp;#34;true&amp;#34;&lt;/span>&lt;span style="color:#719e07">,&lt;/span>&lt;span style="color:#2aa198">&amp;#34;param.sign&amp;#34;&lt;/span>&lt;span style="color:#719e07">,&lt;/span>&lt;span style="color:#2aa198">&amp;#34;true&amp;#34;&lt;/span>&lt;span style="color:#719e07">})&lt;/span>
 &lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">AuthDemoServiceImpl&lt;/span> &lt;span style="color:#268bd2">implements&lt;/span> AuthService &lt;span style="color:#719e07">{&lt;/span>
 &lt;span style="color:#719e07">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>服务消费端，只需要配置好对应的证书等信息即可，之后会自动地在对这些需要认证的接口发起调用前进行签名操作，通过与鉴权服务的交互，用户无需在代码中配置AK/SK这些敏感信息，并且在不重启应用的情况下刷新AK/SK，达到权限动态下发的目的。&lt;/p>
