@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 高级用法</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/advanced/</link><description>Recent content in 高级用法 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs/advanced/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Protobuf与Interface对比</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/advanced/protobufinterface/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/advanced/protobufinterface/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 高级用法</title><link>https://dubbo.apache.org/zh/docs/advanced/</link><description>Recent content in 高级用法 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://dubbo.apache.org/zh/docs/advanced/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Protobuf与Interface对比</title><link>https://dubbo.apache.org/zh/docs/advanced/protobufinterface/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs/advanced/protobufinterface/</guid><description>
 &lt;h1 id="protobuf与interface这2种idl的差异">Protobuf与Interface这2种IDL的差异&lt;/h1>
 &lt;h2 id="1-数据类型">1. 数据类型&lt;/h2>
 &lt;h3 id="11-基本类型">1.1. 基本类型&lt;/h3>
@@ -242,10 +242,10 @@ uint32 ownerUid &lt;span style="color:#719e07">=&lt;/span> 1 &lt;span style="col
 &lt;li>社区主页地址：https://developers.google.cn/protocol-buffers/&lt;/li>
 &lt;li>社区开源地址：https://github.com/google/protobuf&lt;/li>
 &lt;li>相关jar的maven：http://mvnrepository.com/artifact/com.google.protobuf&lt;/li>
-&lt;/ul></description></item><item><title>Docs: 地址迁移规则说明</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/advanced/migration-invoker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/advanced/migration-invoker/</guid><description>
+&lt;/ul></description></item><item><title>Docs: 地址迁移规则说明</title><link>https://dubbo.apache.org/zh/docs/advanced/migration-invoker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs/advanced/migration-invoker/</guid><description>
 &lt;h2 id="状态模型">状态模型&lt;/h2>
 &lt;p>在 Dubbo 3 之前地址注册模型是以接口级粒度注册到注册中心的，而 Dubbo 3 全新的应用级注册模型注册到注册中心的粒度是应用级的。从注册中心的实现上来说是几乎不一样的，这导致了对于从接口级注册模型获取到的 invokers 是无法与从应用级注册模型获取到的 invokers 进行合并的。为了帮助用户从接口级往应用级迁移，Dubbo 3 设计了 Migration 机制，基于三个状态的切换实现实际调用中地址模型的切换。&lt;/p>
-&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/migration-1.png" alt="//imgs/v3/migration/migration-1.png">&lt;/p>
+&lt;p>&lt;img src="https://dubbo.apache.org/imgs/v3/migration/migration-1.png" alt="//imgs/v3/migration/migration-1.png">&lt;/p>
 &lt;p>当前共存在三种状态，FORCE_INTERFACE（强制接口级），APPLICATION_FIRST（应用级优先）、FORCE_APPLICATION（强制应用级）。&lt;/p>
 &lt;p>FORCE_INTERFACE：只启用兼容模式下接口级服务发现的注册中心逻辑，调用流量 100% 走原有流程
 APPLICATION_FIRST：开启接口级、应用级双订阅，运行时根据阈值和灰度流量比例动态决定调用流量走向
@@ -354,9 +354,9 @@ FORCE_APPLICATION：只启用新模式下应用级服务发现的注册中心逻
 &lt;p>灰度比例功能仅在应用级优先状态下生效。此功能可以让用户自行决定调用往新模式应用级注册中心地址的调用数比例。灰度生效的前提是满足了阈值探测，在应用级优先状态下，如果阈值探测通过，&lt;code>currentAvailableInvoker&lt;/code> 将被切换为对应应用级地址的 invoker；如果探测失败 &lt;code>currentAvailableInvoker&lt;/code> 仍为原有接口级地址的 invoker。&lt;/p>
 &lt;p>流程图如下：
 探测阶段
-&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/migration-2.png" alt="//imgs/v3/migration/migration-2.png">
+&lt;img src="https://dubbo.apache.org/imgs/v3/migration/migration-2.png" alt="//imgs/v3/migration/migration-2.png">
 调用阶段
-&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/migration-3.png" alt="//imgs/v3/migration/migration-3.png">&lt;/p>
+&lt;img src="https://dubbo.apache.org/imgs/v3/migration/migration-3.png" alt="//imgs/v3/migration/migration-3.png">&lt;/p>
 &lt;p>核心代码如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-java" data-lang="java">&lt;span style="color:#586e75">// currentAvailableInvoker is based on MigrationAddressComparator&amp;#39;s result
 &lt;/span>&lt;span style="color:#586e75">&lt;/span>&lt;span style="color:#719e07">if&lt;/span> &lt;span style="color:#719e07">(&lt;/span>currentAvailableInvoker &lt;span style="color:#719e07">!=&lt;/span> &lt;span style="color:#cb4b16">null&lt;/span>&lt;span style="color:#719e07">)&lt;/span> &lt;span style="color:#719e07">{&lt;/span>
@@ -374,11 +374,11 @@ FORCE_APPLICATION：只启用新模式下应用级服务发现的注册中心逻
 &lt;h3 id="1-切换到应用级优先">1. 切换到应用级优先&lt;/h3>
 &lt;p>从强制接口级、强制应用级往应用级优先切换本质上是从某一单订阅往双订阅切换，保留原有的订阅并创建另外一种订阅的过程。这个切换模式下规则体中配置的 delay 配置不会生效，也即是创建完订阅后马上进行阈值探测并决策选择某一组订阅进行实际优先调用。由于应用级优先模式是支持运行时动态进行阈值探测，所以对于部分注册中心无法启动时即获取全量地址的场景在全部地址通知完也会重新计算阈值并切换。
 应用级优先模式下的动态切换是基于服务目录（Directory）的地址监听器实现的。
-&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/migration-4.png" alt="//imgs/v3/migration/migration-4.png">&lt;/p>
+&lt;img src="https://dubbo.apache.org/imgs/v3/migration/migration-4.png" alt="//imgs/v3/migration/migration-4.png">&lt;/p>
 &lt;h3 id="2-应用级优先切换到强制">2. 应用级优先切换到强制&lt;/h3>
 &lt;p>应用级优先往强制接口级、强制应用级切换的过程是对双订阅的地址进行检查，如果满足则对另外一份订阅进行销毁，如果不满足则回滚保留原来的应用级优先状态。
 如果用户希望这个切换过程不经过检查直接切换可以通过配置 force 参数实现。
-&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/migration-5.png" alt="//imgs/v3/migration/migration-5.png">&lt;/p>
+&lt;img src="https://dubbo.apache.org/imgs/v3/migration/migration-5.png" alt="//imgs/v3/migration/migration-5.png">&lt;/p>
 &lt;h3 id="3-强制接口级和强制应用级互相切换">3. 强制接口级和强制应用级互相切换&lt;/h3>
 &lt;p>强制接口级和强制应用级互相切换需要临时创建一份新的订阅，判断新的订阅（即阈值计算时使用新订阅的地址数去除旧订阅的地址数）是否达标，如果达标则进行切换，如果不达标会销毁这份新的订阅并且回滚到之前的状态。
-&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/migration-6.png" alt="//imgs/v3/migration/migration-6.png">&lt;/p></description></item></channel></rss>
+&lt;img src="https://dubbo.apache.org/imgs/v3/migration/migration-6.png" alt="//imgs/v3/migration/migration-6.png">&lt;/p></description></item></channel></rss>
