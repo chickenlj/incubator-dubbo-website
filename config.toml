@@ -92,7 +92,7 @@ offlineSearch = false
 
 # Add your release versions here
 archived_version = true
-version=3.x
+version = v3.x
 version_menu = "Releasesa"
 url_latest_version = "https://dubbo.apache.org/zh/docs/"
 [[params.versions]]
