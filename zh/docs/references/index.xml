@@ -1,9 +1,9 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/</link><description>Recent content in 参考手册 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="hickenlj.github.io/incubator-dubbo-website/zh/docs/references/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Protobuf</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/protobuf/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/protobuf/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/</link><description>Recent content in 参考手册 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Protobuf</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/protobuf/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/protobuf/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/triple/idl/">最新版本&lt;/a>。&lt;/p>
-&lt;/div></description></item><item><title>Docs: Schema 配置参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/xml/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/xml/</guid><description>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/triple/idl/">最新版本&lt;/a>。&lt;/p>
+&lt;/div></description></item><item><title>Docs: Schema 配置参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/xml/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/xml/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/xml/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/xml/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>这里以 XML Config &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> 为准，列举所有配置项 &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>。其它配置方式，请参见相应转换关系：&lt;a href="../../../docsv2.7/user/configuration/properties">属性配置&lt;/a>，&lt;a href="../../../docsv2.7/user/configuration/annotation">注解配置&lt;/a>，&lt;a href="../../../docsv2.7/user/configuration/api">API 配置&lt;/a>。&lt;/p>
 &lt;p>所有配置项分为三大类，参见下表中的&amp;quot;作用&amp;quot; 一列。&lt;/p>
@@ -26,9 +26,9 @@
 &lt;p>URL 格式：&lt;code>protocol://username:password@host:port/path?key=value&amp;amp;key=value&lt;/code>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Docs: 配置中心参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/config-center/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/config-center/</guid><description>
+&lt;/div></description></item><item><title>Docs: 配置中心参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/config-center/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/config-center/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config-center/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config-center/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>配置中心在 Dubbo 中承担3个职责：&lt;/p>
 &lt;ol>
@@ -53,7 +53,7 @@
 &lt;h2 id="服务治理">服务治理&lt;/h2>
 &lt;h4 id="zookeeper">Zookeeper&lt;/h4>
 &lt;p>默认节点结构：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/zk-configcenter-governance.jpg" alt="zk-configcenter-governance">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/zk-configcenter-governance.jpg" alt="zk-configcenter-governance">&lt;/p>
 &lt;ul>
 &lt;li>namespace，用于不同配置的环境隔离。&lt;/li>
 &lt;li>config，Dubbo 约定的固定节点，不可更改，所有配置和服务治理规则都存储在此节点下。&lt;/li>
@@ -62,41 +62,41 @@
 &lt;/ul>
 &lt;h4 id="apollo">Apollo&lt;/h4>
 &lt;p>所有的服务治理规则都是全局性的，默认从公共命名空间 &lt;code>dubbo&lt;/code> 读取和订阅：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/apollo-configcenter-governance.jpg" alt="apollo-configcenter-governance.jpg">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/apollo-configcenter-governance.jpg" alt="apollo-configcenter-governance.jpg">&lt;/p>
 &lt;p>不同的规则以不同的 key 后缀区分：&lt;/p>
 &lt;ul>
-&lt;li>configurators，&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/config-rule/">覆盖规则&lt;/a>&lt;/li>
-&lt;li>tag-router，&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/">标签路由&lt;/a>&lt;/li>
-&lt;li>condition-router，&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/#%E6%9D%A1%E4%BB%B6%E8%B7%AF%E7%94%B1">条件路由&lt;/a>&lt;/li>
+&lt;li>configurators，&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/config-rule/">覆盖规则&lt;/a>&lt;/li>
+&lt;li>tag-router，&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/">标签路由&lt;/a>&lt;/li>
+&lt;li>condition-router，&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/#%E6%9D%A1%E4%BB%B6%E8%B7%AF%E7%94%B1">条件路由&lt;/a>&lt;/li>
 &lt;li>migration，&lt;a href="../../migration/migration-service-discovery">迁移规则&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;h4 id="nacos">Nacos&lt;/h4>
 &lt;p>所有的服务治理规则都是全局的，默认从 namespace: &lt;code>public&lt;/code> 下进行读取， 通过 dataId: &lt;code>interface name&lt;/code> 以及 group: &lt;code>dubbo&lt;/code> 去读取和订阅：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-configcenter-governance.png" alt="nacos-configcenter-governance.jpg">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-configcenter-governance.png" alt="nacos-configcenter-governance.jpg">&lt;/p>
 &lt;p>不同的规则以 dataId 的后缀区分：&lt;/p>
 &lt;ul>
-&lt;li>configurators，&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/config-rule/">覆盖规则&lt;/a>&lt;/li>
-&lt;li>tag-router，&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/">标签路由&lt;/a>&lt;/li>
-&lt;li>condition-router，&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/#%E6%9D%A1%E4%BB%B6%E8%B7%AF%E7%94%B1">条件路由&lt;/a>&lt;/li>
+&lt;li>configurators，&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/config-rule/">覆盖规则&lt;/a>&lt;/li>
+&lt;li>tag-router，&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/">标签路由&lt;/a>&lt;/li>
+&lt;li>condition-router，&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/routing-rule/#%E6%9D%A1%E4%BB%B6%E8%B7%AF%E7%94%B1">条件路由&lt;/a>&lt;/li>
 &lt;li>migration，&lt;a href="../../migration/migration-service-discovery">迁移规则&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>Docs: 注册中心参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/registry/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/registry/</guid><description>
+&lt;/ul></description></item><item><title>Docs: 注册中心参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/registry/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/registry/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/registry/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/registry/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
-&lt;p>推荐使用 &lt;a href="zookeeper">Zookeeper 注册中心&lt;/a>&lt;/p></description></item><item><title>Docs: SPI 扩展实现</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/spis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/spis/</guid><description>
+&lt;p>推荐使用 &lt;a href="zookeeper">Zookeeper 注册中心&lt;/a>&lt;/p></description></item><item><title>Docs: SPI 扩展实现</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/spis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/spis/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/spi/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/spi/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
-&lt;p>SPI 扩展接口仅用于系统集成，或 Contributor 扩展功能插件。&lt;/p></description></item><item><title>Docs: Dubbo 配置</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/configuration/</guid><description>
+&lt;p>SPI 扩展接口仅用于系统集成，或 Contributor 扩展功能插件。&lt;/p></description></item><item><title>Docs: Dubbo 配置</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/configuration/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/">最新版本&lt;/a>。&lt;/p>
-&lt;/div></description></item><item><title>Docs: 元数据参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/metadata/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/metadata/</guid><description>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/">最新版本&lt;/a>。&lt;/p>
+&lt;/div></description></item><item><title>Docs: 元数据参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/metadata/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/metadata/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/metadata-center/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/metadata-center/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;h2 id="背景">背景&lt;/h2>
-&lt;p>dubbo provider中的服务配置项有接近&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/references/xml/dubbo-provider/">30个配置项&lt;/a>。 排除注册中心服务治理需要之外，很大一部分配置项是provider自己使用，不需要透传给消费者。这部分数据不需要进入注册中心，而只需要以key-value形式持久化存储。
-dubbo consumer中的配置项也有&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/references/xml/dubbo-consumer/">20+个配置项&lt;/a>。在注册中心之中，服务消费者列表中只需要关注application，version，group，ip，dubbo版本等少量配置，其他配置也可以以key-value形式持久化存储。
+&lt;p>dubbo provider中的服务配置项有接近&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/references/xml/dubbo-provider/">30个配置项&lt;/a>。 排除注册中心服务治理需要之外，很大一部分配置项是provider自己使用，不需要透传给消费者。这部分数据不需要进入注册中心，而只需要以key-value形式持久化存储。
+dubbo consumer中的配置项也有&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/references/xml/dubbo-consumer/">20+个配置项&lt;/a>。在注册中心之中，服务消费者列表中只需要关注application，version，group，ip，dubbo版本等少量配置，其他配置也可以以key-value形式持久化存储。
 这些数据是以服务为维度注册进入注册中心，导致了数据量的膨胀，进而引发注册中心(如zookeeper)的网络开销增大，性能降低。&lt;br>
 除了上述配置项的存储之外，dubbo服务元数据信息也需要被存储下来。元数据信息包括服务接口，及接口的方法信息。这些信息将被用于服务mock，服务测试。&lt;/p>
 &lt;p>以上的元数据都是基于接口级别。在3.0版本中，引入了应用元数据的概念，应用元数据描述的是整个应用的信息概览。并且引入了服务自省映射，用于应用级别的服务发现。&lt;/p>
@@ -447,9 +447,9 @@ Consumer存储内容，为Map格式。从Consumer端注册到注册中心的URL�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Consumer: namespace: &amp;#39;public&amp;#39;, dataId: &amp;#39;{service name}:::consumer:{application name}&amp;#39;, group: &amp;#39;dubbo&amp;#39;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以通过 Nacos 自带的 web console 界面进行查看.&lt;/p>
 &lt;p>Provider data:
-&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-provider-metadata.png" alt="nacos-metadata-report-provider-metadata.png">&lt;/p>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-provider-metadata.png" alt="nacos-metadata-report-provider-metadata.png">&lt;/p>
 &lt;p>Consumer data:
-&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-consumer-metadata.png" alt="nacos-metadata-report-consumer-metadata.png">&lt;/p>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-consumer-metadata.png" alt="nacos-metadata-report-consumer-metadata.png">&lt;/p>
 &lt;h4 id="应用级别元数据">应用级别元数据&lt;/h4>
 &lt;p>应用级别元数据只有当一个应用定义服务之后，才会进行暴露。会根据当前应用的自身信息，以及接口信息，去计算出该应用的 revision 修订值，用于保存应用级别元数据，&lt;/p>
 &lt;h5 id="zookeeper-1">Zookeeper&lt;/h5>
@@ -471,7 +471,7 @@ Consumer存储内容，为Map格式。从Consumer端注册到注册中心的URL�
 &lt;p>Redis 元数据中心目前还不支持应用级别元数据，但已提上日程，会在近期进行实现。&lt;/p>
 &lt;h5 id="nacoshttpsnacosio">&lt;a href="https://nacos.io/">Nacos&lt;/a>&lt;/h5>
 &lt;p>Nacos 应用级别的元数据位于 namespace: &amp;lsquo;public&amp;rsquo;, dataId: &amp;lsquo;{application name}&amp;rsquo;, group: &amp;lsquo;{revision}&amp;rsquo;&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-application-metadata.png" alt="nacos-metadata-report-application-metadata.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-application-metadata.png" alt="nacos-metadata-report-application-metadata.png">&lt;/p>
 &lt;h4 id="服务自省映射---service-name-mapping">服务自省映射 - Service Name Mapping&lt;/h4>
 &lt;p>在Dubbo 3.0 中，默认使用了服务自省机制去实现服务发现，关于服务自省可以查看&lt;a href="https://mercyblitz.github.io/2020/05/11/Apache-Dubbo-%E6%9C%8D%E5%8A%A1%E8%87%AA%E7%9C%81%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">服务自省&lt;/a>&lt;/p>
 &lt;p>简而言之，服务自省机制需要能够通过 interface name 去找到对应的 application name，这个关系可以是一对多的，即一个 service name 可能会对应多个不同的 application name。在 3.0 中，元数据中心提供此项映射的能力。&lt;/p>
@@ -504,9 +504,9 @@ Consumer存储内容，为Map格式。从Consumer端注册到注册中心的URL�
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>ConfigService configService &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">...&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>configService&lt;span style="color:#719e07">.&lt;/span>publishConfigCas&lt;span style="color:#719e07">(&lt;/span>key&lt;span style="color:#719e07">,&lt;/span> group&lt;span style="color:#719e07">,&lt;/span> content&lt;span style="color:#719e07">,&lt;/span> ticket&lt;span style="color:#719e07">);&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>映射信息位于 namespace: &amp;lsquo;public&amp;rsquo;, dataId: &amp;lsquo;{service name}&amp;rsquo;, group: &amp;lsquo;mapping&amp;rsquo;.&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-service-name-mapping.png" alt="nacos-metadata-report-service-name-mapping.png">&lt;/p></description></item><item><title>Docs: API 参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/api/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/api/</guid><description>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/nacos-metadata-report-service-name-mapping.png" alt="nacos-metadata-report-service-name-mapping.png">&lt;/p></description></item><item><title>Docs: API 参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/api/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/api/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/api/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/api/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>Dubbo 的常规功能，都保持零侵入，但有些功能不得不用 API 侵入才能实现。&lt;/p>
 &lt;div class="alert alert-primary" role="alert">
@@ -542,13 +542,13 @@ Dubbo 中除这里声明以外的接口或类，都是内部接口或扩展接�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>org.apache.dubbo.rpc.service.GenericException
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>详细参见：&lt;a href="../../advanced/generic-reference">泛化引用&lt;/a> &amp;amp; &lt;a href="../../advanced/generic-service">泛化实现&lt;/a>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>org.apache.dubbo.rpc.service.EchoService
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>详细参见：&lt;a href="../../advanced/echo-service">回声测试&lt;/a>&lt;/p></description></item><item><title>Docs: Kubernetes 生命周期对齐探针</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/lifecycle/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/lifecycle/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>详细参见：&lt;a href="../../advanced/echo-service">回声测试&lt;/a>&lt;/p></description></item><item><title>Docs: Kubernetes 生命周期对齐探针</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/lifecycle/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/lifecycle/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/others/dubbo-kubernetes-probe/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/others/dubbo-kubernetes-probe/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
-&lt;p>和 Kubernetes 生命周期对齐的一些扩展点&lt;/p></description></item><item><title>Docs: 在线运维命令参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/qos/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/qos/</guid><description>
+&lt;p>和 Kubernetes 生命周期对齐的一些扩展点&lt;/p></description></item><item><title>Docs: 在线运维命令参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/qos/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/qos/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/qos/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/qos/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>dubbo &lt;code>2.5.8&lt;/code> 新版本增加了 QOS 模块，提供了新的 telnet 命令支持。&lt;/p>
 &lt;h2 id="端口">端口&lt;/h2>
@@ -728,9 +728,9 @@ Dubbo 中除这里声明以外的接口或类，都是内部接口或扩展接�
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>dubbo.application.qos-enable=true
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dubbo.application.qos-port=33333
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dubbo.application.qos-accept-foreign-ip=false
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: Telnet 命令参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/telnet/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/telnet/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: Telnet 命令参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/telnet/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/telnet/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/qos/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/qos/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>从 &lt;code>2.0.5&lt;/code> 版本开始，dubbo 开始支持通过 telnet 命令来进行服务治理。&lt;/p>
 &lt;h2 id="使用">使用&lt;/h2>
@@ -824,9 +824,9 @@ Dubbo 中除这里声明以外的接口或类，都是内部接口或扩展接�
 &lt;p>&lt;code>2.0.6&lt;/code> 以上版本支持&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Docs: Maven 插件参考手册</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/maven/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/maven/</guid><description>
+&lt;/div></description></item><item><title>Docs: Maven 插件参考手册</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/maven/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/maven/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;h2 id="启动一个简易注册中心">启动一个简易注册中心&lt;/h2>
 &lt;p>以指定的 9099 端口启动一个简易注册中心 &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>：&lt;/p>
@@ -841,22 +841,22 @@ Dubbo 中除这里声明以外的接口或类，都是内部接口或扩展接�
 &lt;p>如果端口不指定，默认端口为 9090&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Docs: RPC协议</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/protocols/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/protocols/</guid><description>
+&lt;/div></description></item><item><title>Docs: RPC协议</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/protocols/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/protocols/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
-&lt;p>Dubbo 中目前支持的RPC协议&lt;/p></description></item><item><title>Docs: 支持graalvm</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/graalvm/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/graalvm/</guid><description>
+&lt;p>Dubbo 中目前支持的RPC协议&lt;/p></description></item><item><title>Docs: 支持graalvm</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/graalvm/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/graalvm/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/performance/support-graalvm/">最新版本&lt;/a>。&lt;/p>
-&lt;/div></description></item><item><title>Docs: 路由规则</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/routers/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/references/routers/</guid><description>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/performance/support-graalvm/">最新版本&lt;/a>。&lt;/p>
+&lt;/div></description></item><item><title>Docs: 路由规则</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/routers/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/references/routers/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/traffic/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/traffic/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;h3 id="基本思想">基本思想&lt;/h3>
 &lt;p>基于路由链，采用Pipeline的处理方式，如下图所示：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/route-rule1.png" alt="route-rule1.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/route-rule1.png" alt="route-rule1.png">&lt;/p>
 &lt;p>可以把路由链的逻辑简单的理解为 target = rn(&amp;hellip;r3(r2(r1(src))))。对于每一个 router 内部的逻辑，可以抽象为输入地址 addrs-in 与 router 中按全量地址 addrs-all 实现切分好的 n 个互不相交的地址池 addrs-pool-1 &amp;hellip; addrs-pool-n 按实现定义好的规则取交集作为输出 addrs-out。以此类推，完成整个路由链的计算。&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/route-rule2.png" alt="route-rule2.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/route-rule2.png" alt="route-rule2.png">&lt;/p>
 &lt;p>另外一方面，如果 router(n) 需要执行 fallback 逻辑的时候，那么需要经过 router(n) 就应该决定好 fallback 逻辑&lt;/p>
 &lt;h3 id="fallback-处理原则">fallback 处理原则&lt;/h3>
 &lt;p>由于多个 router 之间多个条件组件之后，很容易出现地址被筛选为空的情况，那么我们需要针对这情况进行 fallback 处理，保证业务在正确性的前提下，能够顺利找到有效地址。&lt;/p>
@@ -1053,7 +1053,7 @@ Dubbo 中除这里声明以外的接口或类，都是内部接口或扩展接�
 &lt;li>我们在编写匹配条件时，应该遵循从 具体条件到广泛条件 的原则&lt;/li>
 &lt;/ul>
 &lt;h3 id="routechain-的组装模式-目前未实现">RouteChain 的组装模式 (目前未实现)&lt;/h3>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/route-rule3.png" alt="route-rule3.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/user/route-rule3.png" alt="route-rule3.png">&lt;/p>
 &lt;p>我们看到上面的图，在路由的过程当中，我们是 Pipeline 的处理方式，Pipeline 的 Router 节点存在顺序，并且每个 Router 都有一个唯一对应的 VirtualService 和 &lt;strong>多个&lt;/strong> 相应的 DestinationRule 进行描述。&lt;/p>
 &lt;p>以 Nacos 上存着的路由规则配置为例，配置的格式如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">DataId&lt;/span>: Demo.rule.yaml

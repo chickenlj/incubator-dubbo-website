@@ -1,11 +1,11 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 概念与架构</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/</link><description>Recent content in 概念与架构 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: 服务发现</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/service-discovery/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/service-discovery/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 概念与架构</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/</link><description>Recent content in 概念与架构 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: 服务发现</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/service-discovery/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/service-discovery/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/concepts-and-architecture/service-discovery/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/concepts-and-architecture/service-discovery/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>服务发现，即消费端自动发现服务地址列表的能力，是微服务框架需要具备的关键能力，借助于自动化的服务发现，微服务之间可以在无需感知对端部署位置与 IP 地址的情况下实现通信。&lt;/p>
 &lt;p>实现服务发现的方式有很多种，Dubbo 提供的是一种 Client-Based 的服务发现机制，通常还需要部署额外的第三方注册中心组件来协调服务发现过程，如常用的 &lt;a href="https://nacos.io/">Nacos&lt;/a>、Consul、Zookeeper 等，Dubbo 自身也提供了对多种注册中心组件的对接，用户可以灵活选择。&lt;/p>
 &lt;p>Dubbo 基于消费端的自动服务发现能力，其基本工作原理如下图：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/architecture.png" alt="//imgs/architecture.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/architecture.png" alt="//imgs/architecture.png">&lt;/p>
 &lt;p>服务发现的一个核心组件是注册中心，Provider 注册地址到注册中心，Consumer 从注册中心读取和订阅 Provider 地址列表。
 因此，要启用服务发现，需要为 Dubbo 增加注册中心配置：&lt;/p>
 &lt;p>以 dubbo-spring-boot-starter 使用方式为例，增加 registry 配置&lt;/p>
@@ -33,14 +33,14 @@
 &lt;li>提升性能与可伸缩性。支持超大规模集群的服务治理一直以来都是 Dubbo 的优势，通过引入应用级服务发现模型，从本质上解决了注册中心地址数据的存储与推送压力，相应的 Consumer 侧的地址计算压力也成数量级下降；集群规模也开始变得可预测、可评估（与 RPC 接口数量无关，只与实例部署规模相关）。&lt;/li>
 &lt;/ul>
 &lt;p>下图是 Dubbo2 的服务发现模型：Provider 注册服务地址，Consumer 经过注册中心协调并发现服务地址，进而对地址发起通信，这是被绝大多数微服务框架的经典服务发现流程。而 Dubbo2 的特殊之处在于，它把 “RPC 接口”的信息也融合在了地址发现过程中，而这部分信息往往是和具体的业务定义密切相关的。&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/servicediscovery_old.png" alt="//imgs/v3/concepts/servicediscovery_old.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/servicediscovery_old.png" alt="//imgs/v3/concepts/servicediscovery_old.png">&lt;/p>
 &lt;p>而在接入云原生基础设施后，基础设施融入了微服务概念的抽象，容器化微服务被编排、调度的过程即完成了在基础设施层面的注册。如下图所示，基础设施既承担了注册中心的职责，又完成了服务注册的动作，而 “RPC 接口”这部分信息，由于与具体的业务相关，不可能也不适合被基础设施托管。&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/servicediscovery_k8s.png" alt="//imgs/v3/concepts/servicediscovery_k8s.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/servicediscovery_k8s.png" alt="//imgs/v3/concepts/servicediscovery_k8s.png">&lt;/p>
 &lt;p>在这样的场景下，对 Dubbo3 的服务注册发现机制提出了两个要求：
 Dubbo3 需要在原有服务发现流程中抽象出通用的、与业务逻辑无关的地址映射模型，并确保这部分模型足够合理，以支持将地址的注册行为和存储委托给下层基础设施
 Dubbo3 特有的业务接口同步机制，是 Dubbo3 需要保留的优势，需要在 Dubbo3 中定义的新地址模型之上，通过框架内的自有机制予以解决。&lt;/p>
 &lt;p>这样设计的全新的服务发现模型，在架构兼容性、可伸缩性上都给 Dubbo3 带来了更大的优势。&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/servicediscovery_mem.png" alt="//imgs/v3/concepts/servicediscovery_mem.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/servicediscovery_mem.png" alt="//imgs/v3/concepts/servicediscovery_mem.png">&lt;/p>
 &lt;p>在架构兼容性上，如上文所述，Dubbo3 复用下层基础设施的服务抽象能力成为了可能；另一方面，如 Spring Cloud 等业界其它微服务解决方案也沿用这种模型，
 在打通了地址发现之后，使得用户探索用 Dubbo 连接异构的微服务体系成为了一种可能。&lt;/p>
 &lt;p>Dubbo3 服务发现模型更适合构建可伸缩的服务体系，这点要如何理解？
@@ -49,9 +49,9 @@ Dubbo3 特有的业务接口同步机制，是 Dubbo3 需要保留的优势，�
 对于 Dubbo3 来说，新的注册发现模型只需要 1 个服务（只和应用有关和接口无关）， 只注册和机器实例数相等的 1 * 100 = 100 个虚拟节点到注册中心。
 在这个简单的示例中，Dubbo 所注册的地址数量下降到了原来的 1 / 100，对于注册中心、订阅方的存储压力都是一个极大的释放。更重要的是，
 地址发现容量彻底与业务 RPC 定义解耦开来，整个集群的容量评估对运维来说将变得更加透明：部署多少台机器就会有多大负载，不会像 Dubbo2 一样，
-因为业务 RPC 重构就会影响到整个集群服务发现的稳定性。&lt;/p></description></item><item><title>Docs: RPC 通信协议</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/rpc-protocol/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/rpc-protocol/</guid><description>
+因为业务 RPC 重构就会影响到整个集群服务发现的稳定性。&lt;/p></description></item><item><title>Docs: RPC 通信协议</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/rpc-protocol/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/rpc-protocol/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/overview/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/overview/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>Dubbo3 提供了 Triple(Dubbo3)、Dubbo2 协议，这是 Dubbo 框架的原生协议。除此之外，Dubbo3 也对众多第三方协议进行了集成，并将它们纳入 Dubbo 的编程与服务治理体系，
 包括 gRPC、Thrift、JsonRPC、Hessian2、REST 等。以下重点介绍 Triple 与 Dubbo2 协议。&lt;/p>
@@ -65,7 +65,7 @@ Dubbo3 特有的业务接口同步机制，是 Dubbo3 需要保留的优势，�
 &lt;li>协议结构： 定义包含字段列表和各字段语义以及不同字段的排列方式&lt;/li>
 &lt;li>协议通过定义规则、格式和语义来约定数据如何在网络间传输。一次成功的 RPC 需要通信的两端都能够按照协议约定进行网络字节流的读写和对象转换。如果两端对使用的协议不能达成一致，就会出现鸡同鸭讲，无法满足远程通信的需求。&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/triple-protocol.png" alt="协议选择">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/triple-protocol.png" alt="协议选择">&lt;/p>
 &lt;p>RPC 协议的设计需要考虑以下内容：&lt;/p>
 &lt;ul>
 &lt;li>通用性： 统一的二进制格式，跨语言、跨平台、多传输层协议支持&lt;/li>
@@ -111,7 +111,7 @@ gRPC 的优势由HTTP2 和 Protobuf 继承而来。&lt;/p>
 &lt;li>易用性上，Triple 除了支持原生 gRPC 所推荐的 Protobuf 序列化外，使用通用的方式支持了 Hessian / JSON 等其他序列化，能让用户更方便的升级到 Triple 协议。对原有的 Dubbo 服务而言，修改或增加 Triple 协议 只需要在声明服务的代码块添加一行协议配置即可，改造成本几乎为 0。&lt;/li>
 &lt;/ul>
 &lt;h3 id="triple-协议-1">Triple 协议&lt;/h3>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/triple.png" alt="Triple 协议通信方式">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/triple.png" alt="Triple 协议通信方式">&lt;/p>
 &lt;ul>
 &lt;li>现状&lt;/li>
 &lt;/ul>
@@ -148,7 +148,7 @@ gRPC 的优势由HTTP2 和 Protobuf 继承而来。&lt;/p>
 &lt;p>在Cloud Native的潮流下，跨平台、跨厂商、跨环境的系统间互操作性的需求必然会催生基于开放标准的RPC技术，而gRPC顺应了历史趋势，得到了越来越广泛地应用。在微服务领域，Triple协议的提出与落地，是 Dubbo3 迈向云原生微服务的一大步。&lt;/p>
 &lt;h2 id="dubbo2">Dubbo2&lt;/h2>
 &lt;h3 id="protocol-spec">Protocol SPEC&lt;/h3>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/dev/dubbo_protocol_header.png" alt="/dev-guide/images/dubbo_protocol_header.jpg">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/dev/dubbo_protocol_header.png" alt="/dev-guide/images/dubbo_protocol_header.jpg">&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>Magic - Magic High &amp;amp; Magic Low (16 bits)&lt;/p>
@@ -225,13 +225,13 @@ gRPC 的优势由HTTP2 和 Protobuf 继承而来。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>Dubbo version bytes (换行符)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Service name bytes (换行符)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: 服务流量管理</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/traffic-management/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/traffic-management/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Docs: 服务流量管理</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/traffic-management/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/traffic-management/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/traffic/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/traffic/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;h3 id="流量管理">流量管理&lt;/h3>
 &lt;p>流量管理的本质是将请求根据制定好的路由规则分发到应用服务上，如下图所示：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/what-is-traffic-control.png" alt="What is traffic control">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/what-is-traffic-control.png" alt="What is traffic control">&lt;/p>
 &lt;p>其中：&lt;/p>
 &lt;ul>
 &lt;li>路由规则可以有多个，不同的路由规则之间存在优先级。如：Router(1) -&amp;gt; Router(2) -&amp;gt; …… -&amp;gt; Router(n)&lt;/li>
@@ -250,9 +250,9 @@ gRPC 的优势由HTTP2 和 Protobuf 继承而来。&lt;/p>
 &lt;li>&lt;a href="../../references/routers/virtualservice/#dubbodestination">DubboDestination&lt;/a> 用来描述路由流量的目标地址，支持 host、port、subnet 等方式。&lt;/li>
 &lt;li>&lt;a href="../../references/routers/destination-rule/">DestinationRule&lt;/a> 主要处理目标地址规则，可以通过 hosts、subnet 等方式关联到 Provider 集群。同时可以通过 &lt;a href="../../references/routers/destination-rule/#trafficpolicy">trafficPolicy&lt;/a> 来实现负载均衡。&lt;/li>
 &lt;/ul>
-&lt;p>这种设计理念很好的解决流量分流和目标地址之间的耦合问题。不仅将配置规则进行了简化有效避免配置冗余的问题，还支持 &lt;a href="../../references/routers/virtualservice/">VirtualService&lt;/a> 和 &lt;a href="../../references/routers/destination-rule/">DestinationRule&lt;/a> 的任意组合，可以非常灵活的支持各种业务使用场景。&lt;/p></description></item><item><title>Docs: 配置管理</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/configuration/</guid><description>
+&lt;p>这种设计理念很好的解决流量分流和目标地址之间的耦合问题。不仅将配置规则进行了简化有效避免配置冗余的问题，还支持 &lt;a href="../../references/routers/virtualservice/">VirtualService&lt;/a> 和 &lt;a href="../../references/routers/destination-rule/">DestinationRule&lt;/a> 的任意组合，可以非常灵活的支持各种业务使用场景。&lt;/p></description></item><item><title>Docs: 配置管理</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/configuration/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>Dubbo配置主要分为几大类： 启动阶段配置项、服务治理规则、动态配置项。&lt;/p>
 &lt;h2 id="启动阶段配置项">启动阶段配置项&lt;/h2>
@@ -301,9 +301,9 @@ gRPC 的优势由HTTP2 和 Protobuf 继承而来。&lt;/p>
 &lt;td>&lt;/td>
 &lt;/tr>
 &lt;/tbody>
-&lt;/table></description></item><item><title>Docs: 部署架构（注册中心 配置中心 元数据中心）</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/registry-configcenter-metadata/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/registry-configcenter-metadata/</guid><description>
+&lt;/table></description></item><item><title>Docs: 部署架构（注册中心 配置中心 元数据中心）</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/registry-configcenter-metadata/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/registry-configcenter-metadata/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/registry/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/registry/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;p>作为一个微服务框架，Dubbo sdk 跟随着微服务组件被部署在分布式集群各个位置，为了在分布式环境下实现各个微服务组件间的协作，
 Dubbo 定义了一些中心化组件，这包括：&lt;/p>
@@ -322,7 +322,7 @@ Dubbo 定义了一些中心化组件，这包括：&lt;/p>
 &lt;/ul>
 &lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/threecenters.png" alt="//imgs/v3/concepts/threecenters.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/threecenters.png" alt="//imgs/v3/concepts/threecenters.png">&lt;/p>
 &lt;p>上图完整的描述了 Dubbo 微服务组件与各个中心的交互过程。&lt;/p>
 &lt;p>以上三个中心并不是运行 Dubbo 的必要条件，用户完全可以根据自身业务情况决定只启用其中一个或多个，以达到简化部署的目的。通常情况下，所有用户都会以独立的注册中心
 开始 Dubbo 服务开发，而配置中心、元数据中心则会在微服务演进的过程中逐步的按需被引入进来。&lt;/p>
@@ -340,7 +340,7 @@ Dubbo 定义了一些中心化组件，这包括：&lt;/p>
 &lt;/li>
 &lt;/ul>
 &lt;p>而注册中心并不依赖于配置中心和元数据中心，如下图所示：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/centers-registry.png" alt="//imgs/v3/concepts/centers-registry.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/centers-registry.png" alt="//imgs/v3/concepts/centers-registry.png">&lt;/p>
 &lt;p>该图中没有部署配置中心和元数据中心，在Dubbo中会默认将注册中心的实例同时作为配置中心和元数据中心，这是Dubbo的默认行为，如果确实不需要配置中心或者元数据中心的能力，可在配置中关闭，在注册中心的配置中有两个配置分别为use-as-config-center和use-as-metadata-center，将配置置为false即可。&lt;/p>
 &lt;h2 id="元数据中心">元数据中心&lt;/h2>
 &lt;p>元数据中心在2.7.x版本开始支持，随着应用级别的服务注册和服务发现在Dubbo中落地，元数据中心也变的越来越重要。在以下几种情况下会需要部署元数据中心：&lt;/p>
@@ -350,11 +350,11 @@ Dubbo 定义了一些中心化组件，这包括：&lt;/p>
 &lt;/ol>
 &lt;p>如果有以上两种需求，都可以选择部署元数据中心，并通过Dubbo的配置来集成该元数据中心。&lt;/p>
 &lt;p>元数据中心并不依赖于注册中心和配置中心，用户可以自由选择是否集成和部署元数据中心，如下图所示：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/centers-metadata.png" alt="//imgs/v3/concepts/centers-metadata.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/centers-metadata.png" alt="//imgs/v3/concepts/centers-metadata.png">&lt;/p>
 &lt;p>该图中不配备配置中心，意味着可以不需要全局管理配置的能力。该图中不配备注册中心，意味着可能采用了Dubbo mesh的方案，也可能不需要进行服务注册，仅仅接收直连模式的服务调用。&lt;/p>
 &lt;h2 id="配置中心">配置中心&lt;/h2>
 &lt;p>配置中心与其他两大中心不同，它无关于接口级还是应用级，它与接口并没有对应关系，它仅仅与配置数据有关，即使没有部署注册中心和元数据中心，配置中心也能直接被接入到Dubbo应用服务中。在整个部署架构中，整个集群内的实例（无论是Provider还是Consumer）都将会共享该配置中心集群中的配置，如下图所示：
-&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/centers-config.png" alt="//imgs/v3/concepts/centers-config.png">&lt;/p>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/centers-config.png" alt="//imgs/v3/concepts/centers-config.png">&lt;/p>
 &lt;p>该图中不配备注册中心，意味着可能采用了Dubbo mesh的方案，也可能不需要进行服务注册，仅仅接收直连模式的服务调用。&lt;/p>
 &lt;p>该图中不配备元数据中心，意味着Consumer可以从Provider暴露的MetadataService获取服务元数据，从而实现RPC调用&lt;/p>
 &lt;h2 id="保证三大中心高可用的部署架构">保证三大中心高可用的部署架构&lt;/h2>
@@ -372,9 +372,9 @@ Dubbo 定义了一些中心化组件，这包括：&lt;/p>
 &lt;/li>
 &lt;/ul>
 &lt;p>拿注册中心举例，下面是一个多活场景的部署架构示意图：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/multiple-registry-deployment-architecture.png" alt="//imgs/v3/concepts/multiple-registry-deployment-architecture">&lt;/p></description></item><item><title>Docs: 如何扩展 Dubbo</title><link>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/extensibility/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/extensibility/</guid><description>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/multiple-registry-deployment-architecture.png" alt="//imgs/v3/concepts/multiple-registry-deployment-architecture">&lt;/p></description></item><item><title>Docs: 如何扩展 Dubbo</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/extensibility/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/extensibility/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
-&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/spi/">最新版本&lt;/a>。&lt;/p>
+&lt;p>此文档已经不再维护。您当前查看的是快照版本。如果想要查看最新版本的文档，请参阅&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/spi/">最新版本&lt;/a>。&lt;/p>
 &lt;/div>
 &lt;h2 id="扩展设计理念">扩展设计理念&lt;/h2>
 &lt;p>可扩展性是任何一个系统所追求的，对于 Dubbo 来说是同样适用。&lt;/p>
@@ -408,7 +408,7 @@ Dubbo 定义了一些中心化组件，这包括：&lt;/p>
 &lt;p>从 Dubbo 扩展的设计目标可以看出，Dubbo 实现的一些例如动态选择扩展实现、IOC、AOP 等特性，能够为用户提供非常灵活的扩展能力。&lt;/p>
 &lt;h2 id="dubbo-扩展加载流程">Dubbo 扩展加载流程&lt;/h2>
 &lt;p>Dubbo 加载扩展的整个流程如下：&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/extension-load.png" alt="//imgs/v3/concepts/extension-load.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/extension-load.png" alt="//imgs/v3/concepts/extension-load.png">&lt;/p>
 &lt;p>主要步骤为 4 个：&lt;/p>
 &lt;ul>
 &lt;li>读取并解析配置文件&lt;/li>
@@ -431,7 +431,7 @@ Dubbo 定义了一些中心化组件，这包括：&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>从上面的扩展步骤可以看出，用户基本在黑盒下就完成了扩展。&lt;/p>
 &lt;h2 id="dubbo-扩展的应用">Dubbo 扩展的应用&lt;/h2>
 &lt;p>Dubbo 的扩展能力非常灵活，在自身功能的实现上无处不在。&lt;/p>
-&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/extension-use.png" alt="//imgs/v3/concepts/extension-use.png">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/concepts/extension-use.png" alt="//imgs/v3/concepts/extension-use.png">&lt;/p>
 &lt;p>Dubbo 扩展能力使得 Dubbo 项目很方便的切分成一个一个的子模块，实现热插拔特性。用户完全可以基于自身需求，替换 Dubbo 原生实现，来满足自身业务需求。&lt;/p>
 &lt;h2 id="使用场景">使用场景&lt;/h2>
 &lt;ul>
