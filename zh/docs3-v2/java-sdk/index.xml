@@ -1,4 +1,56 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – Java</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/</link><description>Recent content in Java on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs3-V2: 快速入门</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/quick-start/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/quick-start/</guid><description/></item><item><title>Docs3-V2: 概念和架构</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/concepts-and-architecture/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/concepts-and-architecture/</guid><description/></item><item><title>Docs3-V2: 高级特性和用法</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/advanced-features-and-usage/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/advanced-features-and-usage/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – Java</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/</link><description>Recent content in Java on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs3-V2: Java 文档主页</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/home/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/home/</guid><description>
+&lt;div class="row">
+&lt;div class="col-sm col-md-6 mb-4">
+&lt;div class="h-100 card shadow" href="#">
+&lt;div class="card-body">
+&lt;h4 class="card-title">
+&lt;a href="quick-start/spring-boot/">Spring Boot 快速开发 Dubbo 服务&lt;/a>
+&lt;/h4>
+&lt;p>快速体验 Dubbo Java 微服务开发&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;div class="col-sm col-md-6 mb-4">
+&lt;div class="h-100 card shadow" href="#">
+&lt;div class="card-body">
+&lt;h4 class="card-title">
+&lt;a href="reference-manual/config/">配置参考手册&lt;/a>
+&lt;/h4>
+&lt;p>配置参考手册&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;div class="col-sm col-md-6 mb-4">
+&lt;div class="h-100 card shadow" href="#">
+&lt;div class="card-body">
+&lt;h4 class="card-title">
+&lt;a href="concepts-and-architecture/service-invocation/">扩展 Filter、Router 拦截流量&lt;/a>
+&lt;/h4>
+&lt;p>扩展 Filter、Router 拦截流量&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;div class="col-sm col-md-6 mb-4">
+&lt;div class="h-100 card shadow" href="#">
+&lt;div class="card-body">
+&lt;h4 class="card-title">
+&lt;a href="reference-manual/registry/">注册中心配置指南&lt;/a>
+&lt;/h4>
+&lt;p>注册中心配置指南&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;div class="col-sm col-md-6 mb-4">
+&lt;div class="h-100 card shadow" href="#">
+&lt;div class="card-body">
+&lt;h4 class="card-title">
+&lt;a href="upgrades-and-compatibility/">3.0 迁移指南&lt;/a>
+&lt;/h4>
+&lt;p>3.0 迁移指南&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;/div></description></item><item><title>Docs3-V2: 快速入门</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/quick-start/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/quick-start/</guid><description/></item><item><title>Docs3-V2: 概念和架构</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/concepts-and-architecture/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/concepts-and-architecture/</guid><description/></item><item><title>Docs3-V2: 高级特性和用法</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/advanced-features-and-usage/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/advanced-features-and-usage/</guid><description>
 &lt;div>
 &lt;h5 class="mt-3">&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/advanced-features-and-usage/security/tls/">TLS支持&lt;/a>&lt;/h5>
 &lt;/div>
