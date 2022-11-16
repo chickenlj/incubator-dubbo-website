@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 功能演示</title><link>https://dubbo.apache.org/zh/blog/java/demos/</link><description>Recent content in 功能演示 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://dubbo.apache.org/zh/blog/java/demos/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Proxyless Mesh在Dubbo中的实践</title><link>https://dubbo.apache.org/zh/blog/2022/09/05/proxyless-mesh%E5%9C%A8dubbo%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link><pubDate>Mon, 05 Sep 2022 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2022/09/05/proxyless-mesh%E5%9C%A8dubbo%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 功能演示</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/java/demos/</link><description>Recent content in 功能演示 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="hickenlj.github.io/incubator-dubbo-website/zh/blog/java/demos/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Proxyless Mesh在Dubbo中的实践</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2022/09/05/proxyless-mesh%E5%9C%A8dubbo%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link><pubDate>Mon, 05 Sep 2022 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2022/09/05/proxyless-mesh%E5%9C%A8dubbo%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid><description>
 &lt;h2 id="背景">背景&lt;/h2>
 &lt;p>随着 Dubbo 3.1 的 release，Dubbo 在云原生的路上又迈出了重要的一步。在这个版本中添加了 Proxyless Mesh 的新特性，Dubbo Proxyless Mesh 直接实现 xDS 协议解析，
 实现 Dubbo 与 Control Plane 的直接通信，进而实现控制面对流量管控、服务治理、可观测性、安全等的统一管控，规避 Sidecar 模式带来的性能损耗与部署架构复杂性。&lt;/p>
@@ -16,7 +16,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>在实践中，Service Mesh 通常以轻量级网络代理阵列的形式实现，这些代理与应用程序代码部署在一起，对应用程序来说无需感知代理的存在。
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>说到 Service Mesh 一定离不开 Sidecar 经典架构模式。它通过在业务 Pod 中注入 Sidecar 容器，接管业务容器的通信流量，同时 Sidecar 容器与网格平台的控制平面对接，
 基于控制平面下发的策略，对代理流量实施治理和管控，将原有服务框架的治理能力下层到 Sidecar 容器中，从而实现了基础框架能力的下沉，与业务系统解耦。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/1.png" alt="Service Mesh">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/1.png" alt="Service Mesh">&lt;/p>
 &lt;p>经典的 Sidecar Mesh 部署架构有很多优势，如平滑升级、多语言、业务侵入小等，但也带来了一些额外的问题，比如:&lt;/p>
 &lt;ul>
 &lt;li>Proxy 带来的性能损耗，在复杂拓扑的网络调用中将变得尤其明显&lt;/li>
@@ -27,7 +27,7 @@
 &lt;p>针对 Sidecar Mesh 模型的问题，Dubbo 社区自很早之前就做了 Dubbo 直接对接到控制面的设想与思考，并在国内开源社区率先提出了 Proxyless Mesh 的概念，当然就 Proxyless 概念的说法而言，最开始是谷歌提出来的。&lt;/p>
 &lt;h2 id="dubbo-proxyless-mesh">Dubbo Proxyless Mesh&lt;/h2>
 &lt;p>Dubbo Proxyless 模式是指 Dubbo 直接与 Istiod通信，通过 xDS协议实现服务发现和服务治理等能力。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/2.png" alt="Proxyless">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/2.png" alt="Proxyless">&lt;/p>
 &lt;p>Proxyless 模式使得微服务又回到了 2.x 时代的部署架构，同 Dubbo 经典服务治理模式非常相似，所以说这个模式并不新鲜， Dubbo 从最开始就是这样的设计模式。
 这样做可以极大的提升应用性能，降低网络延迟。有人说这种做法又回答了原始的基于 SDK 的微服务模式，其实非也，它依然使用了 Envoy 的 xDS API，
 但是因为不再需要向应用程序中注入 Sidecar 代理，因此可以减少应用程序性能的损耗。&lt;/p>
@@ -42,7 +42,7 @@
 &lt;h2 id="服务发现">服务发现&lt;/h2>
 &lt;p>xDS 接入以注册中心的模式对接，节点发现同其他注册中心的服务自省模型一样，对于 xDS 的负载均衡和路由配置通过 ServiceInstance 的动态运行时配置传出，
 在构建 Invoker 的时候将配置参数传入配置地址。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/3.png" alt="服务发现">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/3.png" alt="服务发现">&lt;/p>
 &lt;h2 id="证书管理">证书管理&lt;/h2>
 &lt;p>零信任架构下，需要严格区分工作负载的识别和信任，而签发 X.509 证书是推荐的一种认证方式。在 Kubernetes 集群中，服务间是通过 DNS 名称互相访问的，而网络流量可能被 DNS 欺骗、BGP/路由劫持、ARP 欺骗等手段劫持，为了将服务名称（DNS 名称）与服务身份强关联起来，Istio 使用置于 X.509 证书中的安全命名机制。SPIFFE是 Istio 所采用的安全命名的规范，它也是云原生定义的一种标准化的、可移植的工作负载身份规范。&lt;/p>
 &lt;p>Secure Production Identity Framework For Everyone (SPIFFE) 是一套服务之间相互进行身份识别的标准，主要包含以下内容：&lt;/p>
@@ -56,7 +56,7 @@
 &lt;p>Istio 使用形如 &lt;code>spiffe://&amp;lt;trust_domain&amp;gt;/ns/&amp;lt;namespace&amp;gt;/sa/&amp;lt;service_account&amp;gt;&lt;/code> 格式的 SPIFFE ID 作为安全命名，注入到 X.509 证书的 subjectAltName 扩展中。
 其中&amp;quot;trust_domain&amp;quot;参数通过 Istiod 环境变量TRUST_DOMAIN 注入，用于在多集群环境中交互。&lt;/p>
 &lt;p>以下是 Dubbo Proxyless Mesh 证书颁发的过程&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/4.png" alt="证书颁发">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/4.png" alt="证书颁发">&lt;/p>
 &lt;ul>
 &lt;li>创建 RSA 私钥（Istio 还不支持 ECDSA 私钥）&lt;/li>
 &lt;li>构建 CSR（Certificate signing request）模板&lt;/li>
@@ -289,29 +289,29 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>✅ 到目前为止我们的环境和代码就全都准备完毕了！&lt;/p>
 &lt;h2 id="构建镜像">构建镜像&lt;/h2>
 &lt;h3 id="1启动docker">1、启动docker&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/5.png" alt="启动docker">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/5.png" alt="启动docker">&lt;/p>
 &lt;h3 id="2启动minikube">2、启动minikube&lt;/h3>
 &lt;p>因为minikube是一个本地的k8s，他启动需要一个虚拟引擎，这里我们用docker来管理。我们通过如下命令启动&lt;/p>
 &lt;p>&lt;code>minikube start&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/6.png" alt="启动minikube">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/6.png" alt="启动minikube">&lt;/p>
 &lt;p>我们可以在docker里看到minikube&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/7.png" alt="minikube">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/7.png" alt="minikube">&lt;/p>
 &lt;h3 id="3检查istio的状态">3、检查istio的状态&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/8.png" alt="istio的状态">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/8.png" alt="istio的状态">&lt;/p>
 &lt;h3 id="4构建镜像">4、构建镜像&lt;/h3>
 &lt;p>在本地找到代码所在位置、依次执行以下命令&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span># 找到provider所在路径
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd ./dubbo-samples-xds-provider/
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># 构建provider的镜像
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker build -t apache/dubbo-demo:dubbo-samples-xds-provider_0.0.1 .
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/9.png" alt="构建provider">&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/9.png" alt="构建provider">&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span># 找到consumer所在路径
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd ../dubbo-samples-xds-consumer/
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># 构建consumer的镜像
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker build -t apache/dubbo-demo:dubbo-samples-xds-consumer_0.0.1 .
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/10.png" alt="构建consumer">&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/10.png" alt="构建consumer">&lt;/p>
 &lt;h3 id="5检查本地镜像">5、检查本地镜像&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/11.png" alt="检查本地镜像">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/11.png" alt="检查本地镜像">&lt;/p>
 &lt;h3 id="6创建namespace">6、创建namespace&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span># 初始化命名空间
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>kubectl apply -f https://raw.githubusercontent.com/apache/dubbo-samples/master/dubbo-samples-xds/deploy/Namespace.yml
@@ -319,7 +319,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># 切换命名空间
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>kubens dubbo-demo
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果不创建namespace，那么会看到如下错误&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/12.png" alt="错误">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/12.png" alt="错误">&lt;/p>
 &lt;h2 id="部署容器">部署容器&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span># 找到provider所在路径
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd ./dubbo-samples-xds-provider/src/main/resources/k8s
@@ -329,16 +329,16 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># 部署provider的Deployment和Service
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>kubectl apply -f Deployment.yml
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>kubectl apply -f Service.yml
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/13.png" alt="部署provider">&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/13.png" alt="部署provider">&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span># 找到consumer所在路径
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd ../../../../../dubbo-samples-xds-consumer/src/main/resources/k8s
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># dubbo-samples-xds/dubbo-samples-xds-consumer/src/main/resources/k8s/Deployment.yml
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># 部署consumer的Deployment
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>kubectl apply -f Deployment.yml
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/14.png" alt="部署provider">&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/14.png" alt="部署provider">&lt;/p>
 &lt;p>在minikube dashboard看到我们已经部署的pod&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/15.png" alt="部署provider">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/15.png" alt="部署provider">&lt;/p>
 &lt;h2 id="观察consumer效果">观察consumer效果&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>kubectl logs xxx
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -348,11 +348,11 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>result: hello, xDS Consumer! from host: 172.17.0.6
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="总结展望">总结&amp;amp;展望&lt;/h2>
 &lt;p>本文主要剖析了 Dubbo Proxyless Mesh 的架构、服务发现以及证书管理等核心流程，最后通过示例给大家演示了如何使用 Dubbo Proxyless。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/20220905/16.png" alt="部署provider">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/20220905/16.png" alt="部署provider">&lt;/p>
 &lt;p>随着 Dubbo 3.1 的 release，Dubbo 在云原生的路上又迈出了重要的一步。在今年年底，Dubbo Mesh 将发布具有服务发现能力的版本，
 届时将面向所有 Dubbo 用户提供从低版本平滑迁移到 Mesh 架构的能力；在明年年初春季的时候将发布带有治理能力的版本；在明年年底前发布带热插件更新能力的版本，
 希望有兴趣见证 Dubbo 云原生之路的同学可以积极参与社区贡献！&lt;/p>
-&lt;p>更多关于 Dubbo Mesh 的动态可以关注 Apache Dubbo 社区官方公众号（ApacheDubbo），及时获取最新消息。&lt;/p></description></item><item><title>Blog: Dubbo-Api-Docs -- Apache Dubbo文档展示&amp;测试工具</title><link>https://dubbo.apache.org/zh/blog/2020/12/22/dubbo-api-docs--apache-dubbo%E6%96%87%E6%A1%A3%E5%B1%95%E7%A4%BA%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/</link><pubDate>Tue, 22 Dec 2020 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2020/12/22/dubbo-api-docs--apache-dubbo%E6%96%87%E6%A1%A3%E5%B1%95%E7%A4%BA%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/</guid><description>
+&lt;p>更多关于 Dubbo Mesh 的动态可以关注 Apache Dubbo 社区官方公众号（ApacheDubbo），及时获取最新消息。&lt;/p></description></item><item><title>Blog: Dubbo-Api-Docs -- Apache Dubbo文档展示&amp;测试工具</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2020/12/22/dubbo-api-docs--apache-dubbo%E6%96%87%E6%A1%A3%E5%B1%95%E7%A4%BA%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/</link><pubDate>Tue, 22 Dec 2020 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2020/12/22/dubbo-api-docs--apache-dubbo%E6%96%87%E6%A1%A3%E5%B1%95%E7%A4%BA%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/</guid><description>
 &lt;h1 id="dubbo-api-docs">Dubbo-Api-Docs&lt;/h1>
 &lt;h2 id="背景">背景&lt;/h2>
 &lt;p>Swagger 是一个规范和完整的前端框架,用于生成,描述,调用和可视化 RESTful 风格的 Web 服务.
@@ -508,7 +508,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>到此 Dubbo-Api-Docs 相关的东西已经添加完毕.
 &lt;a href="https://github.com/apache/dubbo-spi-extensions/tree/2.7.x/dubbo-api-docs/dubbo-api-docs-examples">dubbo-api-docs-examples&lt;/a>
 中有更多更为详尽的例子.下文中有注解的详细说明.下面我们来看一下增加 Dubbo-Api-Docs 后的效果图.&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/api-docs/quickStart.png" alt="demoApi2">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/api-docs/quickStart.png" alt="demoApi2">&lt;/p>
 &lt;h3 id="2启动提供者项目">2.启动提供者项目&lt;/h3>
 &lt;ul>
 &lt;li>示例使用nacos作为注册中心,&lt;a href="https://nacos.io">下载并启动nacos&lt;/a>&lt;/li>
@@ -621,12 +621,12 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;li>左侧接口列表中加载出接口列表,点击任意接口,右边展示出该接口信息及参数表单.&lt;/li>
 &lt;li>填入表单内容后,点击最下方测试按钮&lt;/li>
 &lt;li>响应部分展示了响应示例及实际响应结果&lt;/li>
-&lt;/ol></description></item><item><title>Blog: Dubbo测试验证</title><link>https://dubbo.apache.org/zh/blog/2019/12/02/dubbo%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81/</link><pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/12/02/dubbo%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81/</guid><description>
+&lt;/ol></description></item><item><title>Blog: Dubbo测试验证</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/12/02/dubbo%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81/</link><pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/12/02/dubbo%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81/</guid><description>
 &lt;p>除了线上常规的使用场景以外，我们在日常使用中还需要一些特定的使用方式，比如对正在开发的功能进行验证测试，比如单独调用某台机器的服务，这篇文章就来介绍一下这些场景下的使用方式。&lt;/p>
 &lt;h3 id="只订阅">只订阅&lt;/h3>
 &lt;p>为方便开发测试，经常会在线下共用一个所有服务可用的注册中心，这时，如果一个正在开发中的服务提供者注册，可能会影响消费者不能正常运行。&lt;/p>
 &lt;p>可以让服务提供者开发方，只订阅服务(开发的服务可能依赖其它服务)，而不注册正在开发的服务，通过直连测试正在开发的服务。 &lt;br>
-&lt;img src="https://dubbo.apache.org/imgs/blog/subscribe-only.jpg" alt="subscribe-only">
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/subscribe-only.jpg" alt="subscribe-only">
 禁用注册配置&lt;/p>
 &lt;pre>&lt;code>&amp;lt;dubbo:registry address=&amp;quot;10.20.153.10:9090&amp;quot; register=&amp;quot;false&amp;quot; /&amp;gt;
 &lt;/code>&lt;/pre>
@@ -635,7 +635,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/code>&lt;/pre>
 &lt;h3 id="指定ip调用">指定IP调用&lt;/h3>
 &lt;p>在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直联方式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表&lt;br>
-&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-directly.jpg" alt="subscribe-only">&lt;/p>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-directly.jpg" alt="subscribe-only">&lt;/p>
 &lt;p>可以通过以下几种配置来指定IP调用&lt;/p>
 &lt;ul>
 &lt;li>XML 配置： 如果是线上需求需要点对点，可在 &lt;a href="dubbo:reference">dubbo:reference&lt;/a> 中配置 url 指向提供者，将绕过注册中心，多个地址用分号隔开，配置如下：
@@ -696,11 +696,11 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在经过EchoFilter.invoke方法时，如果调用的是&lt;code>$echo&lt;/code>，会中断当前的调用过程，直接返回&lt;code>$echo&lt;/code>的入参，否则会继续执行Filter链。&lt;br>
-通过动态代理和EchoFilter机制，使得回声测试的整个过程对用户透明，不需要做任何额外的配置，直接调用即可。&lt;/p></description></item><item><title>Blog: Dubbo 在 Service Mesh 下的思考和方案</title><link>https://dubbo.apache.org/zh/blog/2019/11/30/dubbo-%E5%9C%A8-service-mesh-%E4%B8%8B%E7%9A%84%E6%80%9D%E8%80%83%E5%92%8C%E6%96%B9%E6%A1%88/</link><pubDate>Sat, 30 Nov 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/11/30/dubbo-%E5%9C%A8-service-mesh-%E4%B8%8B%E7%9A%84%E6%80%9D%E8%80%83%E5%92%8C%E6%96%B9%E6%A1%88/</guid><description>
+通过动态代理和EchoFilter机制，使得回声测试的整个过程对用户透明，不需要做任何额外的配置，直接调用即可。&lt;/p></description></item><item><title>Blog: Dubbo 在 Service Mesh 下的思考和方案</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/11/30/dubbo-%E5%9C%A8-service-mesh-%E4%B8%8B%E7%9A%84%E6%80%9D%E8%80%83%E5%92%8C%E6%96%B9%E6%A1%88/</link><pubDate>Sat, 30 Nov 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/11/30/dubbo-%E5%9C%A8-service-mesh-%E4%B8%8B%E7%9A%84%E6%80%9D%E8%80%83%E5%92%8C%E6%96%B9%E6%A1%88/</guid><description>
 &lt;h2 id="开头">开头&lt;/h2>
 &lt;p>Service Mesh这个“热”词是2016年9月被“造”出来，而今年2018年更是被称为service Mesh的关键之年，各家大公司都希望能在这个思潮下领先一步。今天我也分享阿里中间件在这方面的观点，思考和实践。考虑到有些人没了解过Dubbo(集团内以HSF为主)和Servicemesh，先简单介绍下这两个词。Dubbo应该是国内最受欢迎的远程服务框架，在Github上有超过2w的star数，也是阿里分布式架构互联互通的核心所在。跟Dubbo一样，servicemesh也是面向服务互联互通这一问题域，是云原生技术栈的核心之一；大家可以简单理解service mesh就是云原生组织定义的微服务架构解决理念。Dubbo是实现框架，融入service mesh理念就是我们今天分享的。&lt;/p>
 &lt;h2 id="现状和挑战">现状和挑战&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/1.png" alt="1.png | center | 826x206">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/1.png" alt="1.png | center | 826x206">&lt;/p>
 &lt;p>当前Dubbo支撑的阿里分布式应用内支撑万级别的应用数，运行在20多万的服务器实例上，每天调用量是万亿级别，这应该是国内最大的分布式应用集群。&lt;/p>
 &lt;p>挑战主要来自三方面&lt;/p>
 &lt;ul>
@@ -711,13 +711,13 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;p>这里讲个大鱼吃小鱼的故事来简单理解下云原生：软件会吃掉这个世界，也就是信息化不可避免，而开源会吃掉软件，最终云原生会吃掉开源。这正代表了云原生理念的颠覆性，从商业软件到开源到云原生，环环相套，以体系化和层次化的方式推荐各个方面的开源方案和标准，这会极大降低企业级架构服务的技术门槛，是企业信息化之路的一大利好，当然也是进化方向。这个故事跟今天的主题&amp;ndash;开发者定义软件未来，是非常契合，也就是说这个趋势至少在企业级软件服务领域正在发生。云原生：Cloud Native is Patterns with A complete and trusted tool kit for modern architectures。&lt;/p>
 &lt;p>&lt;span data-type="color" style="color:white">Service Mesh的典型方案&lt;/span>&lt;/p>
 &lt;h2 id="service-mesh的典型方案">Service Mesh的典型方案&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/2.png" alt="2.png | center | 826x206" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/2.png" alt="2.png | center | 826x206" title="">&lt;/p>
 &lt;p>讲完故事，回到servicemesh。&lt;/p>
 &lt;p>传统形态下SDK代表着一个特定语言的库，由应用和微服务框架共处一进程内，在发布升级中共享生命周期。比较典型的代表是Twitter的finagle，Google的stubby/grpc，阿里巴巴的HSF/Dubbo.&lt;/p>
 &lt;p>Serviemesh下推荐是右边Sidecar方案，Sidecar方案没有引入新的功能，只是改变了原有功能的位置，以独立的应用来存在，大家可以暂时以nginx来理解其网络代理能力也可以。&lt;/p>
 &lt;p>在这张图中希望大家关注两个信息， 1）所有的sidecar形成逻辑网络被称为数据面，是业务服务的链路中是强依赖节点，承载了业务数据互联互通的基础；传统的ops管控服务被称为控制面，这部分跟传统是大同小异。 2）在sidecar形态下，网络会增加两跳，即应用与sidecar之间，他们之间的数据互通也是基于协议规范。后面会详细讲。&lt;/p>
 &lt;h2 id="sidecar模式的优劣">Sidecar模式的优劣&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/3.png" alt="3.png | center | 826x206" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/3.png" alt="3.png | center | 826x206" title="">&lt;/p>
 &lt;p>接下来从开发和运维两个阶段来分开比较。&lt;/p>
 &lt;ul>
 &lt;li>多语言支持方面，既然sidecar是独立应用，用最合适的一种语言开发完成即可，就避免了需要针对不同语言的应用场景做不同的版本开发。当前阿里选择基于C语言的Envoy做二次开发来追求最小的footprint和性能，当然也曾经历一些弯路，比如曾经用Java开发过一个sidecar，但最终由于引入JRE体量大和GC带来的抖动等问题证明不可行。有必要强调的是：这里说的是sidecar自身开发现在避免了多语言多版本的问题，而真要支持任意服务自由采用任意语言实现这一理想，是需要站在从业务到数据面再到业务的整个链路上的数据交互做思考。&lt;/li>
@@ -727,7 +727,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/ul>
 &lt;p>稍微总结下，sidecar具有两个明显优势，一个是多语言开发维护成本低 ，另一个是独立升级，当然代价是需要增加一点点的网络延迟。至此大家是不是觉得Sidecar基本完美？ 别着急，需要大家再思考一个问题：SDK模式下中间件组件会随应用一起发布，拥有完全一致的生命周期；而在sidecar模式下，如何管理sidecar的生命周期？这里可以拿无线耳机来举个例子，无线耳机是独立了，但必须独立电源的驱动，所以充电是要的。是的，在大规模的集群中这个点会带来不小的复杂性。&lt;/p>
 &lt;h2 id="关键点">关键点&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/4.png" alt="4.png | center | 826x206" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/4.png" alt="4.png | center | 826x206" title="">&lt;/p>
 &lt;p>下面跟大家分享下我们对servicemesh理解的三个关键技术点。分别是sidecar运维，数据面与控制面的集成，协议。&lt;/p>
 &lt;ul>
 &lt;li>先说sidecar的运维，这是个难点，也是为什么sidecar方案以前没有被广泛应用的重要原因。前面说sidecar与应用现在成为两个不同的进程，要考虑多个事宜，一是要考虑如何把sidecar与应用部署在一起，二是考虑业务进程或sidecar进程一方需要升级重启时如何协同来保证请求的正常处理或转发，即优雅上下线的问题。这些事宜考虑清楚并解决后，算是具备servicemesh的前提条件。当然，kubernetes解决了这块的事情，提供了initiator类似插件的机制来对原子性的pod进行注入sidecar，并通过健康检查机制来保证两个进程的协同。简单地也可以这么理解：先把kubernetes容器调度平台的实施是servicemesh的前提条件。&lt;/li>
@@ -735,7 +735,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;li>协议 协议 协议， 重要的事说三遍。。。sidecar和Dubbo的内核是网络协议的处理器，而sidecar又是面向多语言场景的，所以自然协议处理能力是要强调的。先说下阿里Dubbo当下向Mesh方向发展时遇到难点。首先我们的服务接口都是通过Java Interface描述，其次涉及的传输模型DTO也是Java POJO定义，最后协议也是私有的。这会导致跨语言比较难，而sidecar形态需要面向多语言，这些问题更是首当其冲。考虑到这里有点稍微偏细节点，希望大家带着如下问题来先思考下：业务应用到sidecar之间的数据交换要考虑什么? Sidecar自身在处理网络字节流时又要考虑什么？是的，首先业务应用最好都不依赖特定协议库，也不依赖特接口定义库；Sidecar自身处理数据时跟nginx很接近，但最好具备协议转换适配的能力，比如把基于HTTP的请求转换为Dubbo请求，就能轻松集成Dubbo遗留系统。&lt;/li>
 &lt;/ul>
 &lt;h2 id="回看协议">回看协议&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/5.png" alt="5.png | center | 826x206" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/5.png" alt="5.png | center | 826x206" title="">&lt;/p>
 &lt;p>既然协议在跨语言场景下如此重要，有必要稍微回归下协议的历史轨迹。看历史一般是轻松有趣的过程，最重要的好处是能使我们头脑清晰而不迷茫。&lt;/p>
 &lt;p>我们先从2008年说起，很近也就10年，阿里服务框架诞生这一年。当年各大公司还在炒作SOA思想的时候，阿里在不清楚SOA思想的情况下根据自身业务诉求实践拥抱了SOA的架构。阿里服务框架一直是从三个层面来定义，第一RPC通信 第二是提供丰富强大的治理能力 第三就是基于容器隔离的运维能力，使得中间件可以独立升级。这个理念直到今日都是非常先进，非常的赞。就像前面说的，Dubbo主要是面向Java领域的微服务架构解决方案，在以Java为主导的技术架构下是绝对首选，但因为其协议设计是私有特性，要想成为跨语言的协议标准是有一定难度。&lt;/p>
 &lt;p>事实上，之前已经出现了很多通用的跨语言的服务集成规范。最早是91年的CORBA，是分布式对象访问协议，2000年的SOAP是当年webservice思想下的协议，无论是CORBA还是SOAP都是支持所有平台和语言的一套规范，但是设计地比较复杂笨重，且性能存在一定问题。&lt;/p>
@@ -743,7 +743,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;p>1996年的1在连接通道不支持多工复用，根本无法发挥TCP/UDP的网络能力；而到了2015年HTTP2则解决这些，能够最大限度的利用TCP层的网络宽带，且支持了streaming，push等交互模式，这些跟很多的私有或专有应用协议干得是一个事，但是标准化的大家都容易接受的事。这里必须提一下，伴随HTTP2而来的是grpc，原先Google早早推出了Protocolbuffer，但一直没把自家stubby开源，我猜测最大的原因是不想grpc跑在一个私有协议上，而是在等HTTP2.&lt;/p>
 &lt;p>总结下来，协议技术一直在向着轻量级和标准规范化的方向发展。像SOAP，CORBA这些重量级的不跨平台的协议必然消失在历史车轮里，私有或专有的协议也会向标准协议靠拢。在面向跨语言的场景下，有两种的协议规范是大概率胜出，一种是REST，一种是grpc，两者都是以HTTP为交换通道。&lt;/p>
 &lt;h2 id="面向多语言协议的三层面">面向多语言协议的三层面&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/6.png" alt="6.png | center | 826x206" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/6.png" alt="6.png | center | 826x206" title="">&lt;/p>
 &lt;p>展开来讲，在面向多语言的协议需要考虑三个层面。&lt;/p>
 &lt;ul>
 &lt;li>先从最右边的会话层，干得事是在tcp字节流的基础上形成交互模式，比如 一对一的标准请求响应模式， 以及onway， 一对多的streaming模式。Dubbo在这一层是有扩展能力的，目前除了支持自定义的Dubbo-Remoting，也支持基于HTTP通道能力，我们觉得未来的趋势是HTTP2,所以也会支持这块.这里在分享一句话跟大家一起思考，HTTP不是RPC，HTTP被翻译成超文本传输协议，但不是传输层。另外提一下，这一层是对于MQ，Streaming Compute，Cache等等都是通用的。&lt;/li>
@@ -752,7 +752,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 我们相信在这几个层面，尤其是会话层和应用层，用不多几年一定会是标准化的，尤其是在云原生的趋势下。&lt;/li>
 &lt;/ul>
 &lt;h3 id="方案之kubernetes集成span-data-typecolor-stylecolorwhiteduspan">方案之Kubernetes集成&lt;span data-type="color" style="color:white">Du&lt;/span>&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/7.png" alt="7.png | center | 826x206" title="">
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/7.png" alt="7.png | center | 826x206" title="">
 &lt;span data-type="color" style="color:white">bbo Mesh方案之Kubernetes集成&lt;/span>
 其实，servicemesh在最近两年流行最大的原因是云原生理念的逐渐深入人心，从广义角度看，能够融入云原生的微服务框架都能称得上servicemesh。谈云原生，肯定绕不开kubernetes，所以我们在Dubbo Mesh的方案的第一个分享是 在kubernetes下的集成，目标是复用Kubernetes的基础服务，从而使得Dubbo能解决kubernetes环境下的微服务集成问题，同时能最大限度的利用dubbo已有的功能。核心思路是两点，&lt;/p>
 &lt;ul>
@@ -760,14 +760,14 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;li>Dubbo地址注册针对kubernetes的扩展实现，通过Kubernetes的APIServer来拉取并监听某个服务的podIP。这样，在kubernetes集群内，Dubbo服务就能在其podID的虚拟网络内实现服务发现。&lt;/li>
 &lt;/ul>
 &lt;h2 id="方案之跨语言协议支持">方案之跨语言协议支持&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/8.png" alt="8.png | center | 826x206" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/8.png" alt="8.png | center | 826x206" title="">&lt;/p>
 &lt;p>前面讲了很多关于协议方面的东西，也为我们在Dubbo Mesh的方案的第二点分享是做了铺垫， 第二点的目标是Dubbo 协议的多语言支持。核心思路是&lt;/p>
 &lt;ul>
 &lt;li>积极兼容开源社区Envoy，这个使得Envoy上兼容支持Dubbo的私有协议。&lt;/li>
 &lt;li>Dubbo支持HTTP/2作为传输通道，这个是为了Dubbo的协议通道能力向更加开放更加标准规范的方向做努力。&lt;/li>
 &lt;/ul>
 &lt;h2 id="servicemesh之云原生的指导">ServiceMesh之云原生的指导&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbomesh/9.png" alt="9.png | center | 826x206" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbomesh/9.png" alt="9.png | center | 826x206" title="">&lt;/p>
 &lt;p>孤立地看待servicemesh其实和传统服务框架，价值还不算大，甚至成本相对更高。这时候，当我们把servicemesh设定到云原生的上下文中，就会发现不一样的意义。&lt;/p>
 &lt;p>servicemesh是云原生理念的路径地图的第五步，如果没有前面的容器化，CICD等四部，真正拥抱servicemesh也只是空中楼阁。阿里在这方面的实践经验是，servicemesh的实施是需要结合软件开发的整个生命周期进行统筹，从软件在本地开发测试，到通过持续集成服务的自动化构建，再到以镜像方式分发到仓库并依托调度云平台的持续部署，最后持续监控。&lt;/p>
 &lt;p>dubbo已经开源好多年，是非常符合云原生这个原则，正向servicemesh方向和云原生理念上努力，为企业信息化做出一点贡献。&lt;/p>
@@ -778,9 +778,9 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;li>建议大家根据实际业务场景来慎重权衡sidecar模式下运维复杂性和收益回报。&lt;/li>
 &lt;li>一定把servicemesh设定在云原生的上下文中才具意义，离开了Kubernetes谈servicemesh的实践是不建议的大跃进。
 最后希望大家一起共建共享的Dubbo开源社区，谢谢。&lt;/li>
-&lt;/ol></description></item><item><title>Blog: Dubbo服务端异步接口的实现背景和实践</title><link>https://dubbo.apache.org/zh/blog/2019/11/02/dubbo%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</link><pubDate>Sat, 02 Nov 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/11/02/dubbo%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</guid><description>
+&lt;/ol></description></item><item><title>Blog: Dubbo服务端异步接口的实现背景和实践</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/11/02/dubbo%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</link><pubDate>Sat, 02 Nov 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/11/02/dubbo%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</guid><description>
 &lt;h2 id="铺垫">铺垫&lt;/h2>
-&lt;p>建议先对Dubbo的处理过程中涉及的线程阶段先做个了解，具体可参考&lt;a href="https://dubbo.apache.org/zh/blog/2019/11/01/dubbo%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/">Dubbo客户端异步接口的实现背景和使用场景&lt;/a>。&lt;/p>
+&lt;p>建议先对Dubbo的处理过程中涉及的线程阶段先做个了解，具体可参考&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/11/01/dubbo%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/">Dubbo客户端异步接口的实现背景和使用场景&lt;/a>。&lt;/p>
 &lt;h2 id="实现背景">实现背景&lt;/h2>
 &lt;p>有必要比较详细点的介绍下服务端的线程策略来加深用户在选择服务端异步的判断依据，同时有必要引出协程这一在服务端异步中常常会用到的“秘密武器”。&lt;/p>
 &lt;h3 id="服务端的线程策略">服务端的线程策略&lt;/h3>
@@ -789,26 +789,26 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;li>&lt;strong>Worker-thread策略&lt;/strong>&lt;/li>
 &lt;/ol>
 &lt;p>最常用最普适的策略，其中IO线程将NIO事件处理委托给工作线程。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubboasyn_server/1.png" alt="workerthread-strategy.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubboasyn_server/1.png" alt="workerthread-strategy.png">&lt;/p>
 &lt;p>此策略具有很高的伸缩性。我们可以根据需要更改IO和worker线程池的大小，并且不存在在特定NIO事件处理期间可能发生的，同一Selector各个Channel之间相互干扰的风险。&lt;/p>
 &lt;p>缺点是有线程上下文切换的代价。&lt;/p>
 &lt;ol start="2">
 &lt;li>&lt;strong>Same-thread策略&lt;/strong>&lt;/li>
 &lt;/ol>
 &lt;p>可能是最有效的策略。与第一种不同，同一线程处理当前线程中的NIO事件，避免了昂贵的线程上下文切换。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubboasyn_server/2.png" alt="samethread-strategy.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubboasyn_server/2.png" alt="samethread-strategy.png">&lt;/p>
 &lt;p>这个策略可以调整IO线程池大小，也是具备可伸缩性；缺点也很明显，它要求业务处理中一定不要有阻塞处理，因为它可能会阻止在同一个IO线程上发生的其他NIO事件的处理。&lt;/p>
 &lt;ol start="3">
 &lt;li>&lt;strong>Dynamic策略&lt;/strong>&lt;/li>
 &lt;/ol>
 &lt;p>如前所述，前两种策略具有明显的优点和缺点。但是，如果策略可以尝试在运行时根据当前条件（负载，收集的统计信息等）巧妙地交换它们，何如？&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubboasyn_server/3.png" alt="dynamic-strategy.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubboasyn_server/3.png" alt="dynamic-strategy.png">&lt;/p>
 &lt;p>这种策略可能会带来很多好处，能更好地控制资源，前提是不要使条件评估逻辑过载，防止评估判断的复杂性会使这种策略效率低下。
 多说一句，希望大家对这个策略多留意一下，它可能是Dubbo服务端异步方式的最佳搭配。我也多扯个淡，这几天关注了些adaptive XX或者predictive XX，这里看到dynamic真是亲切，Dubbo作为产品级生产级的微服务解决方案，是必须既要adaptive，又要predictive，还要dynamic，哈哈。&lt;/p>
 &lt;ol start="4">
 &lt;li>&lt;strong>Leader-follower策略&lt;/strong>&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubboasyn_server/4.png" alt="leaderfollower-strategy.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubboasyn_server/4.png" alt="leaderfollower-strategy.png">&lt;/p>
 &lt;p>此策略类似于第一种，但它不是将NIO事件处理传递给worker线程，而是通过将控制传递给Selector给工作线程，并将实际NIO事件处理当前IO线程中。这种策略其实是把worker和IO线程阶段做了混淆，个人不建议。&lt;/p>
 &lt;h3 id="协程与线程">协程与线程&lt;/h3>
 &lt;p>在CPU资源的管理上，OS和JVM的最小调度单位都是线程，业务应用通过扩展实现的协程包是可以具备独立的运行单位，事实上也是基于线程来做的，核心应该是遇到IO阻塞，或者锁等待时，保存上下文，然后切换到另一个协程。至于说的协程开销低，能更高效的使用CPU，这些考虑到协程库的用户态实现和上下文设计是支持的，但也建议大家结合实际业务场景做性能测试。&lt;/p>
@@ -843,9 +843,9 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;li>要用服务端异步，建议服务端的线程策略采用same thread模式+协程包。&lt;/li>
 &lt;/ul>
 &lt;h2 id="小结">小结&lt;/h2>
-&lt;p>Dubbo在支持业务应用时，会碰到千奇百怪的需求场景，服务端异步为用户提供了一种解决ThreadPool Full的方案。当发生ThreadPool Full的情况下，如果当前系统瓶颈是CPU，不建议用这种方案；如果系统Load不高，调高worker的线程数目，或者采用服务端异步，都是可以考虑的。&lt;/p></description></item><item><title>Blog: Dubbo客户端异步接口的实现背景和实践</title><link>https://dubbo.apache.org/zh/blog/2019/11/01/dubbo%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</link><pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/11/01/dubbo%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</guid><description>
+&lt;p>Dubbo在支持业务应用时，会碰到千奇百怪的需求场景，服务端异步为用户提供了一种解决ThreadPool Full的方案。当发生ThreadPool Full的情况下，如果当前系统瓶颈是CPU，不建议用这种方案；如果系统Load不高，调高worker的线程数目，或者采用服务端异步，都是可以考虑的。&lt;/p></description></item><item><title>Blog: Dubbo客户端异步接口的实现背景和实践</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/11/01/dubbo%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</link><pubDate>Fri, 01 Nov 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/11/01/dubbo%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9E%E8%B7%B5/</guid><description>
 &lt;h2 id="铺垫">铺垫&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubboasyn_client/1.png" alt="image | left">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubboasyn_client/1.png" alt="image | left">&lt;/p>
 &lt;p>先简单介绍下一次完整的Dubbo调用所经历的线程阶段。几个信息这里罗列下&lt;/p>
 &lt;ol>
 &lt;li>
@@ -910,13 +910,13 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;ul>
 &lt;li>客户端异步的出发点就是请求发出和响应处理本身为两个不同的独立事件，响应如何被处理和在哪个线程中处理等都是不需要和请求发出事件的业务逻辑线程做耦合绑定。&lt;/li>
 &lt;li>响应事件回调的处理逻辑在哪个线程中做处理是需要根据情况来选择。建议，如果回调逻辑比较简单，建议直接在IO线程中；如果包含了远程访问或者DB访问等IO型的__同步__操作，建议在独立的线程池做处理。&lt;/li>
-&lt;/ul></description></item><item><title>Blog: Dubbo 在跨语言和协议穿透性方向上的探索：支持 HTTP/2 gRPC 和 Protobuf</title><link>https://dubbo.apache.org/zh/blog/2019/10/28/dubbo-%E5%9C%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%A9%BF%E9%80%8F%E6%80%A7%E6%96%B9%E5%90%91%E4%B8%8A%E7%9A%84%E6%8E%A2%E7%B4%A2%E6%94%AF%E6%8C%81-http/2-grpc-%E5%92%8C-protobuf/</link><pubDate>Mon, 28 Oct 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/10/28/dubbo-%E5%9C%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%A9%BF%E9%80%8F%E6%80%A7%E6%96%B9%E5%90%91%E4%B8%8A%E7%9A%84%E6%8E%A2%E7%B4%A2%E6%94%AF%E6%8C%81-http/2-grpc-%E5%92%8C-protobuf/</guid><description>
+&lt;/ul></description></item><item><title>Blog: Dubbo 在跨语言和协议穿透性方向上的探索：支持 HTTP/2 gRPC 和 Protobuf</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/10/28/dubbo-%E5%9C%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%A9%BF%E9%80%8F%E6%80%A7%E6%96%B9%E5%90%91%E4%B8%8A%E7%9A%84%E6%8E%A2%E7%B4%A2%E6%94%AF%E6%8C%81-http/2-grpc-%E5%92%8C-protobuf/</link><pubDate>Mon, 28 Oct 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/10/28/dubbo-%E5%9C%A8%E8%B7%A8%E8%AF%AD%E8%A8%80%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%A9%BF%E9%80%8F%E6%80%A7%E6%96%B9%E5%90%91%E4%B8%8A%E7%9A%84%E6%8E%A2%E7%B4%A2%E6%94%AF%E6%8C%81-http/2-grpc-%E5%92%8C-protobuf/</guid><description>
 &lt;p>本文总体上可分为基础产品简介、Dubbo 对 gRPC (HTTP/2) 和 Protobuf 的支持及示例演示三部分，在简介部分介绍了 Dubbo、HTTP/2、gRPC、Protobuf 的基本概念和特点；第二部分介绍了 Dubbo 为何要支持 gRPC (HTTP/2) 和 Protobuf，以及这种支持为 gRPC 和 Dubbo 开发带来的好处与不同；第三部分通过两个实例分别演示了 Dubbo gRPC 和 Dubbo Protobuf 的使用方式。&lt;/p>
 &lt;h2 id="基本介绍">基本介绍&lt;/h2>
 &lt;h3 id="dubbo-协议">Dubbo 协议&lt;/h3>
 &lt;p>从协议层面展开，以下是当前 2.7 版本支持的 Dubbo 协议&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/grpc/dubbo-ptotocol.png" alt="image-20191029103919557">&lt;/p>
-&lt;p>众所周知，Dubbo 协议是直接定义在 TCP 传输层协议之上，由于 TCP 高可靠全双工的特点，为 Dubbo 协议的定义提供了最大的灵活性，但同时也正是因为这样的灵活性，RPC 协议普遍都是定制化的私有协议，Dubbo 同样也面临这个问题。在这里我们着重讲一下 Dubbo 在协议通用性方面值得改进的地方，关于协议详细解析请参见&lt;a href="https://dubbo.apache.org/zh/blog/2018/10/05/dubbo-%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/">官网博客&lt;/a>&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/grpc/dubbo-ptotocol.png" alt="image-20191029103919557">&lt;/p>
+&lt;p>众所周知，Dubbo 协议是直接定义在 TCP 传输层协议之上，由于 TCP 高可靠全双工的特点，为 Dubbo 协议的定义提供了最大的灵活性，但同时也正是因为这样的灵活性，RPC 协议普遍都是定制化的私有协议，Dubbo 同样也面临这个问题。在这里我们着重讲一下 Dubbo 在协议通用性方面值得改进的地方，关于协议详细解析请参见&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/10/05/dubbo-%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/">官网博客&lt;/a>&lt;/p>
 &lt;ul>
 &lt;li>Dubbo 协议体 Body 中有一个可扩展的 attachments 部分，这给 RPC 方法之外额外传递附加属性提供了可能，是一个很好的设计。但是类似的 Header 部分，却缺少类似的可扩展 attachments，这点可参考 HTTP 定义的 Ascii Header 设计，将 Body Attachments 和 Header Attachments 做职责划分。&lt;/li>
 &lt;li>Body 协议体中的一些 RPC 请求定位符如 Service Name、Method Name、Version 等，可以提到 Header 中，和具体的序列化协议解耦，以更好的被网络基础设施识别或用于流量管控。&lt;/li>
@@ -930,7 +930,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;li>HTTP 的语义和可扩展性能很好的满足 RPC 调用需求。&lt;/li>
 &lt;li>通用性，HTTP 协议几乎被网络上的所有设备所支持，具有很好的协议穿透性。&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/grpc/http1.png" alt="image-20191029113404906">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/grpc/http1.png" alt="image-20191029113404906">&lt;/p>
 &lt;p>具体来说，HTTP/1 的优势和限制是：&lt;/p>
 &lt;ul>
 &lt;li>
@@ -948,7 +948,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/ul>
 &lt;h3 id="http2">HTTP/2&lt;/h3>
 &lt;p>HTTP/2 保留了 HTTP/1 的所有语义，在保持兼容的同时，在通信模型和传输效率上做了很大的改进。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/grpc/http2.png" alt="image-20191029113416731">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/grpc/http2.png" alt="image-20191029113416731">&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>支持单条链路上的 Multiplexing，相比于 Request - Response 独占链路，基于 Frame 实现更高效利用链路&lt;/p>
@@ -1110,7 +1110,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中，&lt;/p>
 &lt;p>pluginArtifact 指定了 Dubbo 定制版本的 Java Protobuf Compiler 插件，通过这个插件来在编译过程中生成 Dubbo 定制版本的 gRPC stub。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;pluginArtifact&amp;gt;&lt;/span>org.apache.dubbo:protoc-gen-dubbo-java:1.19.0-SNAPSHOT:exe:${os.detected.classifier}&lt;span style="color:#268bd2">&amp;lt;/pluginArtifact&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>由于 &lt;code>protoc-gen-dubbo-java&lt;/code> 支持 gRPC 和 Dubbo 两种协议，可生成的 stub 类型，默认值是 gRPC，关于 dubbo 协议的使用可参见 &lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/quick-start/idl/">使用 Protobuf 开发 Dubbo 服务&lt;/a>。&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>由于 &lt;code>protoc-gen-dubbo-java&lt;/code> 支持 gRPC 和 Dubbo 两种协议，可生成的 stub 类型，默认值是 gRPC，关于 dubbo 协议的使用可参见 &lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/quick-start/idl/">使用 Protobuf 开发 Dubbo 服务&lt;/a>。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;pluginParameter&amp;gt;&lt;/span>grpc&lt;span style="color:#268bd2">&amp;lt;/pluginParameter&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
 &lt;li>
@@ -1118,7 +1118,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#586e75"># 运行以下 maven 命令&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ mvn clean compile
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>生成的 Stub 和消息类 如下：
-&lt;img src="https://dubbo.apache.org/imgs/blog/grpc/compiler-classes.png" alt="image-20191026130516896">&lt;/p>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/grpc/compiler-classes.png" alt="image-20191026130516896">&lt;/p>
 &lt;p>重点关注 GreeterGrpc ，包含了所有 gRPC 标准的 stub 类/方法，同时增加了 Dubbo 特定的接口，之后 Provider 端的服务暴露和 Consumer 端的服务调用都将依赖这个接口。&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#586e75">/**
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#586e75"> * Code generated for Dubbo
@@ -1315,7 +1315,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;/ol>
 &lt;p>&lt;strong>三、TLS 配置&lt;/strong>&lt;/p>
-&lt;p>配置方式和 Dubbo 提供的通用的 &lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/advanced-features-and-usage/security/tls/">TLS 支持&lt;/a>一致，具体请参见文档&lt;/p>
+&lt;p>配置方式和 Dubbo 提供的通用的 &lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/security/tls/">TLS 支持&lt;/a>一致，具体请参见文档&lt;/p>
 &lt;h3 id="示例-2-使用-protobuf-开发-dubbo-服务">示例 2， 使用 Protobuf 开发 Dubbo 服务&lt;/h3>
 &lt;p>下面，我们以一个&lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-protobuf">具体的示例&lt;/a>来看一下基于 Protobuf 的 Dubbo 服务开发流程。&lt;/p>
 &lt;h4 id="1-定义服务">1. 定义服务&lt;/h4>
@@ -1378,7 +1378,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#586e75"># 运行以下 maven 命令&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">$mvn&lt;/span> clean compile
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>生成的 Java 类如下：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/grpc/compiler-protobuf.png" alt="image-20191028201240976">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/grpc/compiler-protobuf.png" alt="image-20191028201240976">&lt;/p>
 &lt;p>DemoServiceDubbo 为 Dubbo 定制的 stub&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">final&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">DemoServiceDubbo&lt;/span> &lt;span style="color:#719e07">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -1474,7 +1474,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System&lt;span style="color:#719e07">.&lt;/span>out&lt;span style="color:#719e07">.&lt;/span>println&lt;span style="color:#719e07">(&lt;/span>&lt;span style="color:#2aa198">&amp;#34;result: &amp;#34;&lt;/span> &lt;span style="color:#719e07">+&lt;/span> reply&lt;span style="color:#719e07">.&lt;/span>getMessage&lt;span style="color:#719e07">());&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System&lt;span style="color:#719e07">.&lt;/span>in&lt;span style="color:#719e07">.&lt;/span>read&lt;span style="color:#719e07">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: 本地存根和本地伪装</title><link>https://dubbo.apache.org/zh/blog/2019/10/22/%E6%9C%AC%E5%9C%B0%E5%AD%98%E6%A0%B9%E5%92%8C%E6%9C%AC%E5%9C%B0%E4%BC%AA%E8%A3%85/</link><pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/10/22/%E6%9C%AC%E5%9C%B0%E5%AD%98%E6%A0%B9%E5%92%8C%E6%9C%AC%E5%9C%B0%E4%BC%AA%E8%A3%85/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: 本地存根和本地伪装</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/10/22/%E6%9C%AC%E5%9C%B0%E5%AD%98%E6%A0%B9%E5%92%8C%E6%9C%AC%E5%9C%B0%E4%BC%AA%E8%A3%85/</link><pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/10/22/%E6%9C%AC%E5%9C%B0%E5%AD%98%E6%A0%B9%E5%92%8C%E6%9C%AC%E5%9C%B0%E4%BC%AA%E8%A3%85/</guid><description>
 &lt;h2 id="基本概念">基本概念&lt;/h2>
 &lt;p>典型的 RPC 调用客户端是依赖并且只依赖接口编程来进行远程调用的。在真正发起远程调用之前，用户往往需要做一些预处理的工作，比如提前校验参数。在拿到返回调用结果之后，用户可能需要缓存结果，或者是在调用失败的时候构造容错数据，而不是简单的抛出异常。&lt;/p>
 &lt;p>这个时候，用户可以编写出类似以下的代码来处理上面提出的这些场景：&lt;/p>
@@ -1502,7 +1502,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;/aop:config&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>为了进一步的方便用户做 Dubbo 开发，框架提出了本地存根 &lt;em>Stub&lt;/em> 和本地伪装 &lt;em>Mock&lt;/em> 的概念。通过约定大于配置的理念，进一步的简化了配置，使用起来更加方便，并且不依赖额外的 &lt;em>AOP&lt;/em> 框架就达到了 &lt;em>AOP&lt;/em> 的效果。&lt;/p>
 &lt;p>本地存根的工作方式与 &lt;em>AOP&lt;/em> 的 &lt;strong>around&lt;/strong> advice 类似，而本地伪装的工作方式等同于 &lt;em>AOP&lt;/em> 中的 &lt;strong>after-throwing&lt;/strong> advice，也就是说，只有当远程调用发生 &lt;em>exception&lt;/em> 的时候才会执行本地伪装。本地存根和本地伪装的工作流程如下图所示：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-mock-stub-flow.png" alt="dubbo-mock-stub-flow">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-mock-stub-flow.png" alt="dubbo-mock-stub-flow">&lt;/p>
 &lt;ol>
 &lt;li>服务消费者发起调用&lt;/li>
 &lt;li>如果服务消费者端存在本地存根 &lt;em>Stub&lt;/em> 的话，会先执行本地存根&lt;/li>
@@ -1669,7 +1669,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;p>/zh/docsv2.7/user/examples/local-mock/&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Blog: 研究 Dubbo 网卡地址注册时的一点思考</title><link>https://dubbo.apache.org/zh/blog/2019/10/01/%E7%A0%94%E7%A9%B6-dubbo-%E7%BD%91%E5%8D%A1%E5%9C%B0%E5%9D%80%E6%B3%A8%E5%86%8C%E6%97%B6%E7%9A%84%E4%B8%80%E7%82%B9%E6%80%9D%E8%80%83/</link><pubDate>Tue, 01 Oct 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/10/01/%E7%A0%94%E7%A9%B6-dubbo-%E7%BD%91%E5%8D%A1%E5%9C%B0%E5%9D%80%E6%B3%A8%E5%86%8C%E6%97%B6%E7%9A%84%E4%B8%80%E7%82%B9%E6%80%9D%E8%80%83/</guid><description>
+&lt;/div></description></item><item><title>Blog: 研究 Dubbo 网卡地址注册时的一点思考</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/10/01/%E7%A0%94%E7%A9%B6-dubbo-%E7%BD%91%E5%8D%A1%E5%9C%B0%E5%9D%80%E6%B3%A8%E5%86%8C%E6%97%B6%E7%9A%84%E4%B8%80%E7%82%B9%E6%80%9D%E8%80%83/</link><pubDate>Tue, 01 Oct 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/10/01/%E7%A0%94%E7%A9%B6-dubbo-%E7%BD%91%E5%8D%A1%E5%9C%B0%E5%9D%80%E6%B3%A8%E5%86%8C%E6%97%B6%E7%9A%84%E4%B8%80%E7%82%B9%E6%80%9D%E8%80%83/</guid><description>
 &lt;h2 id="1-如何选择合适的网卡地址">1 如何选择合适的网卡地址&lt;/h2>
 &lt;p>可能相当一部分人还不知道我这篇文章到底要讲什么，我说个场景，大家应该就明晰了。在分布式服务调用过程中，以 Dubbo 为例，服务提供者往往需要将自身的 IP 地址上报给注册中心，供消费者去发现。在大多数情况下 Dubbo 都可以正常工作，但如果你留意过 Dubbo 的 github issue，其实有不少人反馈：Dubbo Provider 注册了错误的 IP。如果你能立刻联想到：多网卡、内外网地址共存、VPN、虚拟网卡等关键词，那我建议你一定要继续将本文看下去，因为我也想到了这些，它们都是本文所要探讨的东西！那么“如何选择合适的网卡地址”呢，Dubbo 现有的逻辑到底算不算完备？我们不急着回答它，而是带着这些问题一起进行研究，相信到文末，其中答案，各位看官自有评说。&lt;/p>
 &lt;h2 id="2-dubbo-是怎么做的">2 Dubbo 是怎么做的&lt;/h2>
@@ -1858,18 +1858,18 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;h2 id="5-干扰因素二tuntap-虚拟网络设备">5 干扰因素二：TUN/TAP 虚拟网络设备&lt;/h2>
 &lt;p>平时我们所说的虚拟网卡、虚拟机，大致都跟 TUN/TAP 有关。我的读者大多数是 Java 从业者，相信我下面的内容并没有太超纲，不要被陌生的名词唬住。对于被唬住的读者，也可以直接跳过 5.1~5.3，直接看 5.4 的实战。&lt;/p>
 &lt;h3 id="51-真实网卡工作原理">5.1 真实网卡工作原理&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/network/01.png" alt="1918847-496d0e96c237f25a">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/network/01.png" alt="1918847-496d0e96c237f25a">&lt;/p>
 &lt;p>上图中的 &lt;strong>eth0&lt;/strong> 表示我们主机已有的真实的网卡接口 (&lt;strong>interface&lt;/strong>)。&lt;/p>
 &lt;p>网卡接口 &lt;strong>eth0&lt;/strong> 所代表的真实网卡通过网线(&lt;strong>wire&lt;/strong>)和外部网络相连，该物理网卡收到的数据包会经由接口 &lt;strong>eth0&lt;/strong> 传递给内核的网络协议栈(&lt;strong>Network Stack&lt;/strong>)。然后协议栈对这些数据包进行进一步的处理。&lt;/p>
 &lt;p>对于一些错误的数据包,协议栈可以选择丢弃；对于不属于本机的数据包，协议栈可以选择转发；而对于确实是传递给本机的数据包,而且该数据包确实被上层的应用所需要，协议栈会通过 &lt;strong>Socket API&lt;/strong> 告知上层正在等待的应用程序。&lt;/p>
 &lt;h3 id="52-tun-工作原理">5.2 TUN 工作原理&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/network/02.png" alt="1918847-85ea08bc89d9427e">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/network/02.png" alt="1918847-85ea08bc89d9427e">&lt;/p>
 &lt;p>我们知道，普通的网卡是通过网线来收发数据包的话，而 &lt;strong>TUN&lt;/strong> 设备比较特殊，它通过一个文件收发数据包。&lt;/p>
 &lt;p>如上图所示，&lt;strong>tunX&lt;/strong> 和上面的 &lt;strong>eth0&lt;/strong> 在逻辑上面是等价的， &lt;strong>tunX&lt;/strong> 也代表了一个网络接口,虽然这个接口是系统通过软件所模拟出来的.&lt;/p>
 &lt;p>网卡接口 &lt;strong>tunX 所代表的虚拟网卡通过文件 /dev/tunX 与我们的应用程序(App)相连&lt;/strong>，应用程序每次使用 &lt;strong>write&lt;/strong> 之类的系统调用将数据写入该文件，这些数据会以网络层数据包的形式，通过该虚拟网卡，经由网络接口 &lt;strong>tunX&lt;/strong> 传递给网络协议栈，同时该应用程序也可以通过 &lt;strong>read&lt;/strong> 之类的系统调用，经由文件 &lt;strong>/dev/tunX&lt;/strong> 读取到协议栈向 &lt;strong>tunX&lt;/strong> 传递的&lt;strong>所有&lt;/strong>数据包。&lt;/p>
 &lt;p>此外，协议栈可以像操纵普通网卡一样来操纵 &lt;strong>tunX&lt;/strong> 所代表的虚拟网卡。比如说，给 &lt;strong>tunX&lt;/strong> 设定 &lt;strong>IP&lt;/strong> 地址，设置路由，总之，在协议栈看来，&lt;strong>tunX&lt;/strong> 所代表的网卡和其他普通的网卡区别不大，当然，硬要说区别，那还是有的,那就是 &lt;strong>tunX&lt;/strong> 设备不存在 &lt;strong>MAC&lt;/strong> 地址，这个很好理解，&lt;strong>tunX&lt;/strong> 只模拟到了网络层，要 &lt;strong>MAC&lt;/strong>地址没有任何意义。当然，如果是 &lt;strong>tapX&lt;/strong> 的话，在协议栈的眼中，&lt;strong>tapX&lt;/strong> 和真实网卡没有任何区别。&lt;/p>
 &lt;p>是不是有些懵了？我是谁，为什么我要在这篇文章里面学习 TUN！因为我们常用的 VPN 基本就是基于 TUN/TAP 搭建的，如果我们使用 &lt;strong>TUN&lt;/strong> 设备搭建一个基于 &lt;strong>UDP&lt;/strong> 的 &lt;strong>VPN&lt;/strong> ，那么整个处理过程可能是这幅样子：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/network/03.png" alt="1918847-ac4155ec7e9489b2">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/network/03.png" alt="1918847-ac4155ec7e9489b2">&lt;/p>
 &lt;h3 id="53-tap-工作原理">5.3 TAP 工作原理&lt;/h3>
 &lt;p>&lt;strong>TAP&lt;/strong> 设备与 &lt;strong>TUN&lt;/strong> 设备工作方式完全相同，区别在于：&lt;/p>
 &lt;ol>
@@ -1906,7 +1906,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RX bytes:0 &lt;span style="color:#719e07">(&lt;/span>0.0 B&lt;span style="color:#719e07">)&lt;/span> TX bytes:0 &lt;span style="color:#719e07">(&lt;/span>0.0 B&lt;span style="color:#719e07">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就解释了文章一开始为什么会有 tun0 这样的网卡了。这里读者可能会有疑惑，使用 ifconfig 不是也可以创建 tap 和 tun 网卡吗？当然啦，openvpn 是一个 vpn 工具，只能创建名为 tunX/tapX 的网卡，其遵守着一定的规范，ifconfig 可以随意创建，但没人认那些随意创建的网卡。&lt;/p>
 &lt;h2 id="6-干扰因素三多网卡">6 干扰因素三：多网卡&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/network/04.png" alt="image-20190429223515625">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/network/04.png" alt="image-20190429223515625">&lt;/p>
 &lt;p>这个没有太多好说的，有多张真实的网卡，从普哥那儿搞到如上的 IP 信息。&lt;/p>
 &lt;h2 id="7-mac-下的差异">7 MAC 下的差异&lt;/h2>
 &lt;p>虽然 ifconfig 等指令是 &lt;code>*nux&lt;/code> 通用的，但是其展示信息，网卡相关的属性和命名都有较大的差异。例如这是我 MAC 下执行 &lt;code>ifconfig -a&lt;/code> 的返回：&lt;/p>
@@ -2018,18 +2018,18 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">-&lt;/span>DDUBBO_IP_TO_BIND&lt;span style="color:#719e07">=&lt;/span>1&lt;span style="color:#719e07">.&lt;/span>2&lt;span style="color:#719e07">.&lt;/span>3&lt;span style="color:#719e07">.&lt;/span>4
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="9-参考文章">9 参考文章&lt;/h2>
 &lt;p>&lt;a href="https://www.jianshu.com/p/09f9375b7fa7">TUN/TAP 设备浅析&lt;/a>&lt;/p>
-&lt;p>&lt;a href="https://stackoverflow.com/questions/29958143/what-are-en0-en1-p2p-and-so-on-that-are-displayed-after-executing-ifconfig">what-are-en0-en1-p2p-and-so-on-that-are-displayed-after-executing-ifconfig&lt;/a>&lt;/p></description></item><item><title>Blog: Dubbo Admin服务测试功能</title><link>https://dubbo.apache.org/zh/blog/2019/08/26/service-test/</link><pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/08/26/service-test/</guid><description>
+&lt;p>&lt;a href="https://stackoverflow.com/questions/29958143/what-are-en0-en1-p2p-and-so-on-that-are-displayed-after-executing-ifconfig">what-are-en0-en1-p2p-and-so-on-that-are-displayed-after-executing-ifconfig&lt;/a>&lt;/p></description></item><item><title>Blog: Dubbo Admin服务测试功能</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/08/26/service-test/</link><pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/08/26/service-test/</guid><description>
 &lt;p>基于Dubbo2.7的元数据，Dubbo Admin实现了服务测试功能，可以通过泛化调用，在控制台上调用真实的服务提供者&lt;/p>
 &lt;h2 id="使用方式">使用方式&lt;/h2>
 &lt;ul>
 &lt;li>部署服务提供者： 可以在&lt;a href="https://github.com/nzomkxia/dubbo-demo">这里&lt;/a>下载demo，此工程基于spring boot，方便在IDE或者命令行启动，对于服务测试来说，只需要启动&lt;code>dubbo-basic-provider&lt;/code>即可。&lt;/li>
 &lt;li>服务查询： 完成服务端部署后，可以到Dubbo Admin的&lt;code>服务测试&lt;/code>页面上查询对应的服务:
-&lt;img src="https://dubbo.apache.org/imgs/blog/admin/testSearch.jpg" alt="testSearch">&lt;br>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/admin/testSearch.jpg" alt="testSearch">&lt;br>
 这里的信息和元数据类似，包含方法名，参数类型和返回值信息，点击右边的标签就可以进入服务测试页面&lt;/li>
 &lt;li>服务测试：
-&lt;img src="https://dubbo.apache.org/imgs/blog/admin/testSuccess.jpg" alt="testSuccess">&lt;br>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/admin/testSuccess.jpg" alt="testSuccess">&lt;br>
 服务测试页面包含了两个json编辑器，参数类型的信息都是以json格式保存，这里需要填入对应的参数值(本例中数类型时&lt;code>String&lt;/code>)，填写完成后点击&lt;code>执行&lt;/code>即可对服务端发起调用，调用结果展示在右边的编辑器中，如果调用失败，会显示详细的失败原因，下面来看一下调用失败的例子：&lt;br>
-&lt;img src="https://dubbo.apache.org/imgs/blog/admin/testFail.jpg" alt="testFail">
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/admin/testFail.jpg" alt="testFail">
 本例中，先关掉Dubbo服务提供者的进程，再执行服务测试，可以看到返回的结果是&lt;code>找不到服务提供者&lt;/code>的异常。和普通调用一样，业务和框架的异常都会返回在结果中，方便业务排查。&lt;/li>
 &lt;li>复合类型参数&lt;br>
 考虑&lt;code>UserService&lt;/code>中的以下方法和类型：&lt;/li>
@@ -2076,11 +2076,11 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>参数是比较复杂的符合类型参数，服务测试的时候，会逐层展开填写每一个field的值，如下图所示：&lt;br>
-&lt;img src="https://dubbo.apache.org/imgs/blog/admin/complex.jpg" alt="complex">
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/admin/complex.jpg" alt="complex">
 同样可以调用成功并且返回结果&lt;/p>
 &lt;h2 id="原理数据来源">原理：数据来源&lt;/h2>
 &lt;p>服务测试中，最重要的就是完整的方法签名信息，和参数的类型信息，有了这些信息才能够一步步填入每个参数的值，拼装出完整的服务消费者。在Dubbo2.7中，新增了元数据中心，Dubbo Admin的方法签名和参数类型信息就是从这里来的：&lt;br>
-&lt;img src="https://dubbo.apache.org/imgs/blog/admin/metadata.png" alt="medatada">
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/admin/metadata.png" alt="medatada">
 如图所示，服务端在运行的时候会将服务的元数据信息注册到元数据中心，格式如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
@@ -2159,11 +2159,11 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;h2 id="原理-泛化调用">原理： 泛化调用&lt;/h2>
 &lt;p>有了参数类型，下一个问题就是怎么能够调用到服务端，在传统的Dubbo RPC调用中，客户端需要依赖服务端的API jar包(参考前文demo中的&lt;a href="https://github.com/nzomkxia/dubbo-demo/tree/master/dubbo-basic-consumer">dubbo-basic-consumer&lt;/a>)，这对于Dubbo Admin来说不太可能，因为服务的上下线是动态的，Dubbo Admin无法动态增加jar包依赖，因此需要用到Dubbo中的&lt;strong>泛化调用&lt;/strong>，指的是在没有服务端API接口的情况下，客户端直接通过 &lt;code>GenericService&lt;/code> 接口来发起服务调用，返回值中的数据对象都用Map来表示。泛化调用在服务端不需要做特殊处理，只需要客户端发起即可。&lt;/p>
 &lt;h2 id="总结和展望">总结和展望&lt;/h2>
-&lt;p>本文简单介绍了服务测试的用法和原理，后续会进一步针对该功能进行增强，比如处理抽象类的参数类型，支持从json文件导入参数值，支持对参数值的保存等等，方便对服务接口进行回归测试。&lt;/p></description></item><item><title>Blog: 本地调用</title><link>https://dubbo.apache.org/zh/blog/2019/08/11/%E6%9C%AC%E5%9C%B0%E8%B0%83%E7%94%A8/</link><pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/08/11/%E6%9C%AC%E5%9C%B0%E8%B0%83%E7%94%A8/</guid><description>
+&lt;p>本文简单介绍了服务测试的用法和原理，后续会进一步针对该功能进行增强，比如处理抽象类的参数类型，支持从json文件导入参数值，支持对参数值的保存等等，方便对服务接口进行回归测试。&lt;/p></description></item><item><title>Blog: 本地调用</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/08/11/%E6%9C%AC%E5%9C%B0%E8%B0%83%E7%94%A8/</link><pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/08/11/%E6%9C%AC%E5%9C%B0%E8%B0%83%E7%94%A8/</guid><description>
 &lt;h3 id="本地调用介绍">本地调用介绍&lt;/h3>
 &lt;p>当一个应用既是一个服务的提供者，同时也是这个服务的消费者的时候，可以直接对本机提供的服务发起本地调用。从 &lt;code>2.2.0&lt;/code> 版本开始，Dubbo 默认在本地以 &lt;em>injvm&lt;/em> 的方式暴露服务，这样的话，在同一个进程里对这个服务的调用会优先走本地调用。&lt;/p>
 &lt;p>与本地对象上方法调用不同的是，Dubbo 本地调用会经过 Filter 链，其中包括了 Consumer 端的 Filter 链以及 Provider 端的 Filter 链。通过这样的机制，本地消费者和其他消费者都是统一对待，统一监控，服务统一进行治理。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-local-call-filter.png" alt="filter-chain">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-local-call-filter.png" alt="filter-chain">&lt;/p>
 &lt;p>同时，相比于远程调用来说，Dubbo 本地调用性能较优，省去了请求、响应的编解码及网络传输的过程。&lt;/p>
 &lt;p>要使用 Dubbo 本地调用不需做特殊配置，按正常 Dubbo 服务暴露服务即可。任一服务在暴露远程服务的同时，也会同时以 &lt;em>injvm&lt;/em> 的协议暴露本地服务。&lt;em>injvm&lt;/em> 是一个伪协议，不会像其他协议那样对外开启端口，只用于本地调用的目的。&lt;/p>
 &lt;p>以下面的 XML 配置为例：&lt;/p>
@@ -2204,7 +2204,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;dubbo:provider&lt;/span> injvm=&lt;span style="color:#2aa198">&amp;#34;true&amp;#34;&lt;/span> ...&lt;span style="color:#268bd2">/&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>但是通过 &lt;em>injvm&lt;/em> 来配置本地调用的方式已经被废弃。通过 &lt;em>scope&lt;/em> 的方式来控制是官方推荐的。&lt;/p>
 &lt;h3 id="总结">总结&lt;/h3>
-&lt;p>本文介绍了本地调用的概念以及带来的好处，并进一步的揭示了 dubbo 本地调用实际上是在当前进程中暴露了 &lt;em>injvm&lt;/em> 的协议，而该协议并不会对外暴露端口，然后讨论了如何通过 &lt;em>scope&lt;/em> 来细粒度的控制本地调用的行为，并强调了通过 &lt;em>invjm&lt;/em> 来配置的方式已经被废弃，在未来版本中可能会被删除。&lt;/p></description></item><item><title>Blog: 在 Dubbo 中使用 REST</title><link>https://dubbo.apache.org/zh/blog/2019/07/26/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8-rest/</link><pubDate>Fri, 26 Jul 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/07/26/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8-rest/</guid><description>
+&lt;p>本文介绍了本地调用的概念以及带来的好处，并进一步的揭示了 dubbo 本地调用实际上是在当前进程中暴露了 &lt;em>injvm&lt;/em> 的协议，而该协议并不会对外暴露端口，然后讨论了如何通过 &lt;em>scope&lt;/em> 来细粒度的控制本地调用的行为，并强调了通过 &lt;em>invjm&lt;/em> 来配置的方式已经被废弃，在未来版本中可能会被删除。&lt;/p></description></item><item><title>Blog: 在 Dubbo 中使用 REST</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/07/26/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8-rest/</link><pubDate>Fri, 26 Jul 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/07/26/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8-rest/</guid><description>
 &lt;h2 id="什么是-rest">什么是 REST&lt;/h2>
 &lt;p>REST 是 Roy Thomas Fielding &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> 在 2000 年他的博士论文 &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> “架构风格以及基于网络的软件架构设计” 中提出来的一个概念。REST 是 &lt;strong>RE&lt;/strong>presentational &lt;strong>S&lt;/strong>tate &lt;strong>T&lt;/strong>ransfer 的缩写，翻译过来就是 “表现层状态转化”。REST 就是 Roy 在这篇论文中提出的面向互联网的软件所应当具备的架构风格。&lt;/p>
 &lt;p>按照 REpresentational State Transfer 的字面意思，可以把应用看成是一个虚拟的状态机，软件提供的不是服务而是一系列的&lt;strong>资源&lt;/strong>，对这些资源的访问通过&lt;strong>统一的操作&lt;/strong>来访问，而返回的结果代表了资源状态的一次跃迁。REST 是一种架构风格，如果一个软件架构符合 REST 风格，就可以称之为 RESTful 架构。这个架构应当具备以下一些设计上的约束：资源具有唯一标示、资源之间有关联关系、使用标准的方式来访问、资源有多种表现形式、无状态交互。&lt;/p>
@@ -2228,7 +2228,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/li>
 &lt;/ul>
 &lt;p>其中的思路是利用 HTTP 协议的标准方法 POST、DELETE、PUT、GET 来表达对于一个资源的增删改查 (CRUD) 操作，利用 URL 来表示一个资源的唯一标识。对资源访问的错误码也复用 HTTP 协议的状态码。返回结果通常由 json 或 XML 来表示，如果其中包换了对关联资源的访问方式 (所谓的表现层状态迁移) ，这种类型的 RESTful 应用可以进一步的称之为 &lt;em>hypermedia as the engine of application state&lt;/em> (HATEOAS) 应用 &lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/rest-sample.png" alt="micro-image">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/rest-sample.png" alt="micro-image">&lt;/p>
 &lt;p>&lt;em>source: /imgs/blog/2019/07/26/rest/micro-image.png&lt;/em>&lt;/p>
 &lt;p>这里需要注意的是，按照 Roy 的定义，RESTful 架构风格与 HTTP 协议并没有什么强关联关系。但是，基于 HTTP 的 RESTful 架构风格是实现起来最自然，也是目前使用最广泛的一种实现，我们称之为 RESTful HTTP。同样的，在下文中将会专注在 HTTP 的场景下介绍如何在 Dubbo 框架中将服务暴露成 Restful 架构。&lt;/p>
 &lt;h2 id="在-dubbo-中使用-rest">在 Dubbo 中使用 REST&lt;/h2>
@@ -2790,9 +2790,9 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#268bd2">body&lt;/span>&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#268bd2">html&lt;/span>&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>再次重启服务器，并访问 &amp;ldquo;http://localhost:8080&amp;rdquo; 时，将会看到 swagger UI 页面的展示：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/swagger-ui.png" alt="swagger-ui">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/swagger-ui.png" alt="swagger-ui">&lt;/p>
 &lt;p>通过 Swagger UI 可以很方便的浏览当前服务器提供的 REST 服务的文档信息，甚至可以直接调用来做服务测试。以 &amp;lsquo;/api/users/{id}&amp;rsquo; 为例，测试结果如下图所示：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/swagger-ui-execute.png" alt="swagger-ui-execute">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/swagger-ui-execute.png" alt="swagger-ui-execute">&lt;/p>
 &lt;h2 id="总结">总结&lt;/h2>
 &lt;p>本文主要关注了在 Dubbo 中支持 REST 协议的情况。首先探索了 REST 概念的起源，澄清了 REST 是一种适合互联网的软件架构风格，进一步的说明了 REST 风格的架构可以与 HTTP 协议无关，但是 HTTP 协议的确是 REST 风格架构的最常用甚至是最佳的组合和搭档。然后讨论了如何在 Dubbo 中开发 REST HTTP 的几种典型用法，其中包括了通过不同的配置，如传统的 Spring XML，完全通过 annotation 来配置两种典型的用法，本文中没有涉及到的还有纯 API 编程方式，Spring Boot 配置方式也是完全可以的，因为篇幅原因没有提及；还讨论了如何通过不同的 REST server 来暴露 REST HTTP 服务，包括了 embedded tomcat，netty，以及外置的 servlet 容器等几种用法。最后，在外置的 servlet 容器的基础上，进一步的讨论了如何通过 Swagger 暴露 openAPI 以及集成 Swagger UI 的方法。&lt;/p>
 &lt;p>本文没有涉及的内容包含但不限于国际化支持、Dubbo REST 更高阶的注入扩展的用法、以及 Dubbo REST 支持未来的规划。其中 Dubbo REST 扩展的支持可以参考 &lt;a href="https://github.com/beiwei30/dubbo-rest-samples/tree/master/extensions">https://github.com/beiwei30/dubbo-rest-samples/tree/master/extensions&lt;/a> 中的演示。以后有机会会开专门的篇幅来探讨更高级的 Swagger 的支持、以及对未来的展望。&lt;/p>
@@ -2815,7 +2815,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;p>&lt;a href="https://www.webjars.org/documentation#servlet3">https://www.webjars.org/documentation#servlet3&lt;/a>&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Blog: 使用 Dubbo 连接异构微服务体系</title><link>https://dubbo.apache.org/zh/blog/2019/06/22/%E4%BD%BF%E7%94%A8-dubbo-%E8%BF%9E%E6%8E%A5%E5%BC%82%E6%9E%84%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%93%E7%B3%BB/</link><pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/06/22/%E4%BD%BF%E7%94%A8-dubbo-%E8%BF%9E%E6%8E%A5%E5%BC%82%E6%9E%84%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%93%E7%B3%BB/</guid><description>
+&lt;/div></description></item><item><title>Blog: 使用 Dubbo 连接异构微服务体系</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/06/22/%E4%BD%BF%E7%94%A8-dubbo-%E8%BF%9E%E6%8E%A5%E5%BC%82%E6%9E%84%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%93%E7%B3%BB/</link><pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/06/22/%E4%BD%BF%E7%94%A8-dubbo-%E8%BF%9E%E6%8E%A5%E5%BC%82%E6%9E%84%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BD%93%E7%B3%BB/</guid><description>
 &lt;p>从编程开发的角度来说，Dubbo 首先是一款 RPC 服务框架，它最大的优势在于提供了面向接口代理的服务编程模型，对开发者屏蔽了底层的远程通信细节。同时 Dubbo 也是一款服务治理框架，它为分布式部署的微服务提供了服务发现、流量调度等服务治理解决方案。&lt;/p>
 &lt;p>在这篇文章中，我们将以以上基础能力为背景，尝试突破 Dubbo 体系自身，探索如何利用 Dubbo 对多协议、多服务发现模型的支持，来实现异构微服务体系间的互联互通。在实际业务场景中，这可以用来解决异构技术体系共存场景下的通信问题，帮助公司实现在异构技术体系间作平滑迁移，解决大规模跨区域、多集群部署场景的地址发现及流量调度等问题。&lt;/p>
 &lt;h2 id="面向接口代理的透明服务开发框架">面向接口代理的透明服务开发框架&lt;/h2>
@@ -2837,13 +2837,13 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> greetingService&lt;span style="color:#719e07">.&lt;/span>sayHi&lt;span style="color:#719e07">(&lt;/span>&lt;span style="color:#2aa198">&amp;#34;Hello world!&amp;#34;&lt;/span>&lt;span style="color:#719e07">);&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>下图是 Dubbo 的基本工作原理图，服务提供者与服务消费者之间通过注册中心协调地址，通过约定的协议实现数据交换。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/architecture.png" alt="Dubbo basic work flow">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/architecture.png" alt="Dubbo basic work flow">&lt;/p>
 &lt;h2 id="同构异构微服务体系面临的问题">同构/异构微服务体系面临的问题&lt;/h2>
 &lt;p>关于 Dubbo 协议本身及其服务治理相关功能细节并不是本文的重点，我们今天将从一个更高的层次，来看看公司内部构建微服务体系所面的挑战，以及 Dubbo 能为架构选型和迁移等提供哪些解决思路。&lt;/p>
 &lt;p>一个公司内部的微服务可能都是基于某一个相同的服务框架开发的，比如说 Dubbo，对于这样的架构，我们称之为是&lt;strong>同构的微服务体系&lt;/strong>；而有些公司的微服务可能是使用多个不同的服务框架所建设，我们称之为&lt;strong>异构的微服务体系&lt;/strong>，多个不同技术栈微服务体系的共存在大型组织内还是非常普遍的，造成这种局面可能有很多原因。比如，可能是遗留系统带来的，也可能是公司正在做技术栈迁移，或者就是不同业务部门为了满足各自特殊需求而做的独立选型（这也意味着异构微服务体系的长期共存）。&lt;/p>
 &lt;p>&lt;strong>1. 异构微服务体系共存&lt;/strong>&lt;/p>
 &lt;p>我们很容易想到的一个挑战是：**不同的体系间通常是使用不同的 RPC 通信协议、部署独立的注册中心集群，面对这种多协议、多注册中心集群的场景，要如何实现相互之间透明的地址发现和透明的 RPC 调用？**如果我们什么都不做，那么每个微服务体系就只能感知到自己体系内的服务状态，流量也在各自的体系内封闭。而要做到从体系 A 平滑的迁移到体系 B，或者想长期的保持公司内部多个体系的共存，则解决不同体系间的互联互通，实现流量的透明调度将是非常重要的环节。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/microservices.png" alt="2">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/microservices.png" alt="2">&lt;/p>
 &lt;p>&lt;strong>2. Dubbo 体系内部&lt;/strong>&lt;/p>
 &lt;p>&lt;strong>多协议、多注册中心集群的问题在同构的微服务体系中也可能存在，尤其是当一个组织内部的微服务规模增长到一定量级的时候。&lt;/strong>&lt;/p>
 &lt;ul>
@@ -2858,7 +2858,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;h2 id="dubbo-体系内的多协议多注册中心机制">Dubbo 体系内的多协议、多注册中心机制&lt;/h2>
 &lt;p>我们将通过两个场景示例，来分别具体的讲一下 Dubbo 的多协议、多注册中心机制的使用方式和工作原理。&lt;/p>
 &lt;h3 id="多协议">多协议&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/multiregistries.png" alt="multiregistries.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/multiregistries.png" alt="multiregistries.png">&lt;/p>
 &lt;p>以上是使用 Dubbo 开发的一套微服务，服务间通信使用到了不同的协议，根据我们的调研发现，公司内部启用多协议其实是非常普遍需求，具体场景在此我们暂不做解释。&lt;/p>
 &lt;p>应用 B 作为服务提供者，发布了 5 个服务，其中：&lt;/p>
 &lt;ul>
@@ -2896,7 +2896,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;p>Dubbo 目前所支持的协议包括 Dubbo、REST、Thrift、gRPC、JsonRPC、Hessian 等，基本涵盖了业界大多数主流的 RPC 通信协议。需要注意的是，这些协议的支持都是以直接集成官方 Release 实现的形式来做的，我认为这是一个很好的选择，既保证了协议解析自身的稳定性，又能使 Dubbo 社区更专注的将更多的精力放在 Dubbo 外围服务治理能力的改善上。试想如果 Dubbo 社区自己为每个协议提供实现，那是要花费多少精力和时间才能使每种协议达到稳定的生产可用。&lt;/p>
 &lt;p>除了以上官方提供支持的协议之外，得益于 Dubbo 灵活的扩展机制，想要为 Dubbo 扩展协议非常容易，开发者可以随时为 Dubbo 增加更多的协议支持，包括自有协议扩展。&lt;/p>
 &lt;p>关于对 gRPC (HTTP/2) 协议的支持，请参阅上期文档&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-screen.png" alt="dubbo-screen.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-screen.png" alt="dubbo-screen.png">&lt;/p>
 &lt;h4 id="多协议能解决的问题">多协议能解决的问题&lt;/h4>
 &lt;ul>
 &lt;li>
@@ -2923,7 +2923,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/li>
 &lt;/ol>
 &lt;p>下面我们具体看一下，Dubbo 为多注册中心集群场景提供的解决方案。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/multisubscribe.png" alt="multisubscribe.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/multisubscribe.png" alt="multisubscribe.png">&lt;/p>
 &lt;p>上图有两个业务集群，分别部署在北京和上海，每个业务集群有自己独立的注册中心集群，要解决两个业务集群间服务的透明 RPC 通信问题。&lt;/p>
 &lt;ol>
 &lt;li>服务提供端，双注册中心发布&lt;/li>
@@ -2946,11 +2946,11 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;dubbo:reference&lt;/span> interface=&lt;span style="color:#2aa198">&amp;#34;org.apache.dubbo.samples.multi.registry.api.HelloService&amp;#34;&lt;/span> registry=&lt;span style="color:#2aa198">&amp;#34;shanghaiRegistry,shanghaiRegistry&amp;#34;&lt;/span>&lt;span style="color:#268bd2">/&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="dubbo-对异构注册中心集群的支持">Dubbo 对异构注册中心集群的支持&lt;/h4>
 &lt;p>虽然我们会做多注册中心集群部署，但通常情况下，我们部署的都是相同的注册中心产品，如都是 Zookeeper、Nacos；而对于注册中心迁移的场景，则要求 Dubbo 能提供对更多的注册中心产品的支持，或者最重要的要有很好的扩展能力。Dubbo 官方目前支持的注册中心实现有：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-screen2.png" alt="dubbo-screen2.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-screen2.png" alt="dubbo-screen2.png">&lt;/p>
 &lt;p>这里需要特别提到的一点是，当前 Dubbo 的服务注册/发现模型是以接口为粒度的，而从 2.7.5 版本开始，Dubbo 新引入了应用粒度的服务注册/发现模型。这一方面有助于优化 Dubbo 当前服务发现机制、提升服务容量，另一方面对于联通以 SpringCloud 为代表的微服务体系也非常重要（关于这点在下一章中有进一步提及）。更多关于《应用粒度服务发现：服务自省》的介绍，我们将在接下来的文章或文档中予以补充，请持续关注。&lt;/p>
 &lt;h4 id="多订阅带来的流量调度问题">多订阅带来的流量调度问题&lt;/h4>
 &lt;p>在引入多注册中心集群后，Dubbo 在流量选址时的多了一层注册中心集群间的负载均衡：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/cluster-lb.png" alt="cluster-lb.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/cluster-lb.png" alt="cluster-lb.png">&lt;/p>
 &lt;p>在 Cluster Invoker 这一级，我们支持的选址策略有（2.7.5+ 版本，具体使用请参见文档）：&lt;/p>
 &lt;ul>
 &lt;li>
@@ -2990,15 +2990,15 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/ul>
 &lt;h2 id="借助-dubbo-联通异构的微服务体系">借助 Dubbo 联通异构的微服务体系&lt;/h2>
 &lt;p>上文我们提到了在组织内存在异构微服务体系的各种合理可能性，现在我们来具体看一下异构微服务体系的实际场景，以及使用 Dubbo 实现互联互通的解决方法。首先我们先通过一张图来看一下，联通异构的微服务体系具体是一个什么样的场景。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/heterogeneous.png" alt="heterogeneous.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/heterogeneous.png" alt="heterogeneous.png">&lt;/p>
 &lt;p>如上图所示，我们有部分微服务可以是基于 SpringCloud、gRPC、K8S 或者是自建体系构建的，他们各自之间默认是相互隔离无法联通的。当我们再构建一套基于 Dubbo 的微服务体系时，则利用 Dubbo 的多协议、多服务发现模型，我们就可以做到和各个微服务体系间的两两之间的互联互通。进一步的，如图中橙色箭头所示，依赖 Dubbo 体系作为桥接层，我们还可以实现两个异构微服务体系间的打通。&lt;/p>
 &lt;p>对于以下几个示例场景，由于在地址发现层面目前没有统一的标准，我们暂且假设地址发现层面不同的体系建是没有障碍的，我们将重点关注迁移的基本流程以及通信协议环节。（关于地址发现部分，我们将在后续《服务自省：基于应用粒度的服务发现》之后再深入探讨）&lt;/p>
 &lt;h3 id="dubbo-体系内的协议迁移共存">Dubbo 体系内的协议迁移（共存）&lt;/h3>
 &lt;p>绝大多数开发者对 Dubbo 有这么一个固有认知：使用 Dubbo 开发微服务系统，则就要用 Dubbo 协议来作为服务间的通信协议才是最优方案。实际上，我们完全没有必要只束缚在 Dubbo RPC 协议上。Dubbo 作为微服务开发框架和 Dubbo 作为 RPC 协议这是两个概念，其实是完全可以分开来看待的，比如我们用 Dubbo 框架开发的业务系统，选用 rest、gRPC 通信是完全没有问题的（参加 Dubbo 支持的协议列表），具体用什么协议根据业务特点和技术规划才是最适合的。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/grpcrest.png" alt="grpcrest.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/grpcrest.png" alt="grpcrest.png">&lt;/p>
 &lt;p>当前在云原生、Mesh 的大背景下， HTTP1/2、gRPC 协议开始受到越来越多的关注，一方面原因自然是因为它们在标准化方面做的更好，得到的更多的网络设备和基础设施的支持，具备更好的通用性和穿透性。对于很多有云原生迁移意愿的企业来说，往此类协议迁移无疑将对之后的架构升级有更多的帮助。&lt;/p>
 &lt;p>下图演示了在 Dubbo 体系内，从 Dubbo 协议向 gRPC 协议迁移的一个中间状态。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/migrate.png" alt="migrate.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/migrate.png" alt="migrate.png">&lt;/p>
 &lt;ul>
 &lt;li>最左边的代表尚未迁移的老应用，这类应用在迁移过程中仍然要消费和提供 Dubbo 协议的服务。&lt;/li>
 &lt;li>中间的代表处于迁移中的应用，他们中间可能有些是服务提供者，既要为左边的老系统提供提供 Dubbo 协议服务；又要为右边的新系统提供 gRPC 服务；因此他们都是双协议暴露服务。&lt;/li>
@@ -3007,7 +3007,7 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;/ul>
 &lt;h3 id="spring-cloud-体系迁移到-dubbo-体系共存">Spring Cloud 体系迁移到 Dubbo 体系（共存）&lt;/h3>
 &lt;p>如前文所述，由于 SpringCloud 和 Dubbo 间服务发现模型的问题，要两个体系间的地址互通需要 Dubbo 侧作相应的适配，关于这部分内容将在接下来的 2.7.5 版本《服务自省》部分发布，在此我们暂且认为已经打通。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/migrate-final.png" alt="migrate-final.png">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/migrate-final.png" alt="migrate-final.png">&lt;/p>
 &lt;p>Dubbo 体系内的部分应用作为透明的联通两个体系的关键节点，部分服务提供者应用要双协议发布、部分消费者应用要做到选定协议消费。由于老的 Spring Cloud 体系不允许做任何改动，因此联通两套体系的关键是 REST 协议，对 Dubbo 侧的应用来说：&lt;/p>
 &lt;ul>
 &lt;li>部分应用可能要以 REST 协议消费 SpringCloud 的服务；&lt;/li>
@@ -3023,8 +3023,8 @@ Dubbo这边有没有集合文档展示和测试功能,能不用写文档就能�
 &lt;p>这个场景和上一节中讲到的的 SpringCloud 迁移有些类似，最大的区别在于 rest 协议是 Dubbo 官方默认提供支持的，而对于已有的微服务体系内的私有通信协议，则需要先要自己去扩展 Dubbo Protocol 来提供协议层面的支持，关于 Protocol 如何扩展请参见以下官方文档：&lt;/p>
 &lt;p>/zh/docs/dev/impls/protocol.html&lt;/p>
 &lt;h2 id="总结与展望">总结与展望&lt;/h2>
-&lt;p>要实现异构微服务体系间的共存或迁移，关键点在打通异构体系间的&lt;code>协议&lt;/code>与&lt;code>服务发现&lt;/code>，得益于 Dubbo 自身对多协议、多注册模型的支持，我们可以很容易的使 Dubbo 成为桥接异构微服务体系的中间层。熟悉 Dubbo 多协议实现细节的同学，可能会担心在服务数量较多的场景下，多协议注册会导致地址数量翻倍从而影响地址推送性能；另外在文中《借助 Dubbo 联通异构的微服务体系》一节，关于如何实现异构体系间的透明服务发现部分我们没有做详细的说明。关于涉及服务发现的这部分，我们将在接下来的文章中做具体阐述，看看 Dubbo 2.7.5 版本引入新的服务发现机制是如何解决这个问题的，请持续关注后续文章及 Dubbo 官方文档。&lt;/p></description></item><item><title>Blog: Dubbo可扩展机制源码解析</title><link>https://dubbo.apache.org/zh/blog/2019/05/02/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</link><pubDate>Thu, 02 May 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/05/02/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</guid><description>
-&lt;p>在&lt;a href="https://dubbo.apache.org/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/" title="">Dubbo可扩展机制实战&lt;/a>中，我们了解了Dubbo扩展机制的一些概念，初探了Dubbo中LoadBalance的实现，并自己实现了一个LoadBalance。是不是觉得Dubbo的扩展机制很不错呀，接下来，我们就深入Dubbo的源码，一睹庐山真面目。&lt;/p>
+&lt;p>要实现异构微服务体系间的共存或迁移，关键点在打通异构体系间的&lt;code>协议&lt;/code>与&lt;code>服务发现&lt;/code>，得益于 Dubbo 自身对多协议、多注册模型的支持，我们可以很容易的使 Dubbo 成为桥接异构微服务体系的中间层。熟悉 Dubbo 多协议实现细节的同学，可能会担心在服务数量较多的场景下，多协议注册会导致地址数量翻倍从而影响地址推送性能；另外在文中《借助 Dubbo 联通异构的微服务体系》一节，关于如何实现异构体系间的透明服务发现部分我们没有做详细的说明。关于涉及服务发现的这部分，我们将在接下来的文章中做具体阐述，看看 Dubbo 2.7.5 版本引入新的服务发现机制是如何解决这个问题的，请持续关注后续文章及 Dubbo 官方文档。&lt;/p></description></item><item><title>Blog: Dubbo可扩展机制源码解析</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/05/02/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</link><pubDate>Thu, 02 May 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/05/02/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</guid><description>
+&lt;p>在&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/" title="">Dubbo可扩展机制实战&lt;/a>中，我们了解了Dubbo扩展机制的一些概念，初探了Dubbo中LoadBalance的实现，并自己实现了一个LoadBalance。是不是觉得Dubbo的扩展机制很不错呀，接下来，我们就深入Dubbo的源码，一睹庐山真面目。&lt;/p>
 &lt;h2 id="extensionloader">ExtensionLoader&lt;/h2>
 &lt;p>ExtensionLoader 是最核心的类，负责扩展点的加载和生命周期管理。我们就以这个类开始吧。
 ExtensionLoader 的方法比较多，比较常用的方法有:&lt;/p>
@@ -3197,7 +3197,7 @@ ExtensionLoader 的方法比较多，比较常用的方法有:&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> objectFactory &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">(&lt;/span>type &lt;span style="color:#719e07">==&lt;/span> ExtensionFactory&lt;span style="color:#719e07">.&lt;/span>class &lt;span style="color:#719e07">?&lt;/span> &lt;span style="color:#cb4b16">null&lt;/span> &lt;span style="color:#719e07">:&lt;/span> ExtensionLoader&lt;span style="color:#719e07">.&lt;/span>getExtensionLoader&lt;span style="color:#719e07">(&lt;/span>ExtensionFactory&lt;span style="color:#719e07">.&lt;/span>class&lt;span style="color:#719e07">).&lt;/span>getAdaptiveExtension&lt;span style="color:#719e07">());&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>objectFacory本身也是一个扩展，通过&lt;code>ExtensionLoader.getExtensionLoader(ExtensionFactory.class).getAdaptiveExtension())&lt;/code>来获取。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-extensionfactory.png" alt="Dubbo-ExtensionFactory" title="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-extensionfactory.png" alt="Dubbo-ExtensionFactory" title="">&lt;/p>
 &lt;p>ExtensionFactory 有三个实现：&lt;/p>
 &lt;ol>
 &lt;li>SpiExtensionFactory：Dubbo自己的Spi去加载Extension&lt;/li>
@@ -3367,34 +3367,34 @@ ProtocolFilterWrapper代码如下：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">destroy&lt;/span>&lt;span style="color:#719e07">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看到Protocol接口中有4个方法，但只有export和refer两个方法使用了@Adaptive注解。Dubbo自动生成的自适应实例，只有@Adaptive修饰的方法才有具体的实现。所以，Protocol$Adaptive 类中，也只有export和refer这两个方法有具体的实现，其余方法都是抛出异常。&lt;/p></description></item><item><title>Blog: Dubbo 一致性Hash负载均衡实现剖析</title><link>https://dubbo.apache.org/zh/blog/2019/05/01/dubbo-%E4%B8%80%E8%87%B4%E6%80%A7hash%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0%E5%89%96%E6%9E%90/</link><pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/05/01/dubbo-%E4%B8%80%E8%87%B4%E6%80%A7hash%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0%E5%89%96%E6%9E%90/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看到Protocol接口中有4个方法，但只有export和refer两个方法使用了@Adaptive注解。Dubbo自动生成的自适应实例，只有@Adaptive修饰的方法才有具体的实现。所以，Protocol$Adaptive 类中，也只有export和refer这两个方法有具体的实现，其余方法都是抛出异常。&lt;/p></description></item><item><title>Blog: Dubbo 一致性Hash负载均衡实现剖析</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/05/01/dubbo-%E4%B8%80%E8%87%B4%E6%80%A7hash%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0%E5%89%96%E6%9E%90/</link><pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/05/01/dubbo-%E4%B8%80%E8%87%B4%E6%80%A7hash%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0%E5%89%96%E6%9E%90/</guid><description>
 &lt;p>需要强调的是，Dubbo的Hash映射模型与大部分网上资料描述的&lt;strong>环形队列Hash映射模型&lt;/strong>是存在一些区别的。于我而言，环形队列Hash映射模型，不足以让我对一致性Hash有足够彻底的了解。直到看懂了Dubbo的一致性Hash的实现，才觉得豁然开朗。&lt;/p>
 &lt;h3 id="一环形队列hash映射模型">一、环形队列Hash映射模型&lt;/h3>
 &lt;p>这种方案，其基础还是基于取模运算。对2^32取模，那么，Hash值的区间为[0, 2^32-1]。接下来要做的，就包括两部分：&lt;/p>
 &lt;h4 id="a映射服务">&lt;strong>a、映射服务&lt;/strong>&lt;/h4>
 &lt;p>将服务地址（ip+端口）按照一定规则构造出特定的识别码（如md5码），再用识别码对2^32取模，确定服务在Hash值区间对应的位置。假设有Node1、Node2、Node3三个服务，其映射关系如下：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/consistenthash/consistent-hash-init-model.jpg" alt="Init">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/consistenthash/consistent-hash-init-model.jpg" alt="Init">&lt;/p>
 &lt;h4 id="b映射请求定位服务">&lt;strong>b、映射请求、定位服务&lt;/strong>&lt;/h4>
 &lt;p>在发起请求时，我们往往会带上参数，而这些参数，就可以被我们用来确定具体调用哪一个服务。假设有请求R1、R2、R3，对它们的参数也经过计算特定识别码、取余的一系列运算之后，有如下映射关系：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/consistenthash/consistent-hash-request-model.jpg" alt="Request">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/consistenthash/consistent-hash-request-model.jpg" alt="Request">&lt;/p>
 &lt;p>从图中，我们可以看到，R1请求映射在0-Node1中间，R2请求映射在Node1-Node2中间，R3请求映射在Node2-Node3中间。我们取&lt;strong>服务Hash值大于请求Hash值&lt;/strong>的&lt;strong>第一个服务&lt;/strong>作为实际的调用服务。也就是说，R1请求将调用Node1服务，R2请求将调用Node2服务，R3请求将调用Node3服务。&lt;/p>
 &lt;h4 id="c新增服务节点">&lt;strong>c、新增服务节点&lt;/strong>&lt;/h4>
 &lt;p>假设新增服务Node4，映射在Node3之前，恰巧破坏了原来的一个映射关系：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/consistenthash/consistent-hash-new-node-model.jpg" alt="New Node">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/consistenthash/consistent-hash-new-node-model.jpg" alt="New Node">&lt;/p>
 &lt;p>这样，请求R3将会实际调用服务Node4，但请求R1、R2不受影响。&lt;/p>
 &lt;h4 id="d删除服务节点">&lt;strong>d、删除服务节点&lt;/strong>&lt;/h4>
 &lt;p>假设服务Node2宕机，那么R2请求将会映射到Node3：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/consistenthash/consistent-hash-delete-node-model.jpg" alt="Delete Node">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/consistenthash/consistent-hash-delete-node-model.jpg" alt="Delete Node">&lt;/p>
 &lt;p>原本的R1、R3请求不受影响。&lt;/p>
 &lt;blockquote>
 &lt;p>可以看出，当新增、删除服务时，受影响的请求是有限的。不至于像简单取模映射一般，服务发生变化时，需要调整全局的映射关系。&lt;/p>
 &lt;/blockquote>
 &lt;h4 id="e平衡性与虚拟节点">&lt;strong>e、平衡性与虚拟节点&lt;/strong>&lt;/h4>
 &lt;p>在我们上面的假设中，我们假设Node1、Node2、Node3三个服务在经过Hash映射后所分布的位置恰巧把环切成了均等的三分，请求的分布也基本是平衡的。但是实际上计算服务Hash值的时候，是很难这么巧的。也许一不小心就映射成了这个样子：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/consistenthash/consistent-hash-balance-model.jpg" alt="Balance">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/consistenthash/consistent-hash-balance-model.jpg" alt="Balance">&lt;/p>
 &lt;p>这样，就会导致大部分请求都会被映射到Node1上。因此，引出了虚拟节点。&lt;/p>
 &lt;p>所谓虚拟节点，就是除了对服务本身地址进行Hash映射外，还通过在它地址上做些处理（比如Dubbo中，在ip+port的字符串后加上计数符1、2、3&amp;hellip;&amp;hellip;，分别代表虚拟节点1、2、3），以达到同一服务映射多个节点的目的。通过引入虚拟节点，我们可以把上图中映射给Node1的请求进一步拆分：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/consistenthash/consistent-hash-virtual-node-model.jpg" alt="Virtual Node">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/consistenthash/consistent-hash-virtual-node-model.jpg" alt="Virtual Node">&lt;/p>
 &lt;p>如上图所示，若有请求落在Node3-Node1&amp;rsquo;区间，该请求应该是调用Node1&amp;rsquo;服务，但是因为Node1&amp;rsquo;是Node1的虚拟节点，所以实际调用的是Node1服务。通过引入虚拟节点，请求的分布就会比较平衡了。&lt;/p>
 &lt;h3 id="二dubbo一致性hash的使用与负载均衡策略的引入阶段">&lt;strong>二、Dubbo一致性Hash的使用与负载均衡策略的引入阶段&lt;/strong>&lt;/h3>
 &lt;h4 id="a如何使用一致性hash作为dubbo的负载均衡策略">&lt;strong>a、如何使用一致性Hash作为Dubbo的负载均衡策略？&lt;/strong>&lt;/h4>
@@ -3546,7 +3546,7 @@ ProtocolFilterWrapper代码如下：&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>argumentIndex是在初始化Selector的时候一起赋值的，代表着需要用哪几个请求参数作Hash映射获取Invoker。比如：有方法methodA(Integer a, Integer b, Integer c)，如果argumentIndex的值为{0,2}，那么即用a和c拼接的字符串来计算Hash值。&lt;/p>
 &lt;p>我们已经知道virtualInvokers是一个TreeMap，TreeMap的底层实现是红黑树。对于TreeMap的方法ceilingEntry(hash)，它的作用是用来&lt;strong>获取比传入值大的第一个元素&lt;/strong>。可以看到，这一点与一般的一致性Hash算法的处理逻辑完全是相同的。&lt;/p>
 &lt;p>但这里的回环逻辑有点不同。对于取模运算来讲，大于最大值后，会自动回环从0开始，而这里的逻辑是：当没有比传入ceilingEntry()方法中的值大的元素的时候，virtualInvokers.ceilingEntry(hash)必然会得到null，于是，就用virtualInvokers.firstEntry()来获取整个TreeMap的第一个元素。&lt;/p>
-&lt;p>从selectForKey中获取到Invoker后，负载均衡策略也就算是执行完毕了。后续获取远程调用客户端等调用流程不再赘述。&lt;/p></description></item><item><title>Blog: Dubbo可扩展机制实战</title><link>https://dubbo.apache.org/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/</link><pubDate>Thu, 25 Apr 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/</guid><description>
+&lt;p>从selectForKey中获取到Invoker后，负载均衡策略也就算是执行完毕了。后续获取远程调用客户端等调用流程不再赘述。&lt;/p></description></item><item><title>Blog: Dubbo可扩展机制实战</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/</link><pubDate>Thu, 25 Apr 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/</guid><description>
 &lt;h2 id="1-dubbo的扩展机制">1. Dubbo的扩展机制&lt;/h2>
 &lt;p>在Dubbo的官网上，Dubbo描述自己是一个高性能的RPC框架。今天我想聊聊Dubbo的另一个很棒的特性, 就是它的可扩展性。
 如同罗马不是一天建成的，任何系统都一定是从小系统不断发展成为大系统的，想要从一开始就把系统设计的足够完善是不可能的，相反的，我们应该关注当下的需求，然后再不断地对系统进行迭代。在代码层面，要求我们适当的对关注点进行抽象和隔离，在软件不断添加功能和特性时，依然能保持良好的结构和可维护性，同时允许第三方开发者对其功能进行扩展。在某些时候，软件设计者对扩展性的追求甚至超过了性能。&lt;/p>
@@ -3675,7 +3675,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">leastactive&lt;/span>&lt;span style="color:#719e07">=&lt;/span>com.alibaba.dubbo.rpc.cluster.loadbalance.LeastActiveLoadBalance
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">consistenthash&lt;/span>&lt;span style="color:#719e07">=&lt;/span>com.alibaba.dubbo.rpc.cluster.loadbalance.ConsistentHashLoadBalance
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看到文件中定义了4个LoadBalance的扩展实现。由于负载均衡的实现不是本次的内容，这里就不过多说明。只用知道Dubbo提供了4种负载均衡的实现，我们可以通过xml文件，properties文件，JVM参数显式的指定一个实现。如果没有，默认使用随机。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo_loadbalance.png" alt="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo_loadbalance.png" alt="">&lt;/p>
 &lt;ul>
 &lt;li>@Adaptive(&amp;ldquo;loadbalance&amp;rdquo;)
 @Adaptive注解修饰select方法，表明方法select方法是一个可自适应的方法。Dubbo会自动生成该方法对应的代码。当调用select方法时，会根据具体的方法参数来决定调用哪个扩展实现的select方法。@Adaptive注解的参数&lt;code>loadbalance&lt;/code>表示方法参数中的loadbalance的值作为实际要调用的扩展实例。
@@ -3718,7 +3718,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;li>Dubbo的扩展机制能很好的支持第三方IoC容器，默认支持Spring Bean，可自己扩展来支持其他容器，比如Google的Guice。&lt;/li>
 &lt;li>切换扩展点的实现，只需要在配置文件中修改具体的实现，不需要改代码。使用方便。&lt;/li>
 &lt;/ul>
-&lt;p>下一篇，我们将会一起深入Dubbo的源码，更深入的了解Dubbo的可扩展机制。&lt;/p></description></item><item><title>Blog: 提前if判断帮助CPU分支预测</title><link>https://dubbo.apache.org/zh/blog/2019/02/03/%E6%8F%90%E5%89%8Dif%E5%88%A4%E6%96%AD%E5%B8%AE%E5%8A%A9cpu%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/</link><pubDate>Sun, 03 Feb 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/02/03/%E6%8F%90%E5%89%8Dif%E5%88%A4%E6%96%AD%E5%B8%AE%E5%8A%A9cpu%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/</guid><description>
+&lt;p>下一篇，我们将会一起深入Dubbo的源码，更深入的了解Dubbo的可扩展机制。&lt;/p></description></item><item><title>Blog: 提前if判断帮助CPU分支预测</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/02/03/%E6%8F%90%E5%89%8Dif%E5%88%A4%E6%96%AD%E5%B8%AE%E5%8A%A9cpu%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/</link><pubDate>Sun, 03 Feb 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/02/03/%E6%8F%90%E5%89%8Dif%E5%88%A4%E6%96%AD%E5%B8%AE%E5%8A%A9cpu%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/</guid><description>
 &lt;h2 id="分支预测">分支预测&lt;/h2>
 &lt;p>在stackoverflow上有一个非常有名的问题：&lt;a href="https://stackoverflow.com/questions/11227809/why-is-it-faster-to-process-a-sorted-array-than-an-unsorted-array">为什么处理有序数组要比非有序数组快？&lt;/a>，可见分支预测对代码运行效率有非常大的影响。&lt;/p>
 &lt;p>现代CPU都支持分支预测(branch prediction)和指令流水线(instruction pipeline)，这两个结合可以极大提高CPU效率。对于像简单的if跳转，CPU是可以比较好地做分支预测的。但是对于switch跳转，CPU则没有太多的办法。switch本质上是据索引，从地址数组里取地址再跳转。&lt;/p>
@@ -3834,7 +3834,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;ul>
 &lt;li>switch对于CPU来说难以做分支预测&lt;/li>
 &lt;li>某些switch条件如果概率比较高，可以考虑单独提前if判断，充分利用CPU的分支预测机制&lt;/li>
-&lt;/ul></description></item><item><title>Blog: 浅谈 RPC</title><link>https://dubbo.apache.org/zh/blog/2019/01/07/%E6%B5%85%E8%B0%88-rpc/</link><pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2019/01/07/%E6%B5%85%E8%B0%88-rpc/</guid><description>
+&lt;/ul></description></item><item><title>Blog: 浅谈 RPC</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/01/07/%E6%B5%85%E8%B0%88-rpc/</link><pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/01/07/%E6%B5%85%E8%B0%88-rpc/</guid><description>
 &lt;p>近几年随着微服务化项目的崛起，逐渐成为许多公司中大型分布式系统架构的主流方式，而今天所说的 RPC 在这其中扮演着至关重要的角色。随着这段日子公司项目微服务化的演进，发现在日常开发中都在隐式或显式的使用 RPC，一些刚刚接触 RPC 的小伙伴会感觉无所适从，而一些入行多年的老手虽然使用 RPC 经验丰富，但有些对其原理也一知半解，缺乏对原理的深入理解，往往也会造成开发中的一些误用。&lt;/p>
 &lt;h2 id="什么是rpc">什么是RPC？&lt;/h2>
 &lt;p>RPC（Remote Procedure Call）—远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。也就是说两台服务器A，B，一个应用部署在A服务器上，想要调用B服务器上应用提供的方法，由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。&lt;/p>
@@ -3856,10 +3856,10 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;li>Server-stub&lt;/li>
 &lt;li>Server&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/rpc/rpc-structure-1.png" alt="RPC结构">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/rpc/rpc-structure-1.png" alt="RPC结构">&lt;/p>
 &lt;p>这里 user 就是 client 端，当 user 想发起一个远程调用时，它实际是通过本地调用 user-stub。user-stub 负责将调用的接口、方法和参数通过约定的协议规范进行编码并通过本地的 RPCRuntime 实例传输到远端的实例。远端 RPCRuntime 实例收到请求后交给 server-stub 进行解码后发起本地端调用，调用结果再返回给 user 端。&lt;/p>
 &lt;p>以上是粗粒度的 RPC 实现概念结构，接下来我们进一步细化它应该由哪些组件构成，如下图所示。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/rpc/rpc-structure-2.png" alt="RPC 结构拆解">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/rpc/rpc-structure-2.png" alt="RPC 结构拆解">&lt;/p>
 &lt;p>RPC 服务方通过 RpcServer 去导出（export）远程接口方法，而客户方通过 RpcClient 去引入（import）远程接口方法。客户方像调用本地方法一样去调用远程接口方法，RPC 框架提供接口的代理实现，实际的调用将委托给代理RpcProxy 。代理封装调用信息并将调用转交给RpcInvoker 去实际执行。在客户端的RpcInvoker 通过连接器RpcConnector 去维持与服务端的通道RpcChannel，并使用RpcProtocol 执行协议编码（encode）并将编码后的请求消息通过通道发送给服务方。&lt;/p>
 &lt;p>RPC 服务端接收器 RpcAcceptor 接收客户端的调用请求，同样使用RpcProtocol 执行协议解码（decode）。解码后的调用信息传递给RpcProcessor 去控制处理调用过程，最后再委托调用给RpcInvoker 去实际执行并返回调用结果。如下是各个部分的详细职责：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>1. RpcServer
@@ -3901,7 +3901,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 数据传输通道
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="rpc-工作原理">RPC 工作原理&lt;/h2>
 &lt;p>RPC的设计由Client，Client stub，Network ，Server stub，Server构成。 其中Client就是用来调用服务的，Cient stub是用来把调用的方法和参数序列化的（因为要在网络中传输，必须要把对象转变成字节），Network用来传输这些信息到Server stub， Server stub用来把这些信息反序列化的，Server就是服务的提供者，最终调用的就是Server提供的方法。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/rpc/rpc-work-principle.png" alt="RPC工作原理">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/rpc/rpc-work-principle.png" alt="RPC工作原理">&lt;/p>
 &lt;ol>
 &lt;li>
 &lt;p>Client像调用本地服务似的调用远程服务；&lt;/p>
@@ -3954,7 +3954,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/ul>
 &lt;p>RPC的目的是让你在本地调用远程的方法，而对你来说这个调用是透明的，你并不知道这个调用的方法是部署哪里。通过RPC能解耦服务，这才是使用RPC的真正目的。&lt;/p>
 &lt;h2 id="总结">总结&lt;/h2>
-&lt;p>这篇文章介绍了 RPC 的一些基本原理，相信到这里您已经对 RPC 有了一定理解。其实发现实现一个 RPC 不算难，难的是实现一个高性能高可靠的RPC框架。比如，既然是分布式了，那么一个服务可能有多个实例，你在调用时，要如何获取这些实例的地址呢？这时候就需要一个服务注册中心，比如在Dubbo中，就可以使用Zookeeper作为注册中心，在调用时，从Zookeeper获取服务的实例列表，再从中选择一个进行调用。那么选哪个调用好呢？这时候就需要负载均衡了，于是你又得考虑如何实现复杂均衡，比如Dubbo就提供了好几种负载均衡策略。所以请继续关注我的另外两篇文章&lt;strong>RPC与服务化的关系&lt;/strong>和&lt;strong>注册中心，配置中心， 服务发现浅谈&lt;/strong>，相信会帮助对RPC设计和实现有更多的理解。&lt;/p></description></item><item><title>Blog: Dubbo服务分组和版本聚合</title><link>https://dubbo.apache.org/zh/blog/2018/10/27/dubbo%E6%9C%8D%E5%8A%A1%E5%88%86%E7%BB%84%E5%92%8C%E7%89%88%E6%9C%AC%E8%81%9A%E5%90%88/</link><pubDate>Sat, 27 Oct 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/10/27/dubbo%E6%9C%8D%E5%8A%A1%E5%88%86%E7%BB%84%E5%92%8C%E7%89%88%E6%9C%AC%E8%81%9A%E5%90%88/</guid><description>
+&lt;p>这篇文章介绍了 RPC 的一些基本原理，相信到这里您已经对 RPC 有了一定理解。其实发现实现一个 RPC 不算难，难的是实现一个高性能高可靠的RPC框架。比如，既然是分布式了，那么一个服务可能有多个实例，你在调用时，要如何获取这些实例的地址呢？这时候就需要一个服务注册中心，比如在Dubbo中，就可以使用Zookeeper作为注册中心，在调用时，从Zookeeper获取服务的实例列表，再从中选择一个进行调用。那么选哪个调用好呢？这时候就需要负载均衡了，于是你又得考虑如何实现复杂均衡，比如Dubbo就提供了好几种负载均衡策略。所以请继续关注我的另外两篇文章&lt;strong>RPC与服务化的关系&lt;/strong>和&lt;strong>注册中心，配置中心， 服务发现浅谈&lt;/strong>，相信会帮助对RPC设计和实现有更多的理解。&lt;/p></description></item><item><title>Blog: Dubbo服务分组和版本聚合</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/10/27/dubbo%E6%9C%8D%E5%8A%A1%E5%88%86%E7%BB%84%E5%92%8C%E7%89%88%E6%9C%AC%E8%81%9A%E5%90%88/</link><pubDate>Sat, 27 Oct 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/10/27/dubbo%E6%9C%8D%E5%8A%A1%E5%88%86%E7%BB%84%E5%92%8C%E7%89%88%E6%9C%AC%E8%81%9A%E5%90%88/</guid><description>
 &lt;p>我们在调用Dubbo服务的时候，一般只需要将Consumer端的&lt;code>dubbo:reference&lt;/code>指定成服务端中&lt;code>dubbo:service&lt;/code>暴露的服务，就可以找到服务端，完成调用，也就是说，Dubbo只需要服务接口信息就可以找到服务提供者。
 其实除了服务提供者以外，Dubbo也有服务分组和版本的概念，在客户端去寻找“匹配”的服务端的时候，需要服务接口，版本号，组别这三个信息都匹配，才算是一个有效的服务端：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">boolean&lt;/span> &lt;span style="color:#268bd2">isMatch&lt;/span>&lt;span style="color:#719e07">(&lt;/span>URL consumerUrl&lt;span style="color:#719e07">,&lt;/span> URL providerUrl&lt;span style="color:#719e07">)&lt;/span> &lt;span style="color:#719e07">{&lt;/span>
@@ -4117,7 +4117,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">throw&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RpcException&lt;span style="color:#719e07">(&lt;/span>&lt;span style="color:#2aa198">&amp;#34;There is no merger to merge result.&amp;#34;&lt;/span>&lt;span style="color:#719e07">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">return&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RpcResult&lt;span style="color:#719e07">(&lt;/span>result&lt;span style="color:#719e07">);&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里会根据返回值的类型，获取到对应的resultMerger，除了Dubbo默认实现的类型外，也可以自己指定merger类型并且添加相应的扩展，通过实现&lt;code>merge&lt;/code>方法类进行结果聚合。&lt;/p></description></item><item><title>Blog: Dubbo 协议详解</title><link>https://dubbo.apache.org/zh/blog/2018/10/05/dubbo-%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/</link><pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/10/05/dubbo-%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里会根据返回值的类型，获取到对应的resultMerger，除了Dubbo默认实现的类型外，也可以自己指定merger类型并且添加相应的扩展，通过实现&lt;code>merge&lt;/code>方法类进行结果聚合。&lt;/p></description></item><item><title>Blog: Dubbo 协议详解</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/10/05/dubbo-%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/</link><pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/10/05/dubbo-%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/</guid><description>
 &lt;h2 id="协议的概念">协议的概念&lt;/h2>
 &lt;p>协议是两个网络实体进行通信的基础，数据在网络上从一个实体传输到另一个实体，以字节流的形式传递到对端。在这个字节流的世界里，如果没有协议，就无法将这个一维的字节流重塑成为二维或者多维的数据结构以及领域对象。&lt;/p>
 &lt;h3 id="协议是什么">协议是什么&lt;/h3>
@@ -4174,7 +4174,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;h2 id="dubbo-协议">Dubbo 协议&lt;/h2>
 &lt;h3 id="协议概览">协议概览&lt;/h3>
 &lt;p>Dubbo 框架定义了私有的RPC协议，其中请求和响应协议的具体内容我们使用表格来展示。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/dev/dubbo_protocol_header.png" alt="/dev-guide/images/dubbo_protocol_header.jpg">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/dev/dubbo_protocol_header.png" alt="/dev-guide/images/dubbo_protocol_header.jpg">&lt;/p>
 &lt;h3 id="协议详情">协议详情&lt;/h3>
 &lt;ul>
 &lt;li>
@@ -4277,7 +4277,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/li>
 &lt;/ul>
 &lt;h2 id="总结">总结&lt;/h2>
-&lt;p>本文主要介绍了协议的概念和常用的协议模式，后面对 Dubbo 协议进行了详细分析，也提到了一些不足的地方，但是相对于其简洁性和易于实现性，以上提出的缺点不足以有动力设计出一个新版本的协议，所以欢迎大家提出对协议优化方面的建议和特性。&lt;/p></description></item><item><title>Blog: Dubbo与Kubernetes集成</title><link>https://dubbo.apache.org/zh/blog/2018/09/30/dubbo%E4%B8%8Ekubernetes%E9%9B%86%E6%88%90/</link><pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/09/30/dubbo%E4%B8%8Ekubernetes%E9%9B%86%E6%88%90/</guid><description>
+&lt;p>本文主要介绍了协议的概念和常用的协议模式，后面对 Dubbo 协议进行了详细分析，也提到了一些不足的地方，但是相对于其简洁性和易于实现性，以上提出的缺点不足以有动力设计出一个新版本的协议，所以欢迎大家提出对协议优化方面的建议和特性。&lt;/p></description></item><item><title>Blog: Dubbo与Kubernetes集成</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/09/30/dubbo%E4%B8%8Ekubernetes%E9%9B%86%E6%88%90/</link><pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/09/30/dubbo%E4%B8%8Ekubernetes%E9%9B%86%E6%88%90/</guid><description>
 &lt;h2 id="大体目标">大体目标&lt;/h2>
 &lt;p>Dubbo的provider不再关心服务注册的事宜，只需要把其Dubbo服务端口打开，由Kubernetes来进行服务的声明和发布；Dubbo的consumer在服务发现时直接发现kubernetes的对应服务endpoints，从而复用Dubbo已有的微服务通道能力。好处是无需依赖三方的软负载注册中心；同时无缝融入Kubernetes的多租户安全体系。Demo的代码参照： &lt;a href="https://github.com/dubbo/dubbo-kubernetes">https://github.com/dubbo/dubbo-kubernetes&lt;/a>&lt;/p>
 &lt;h2 id="闲谈">闲谈&lt;/h2>
@@ -4288,11 +4288,11 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;li>在基础资源（主要是抽象底层IaaS的资源）和应用层的抽象模型之上是治理层，包含弹性扩容，命名空间/租户，等。当然，基于其原子内核的基础能力，在Kubernetes的核心之上搭建统一的日志中心和全方位监控等服务是水到渠成的，CNCF更是有其认定推荐。&lt;/li>
 &lt;/ul>
 &lt;p>来张Kubernetes Architecture的一张图解释下上述描述。在2018年Kubernetes往事实的paas底座的标配迈出质的一步，有人说原因在于基于扩展的二次开发能力，有人说在于其声明式编程和背靠Google和Redhat的强大社区运作，我觉得回归本质是在于下图中的&lt;strong>Layered架构和其问题域的领域建模抽象&lt;/strong>。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/k8s/1.png" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/k8s/1.png" alt="img">&lt;/p>
 &lt;p>以微服务架构视角，Kubernetes在一定意义上是微服务框架（这时较叫微服务平台或toolkit集更合适），支持微服务的服务发现/注册的基本能力。借用如下图做一个简单描述。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/k8s/2.jpeg" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/k8s/2.jpeg" alt="img">&lt;/p>
 &lt;p>话题再展开一下，微服务领域涉及众多问题，大概可以用下图说明。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/k8s/3.jpeg" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/k8s/3.jpeg" alt="img">&lt;/p>
 &lt;p>Kubernetes解决得只是少部分，而像动态路由，稳定性控制（断路器，隔水舱等），分布式服务追踪等是个空白，这也就是servicemesh要解决的，是在CNCF的Trail Map占有重要一席；当然Dubbo是基本具备完备的微服务，也就是使得其集成到k8s体系下具有相当的意义。Dubbo在serviemesh中基于sidecar的方案是解决跨语言诉求的通用servicemesh方案，需要新开一个话题来展开说；而引用serviemsh的原始定义：&lt;/p>
 &lt;blockquote>
 &lt;p>A service mesh is a dedicated infrastructure layer for handling service-to-service communication. It’s responsible for the reliable delivery of requests through the complex topology of services that comprise a modern, cloud native application.&lt;/p>
@@ -4315,7 +4315,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;ol>
 &lt;li>DNS： 默认Kubernetes的service是靠DNS插件(最新版推荐是coreDNS)， Dubbo上有个proposal是关于这个的。我的理解是static resolution的机制是最简单最需要支持的一种service discovery机制，具体也可以参考Envoy在此的观点，由于HSF/Dubbo一直突出其软负载的地址发现能力，反而忽略Static的策略。同时蚂蚁的SOFA一直是支持此种策略，那一个SOFA工程的工程片段做一个解释。这样做有两个好处，1）当软负载中心crash不可用造成无法获取地址列表时，有一定的机制Failover到此策略来处理一定的请求。 2）在LDC/单元化下，蚂蚁的负载中心集群是机房/区域内收敛部署的，首先保证软负载中心的LDC化了进而稳定可控，当单元需要请求中心时，此VIP的地址发现就排上用场了。&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1Kj1ktpkoBKNjSZFEXXbrEVXa-985-213.png" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1Kj1ktpkoBKNjSZFEXXbrEVXa-985-213.png" alt="img">&lt;/p>
 &lt;ol start="2">
 &lt;li>API：DNS是依靠DNS插件进行的，相当于额外的运维开销，所以考虑直接通过kubernetes的client来获取endpoint。事实上，通过访问Kubernetes的API server接口是可以直接获取某个servie背后的endpoint列表，同时可以监听其地址列表的变化。从而实现Dubbo/HSF所推荐的软负载发现策略。具体可以参考代码：&lt;/li>
 &lt;/ol>
@@ -4329,24 +4329,24 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;ol>
 &lt;li>创建镜像仓库并绑定github代码库。如下图&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1m.tEtrorBKNjSZFjXXc_SpXa-1892-870.png" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1m.tEtrorBKNjSZFjXXc_SpXa-1892-870.png" alt="img">&lt;/p>
 &lt;ol start="2">
 &lt;li>点击管理 &lt;strong>进行创建好的仓库&lt;/strong>，通过镜像服务下的构建功能，把demo构建成image，并发布到指定仓库。如下图。&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1oYqvtcIrBKNjSZK9XXagoVXa-1872-888.png" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1oYqvtcIrBKNjSZK9XXagoVXa-1872-888.png" alt="img">&lt;/p>
 &lt;ol start="3">
 &lt;li>切换到企业级分布式应用服务（EDAS）产品，在资源管理 -&amp;gt; 集群 下创建Kubernetes集群并绑定ECS，如下图.&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1b1p2trZnBKNjSZFKXXcGOVXa-1858-833.png" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1b1p2trZnBKNjSZFKXXcGOVXa-1858-833.png" alt="img">&lt;/p>
 &lt;ol start="4">
 &lt;li>应用管理 -》创建应用，&lt;strong>类型为kubernetes应用&lt;/strong> 并且指定在容器镜像服务中的镜像。如下图。&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1b1p2trZnBKNjSZFKXXcGOVXa-1858-833.png" alt="img">&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB18uzTtdcnBKNjSZR0XXcFqFXa-1820-861.png" alt="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1b1p2trZnBKNjSZFKXXcGOVXa-1858-833.png" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB18uzTtdcnBKNjSZR0XXcFqFXa-1820-861.png" alt="">&lt;/p>
 &lt;ol start="5">
 &lt;li>创建完成后，进行应用部署。如下图&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1fEpEtrorBKNjSZFjXXc_SpXa-1846-783.png" alt="">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/09/30/integrate-dubbo-with-kubernetes/TB1fEpEtrorBKNjSZFjXXc_SpXa-1846-783.png" alt="">&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>补充应用名不能有大写字母，全部小写，否则有部署失败的问题。&lt;/p>
@@ -4372,8 +4372,8 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;#34;apiVersion&amp;#34;&lt;/span>: &lt;span style="color:#2aa198">&amp;#34;v1&amp;#34;&lt;/span>,
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;#34;resourceVersion&amp;#34;&lt;/span>: &lt;span style="color:#2aa198">&amp;#34;850282769&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}, &lt;span style="color:#2aa198">&amp;#34;reason&amp;#34;&lt;/span>: &lt;span style="color:#2aa198">&amp;#34;FailedSync&amp;#34;&lt;/span>, &lt;span style="color:#2aa198">&amp;#34;message&amp;#34;&lt;/span>: &lt;span style="color:#2aa198">&amp;#34;Error syncing pod&amp;#34;&lt;/span>, &amp;#34;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo Mesh ｜ Service Mesh的实践与探索</title><link>https://dubbo.apache.org/zh/blog/2018/09/20/dubbo-mesh-service-mesh%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link><pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/09/20/dubbo-mesh-service-mesh%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid><description>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/all-hands.webp" alt="img">&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo Mesh ｜ Service Mesh的实践与探索</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/09/20/dubbo-mesh-service-mesh%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link><pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/09/20/dubbo-mesh-service-mesh%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid><description>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/all-hands.webp" alt="img">&lt;/p>
 &lt;p>近日，在Aliware Open Source•成都站-Apache Dubbo 开发者沙龙上，阿里巴巴中间件高级技术专家李云（至简）向开发者们分享了阿里巴巴中间件团队在Service Mmesh领域的探索和最新实践。本文是根据至简的现场分享所整理，为大家回顾分享中的精彩内容。&lt;/p>
 &lt;h2 id="精彩观点导读">精彩观点导读&lt;/h2>
 &lt;ul>
@@ -4392,24 +4392,24 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;h2 id="微服务的5大挑战">微服务的5大挑战&lt;/h2>
 &lt;h4 id="挑战一微服务框架自身演进困难">挑战一：微服务框架自身演进困难。&lt;/h4>
 &lt;p>任何软件都会有他的生命进化曲线，从最初的萌芽，进入形成期，往上发展，再进入平台期，最后进入衰亡期。当然我们希望我们的软件可以在进入平台期后，能借助某次演进进入新的发展期。从这个维度看，所有软件最重要的使命不是满足功能要求，而是演进，从而持续成长。相反，当某个软件无法演进的时候，就会意味着死亡。但软件的演进并不是一个简单的事情，以微服务框架为例，为了进一步提升双11期间整个中间件平台的稳定性，我们会修改若干个功能，并以SDK的方式去提供给业务方，但业务代码和微服务框架SDK是强耦合的，这时候需要我们推动各个业务方和我们一同去做升级。虽然我们的初衷是实现平台稳定性的提升，帮助业务更好的发展，但这时由于大家的出发点和诉求有所不同，业务方和我们一起去做升级是比较困难的。所以要发展微服务框架，首先遇到的挑战就是演进困难。
-&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/challenges.jpg" alt="img">&lt;/p>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/challenges.jpg" alt="img">&lt;/p>
 &lt;h4 id="挑战二微服务框架sdk多语言并行开发与维护成本高">挑战二：微服务框架SDK多语言并行开发与维护成本高。&lt;/h4>
 &lt;p>以前我们都是通过对技术栈的统一来提升成本优势和团队效率，大家可以用一种语言去开发和维护，避免多语言时团队的不聚焦。但在软件和开源生态演进的过程中，多语言已经成为一种流行，因为不同语言都有其自身的优势，今天大家能看到的一个现象是云原生的生态中有多种开发语言，使用频率最高的语言已经不是Java了，而是Go，是因为Go的footprint很小。再以 Dubbo为例，除了Java，我们还提供C++，Node.js的SDK，以便让更多的开发者可以加入Dubbo生态，但所有的这些，如果没有社区力量的参与，是很难维持的。
-&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/speaker.webp" alt="img">&lt;/p>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/speaker.webp" alt="img">&lt;/p>
 &lt;h4 id="挑战三异构服务框架难以共存完成渐进式演进">挑战三：异构服务框架难以共存完成渐进式演进。&lt;/h4>
 &lt;p>我们结合场景来看看这个挑战。阿里巴巴收购了一些企业，被收购企业的技术栈可能和阿里巴巴不同，比如有些用的是Go语言，有些用的是PHP，这时候为了统一技术栈，我们需要对这类技术平台推倒重来，但这个过程中，我们会面临一系列问题，首当其冲的就是推倒重来会带来巨大的技术风险，其次是可能会面临技术人员大批量流失的风险，这在社会责任的层面也是很难接受。所以我们在寻求一种可能的方案，去解决这类问题。&lt;/p>
 &lt;h4 id="挑战四是单一的语言限制了人才的多样性">挑战四：是单一的语言限制了人才的多样性。&lt;/h4>
 &lt;p>这里，我们不去争论某个编程语言的好与坏，每个语言都有其适用场景，你不能说我手里有个榔头，你面对的都是钉子。以前我们觉得统一技术栈可以集中开发力量，并且带来较高的运维便利性。但伴随着互联网带来的快节奏，以往的团队能力设置已经很难满足这类变化，对工程师个体提出了更高的要求，我们不仅仅需要是某一方面的专家，而且还需要具备多域的工作技能，DevOps和全栈工程师就是这类快节奏变化下最好的注脚。
-&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/challenges-continued.jpg" alt="img">&lt;/p>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/challenges-continued.jpg" alt="img">&lt;/p>
 &lt;h4 id="挑战五是点状的服务治理难以做到及时有效和经济">挑战五：是点状的服务治理难以做到及时、有效和经济。&lt;/h4>
 &lt;p>微服务和架构的核心是拆分，通过拆分，让每个模块可以独立运行，跟上业务的发展速度，持续推动业务的创新。但拆完后新的问题出来了，缺少横向的内容拉通所有独立的烟囱，从而在服务治理上带来极大的挑战。&lt;/p>
 &lt;h2 id="分布式应用的发展趋势">分布式应用的发展趋势&lt;/h2>
 &lt;p>微服务会成为大规模分布式应用的主流架构。任何复杂的工程问题都会归结为devide and conquer（分而治之），意思就是就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题……直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。微服务本质是对服务的拆分，与工程领域惯用的“分而治之”的思路是一致的。&lt;/p>
 &lt;p>微服务架构下应用的开发是多语言的。没有一个语言是一家独大的，每种语言在特定场景下都有其自身的优势，我们希望这种优势能够将技术到产品的周期（time to market）缩短。技术的核心在于创造价值，无论是交付给客户，还是服务于整个社会。因此，微服务是需要不同语言的开发者发挥自身的优势，去进一步完善我们的微服务架构，释放技术价值。
-&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/trends.jpg" alt="img">&lt;/p>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/trends.jpg" alt="img">&lt;/p>
 &lt;p>数据安全将成为公有云分布式应用的生命线。云原生时代，业务即便没上云，企业对自身数据的安全都是有诉求的，尤其是在金融行业，如果通过抓包就能获取一些敏感信息，这将会给企业带来巨大的风险。&lt;/p>
 &lt;p>Cloud native成为distributionless（无分布式）的主要探索路径。分布式发展的终极形式是无分布式，在未来我们做开发，所有的代码在web上写好后，通过点击一个按钮，所有部署都会自动实现，所有的code review的工作可以在一个统一的工作台上全部实现。
-&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/audience-shapshot.webp" alt="img">&lt;/p>
+&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/audience-shapshot.webp" alt="img">&lt;/p>
 &lt;p>以更快的速度，通过构建软件去探索新业务。工程师服务的是客户，通过技术输出来实现技术价值，以互联网的架构帮助赋能传统企业，帮助企业获得差异化竞争力。&lt;/p>
 &lt;h2 id="什么是service-mesh">什么是Service Mesh&lt;/h2>
 &lt;p>Service Mesh是层次化、规范化、体系化、无侵入的分布式服务治理技术平台。&lt;/p>
@@ -4417,7 +4417,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;p>分为数据面和控制面两个概念，数据面是指所有数据流动的那个层面，控制面是用来控制这个数据面的，对服务去做处理。对数据面和控制面进行分层，带来的好处是，针对一个复杂的系统进行切分，可以获得更清晰的认识，这和devide and conque是同一个理念。&lt;/p>
 &lt;h4 id="规范化">规范化&lt;/h4>
 &lt;p>是指通过标准协议完成数据平面和控制平面的连接，同时，sidecar成为所有traffic互联、互通的约束标准。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/what.jpg" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/what.jpg" alt="img">&lt;/p>
 &lt;h4 id="体系化">体系化&lt;/h4>
 &lt;p>包含两个维度，一是指observability全局考虑。目前在整个分布式治理过程中的最大挑战是：logging、metrics、tracing这三个observability领域的核心内容缺少体系性的关注。另一个是集中管理的维度，包括服务管理、限流、熔断、安全、灰度在内的服务模块都可以在获得体系化的呈现，每个服务都可以被看到，而非团队a只看限流，团队b只看logging，需要一种技术能力拉通所有的服务模块，这个体系化这个角度看，Service Mesh是一个理想的技术方案。&lt;/p>
 &lt;h4 id="无侵入">无侵入&lt;/h4>
@@ -4425,7 +4425,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;h2 id="service-mesh的形态">Service Mesh的形态&lt;/h2>
 &lt;p>我们从三个维度对比的来看 ServiceMesh 的形态。&lt;/p>
 &lt;p>图中左边是传统的微服务形态，调用者和被调用者是通过一个SDK的方式来实现共享服务的，以Dubbo为例，我们会在SDK里提供服务路由、服务发现等功能，虽然我们的开发者在做应用开发的时候并不会太关注SDK的构成，但这些功能是面临不断被变更的可能，有着比较重的逻辑。在右边Service Mesh的形态中，我们首先会对厚重的SDK进行分解，将复杂的逻辑下沉到sidecar，借助sidecar来实现服务的调用。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/meetup-chengdu/forms.jpg" alt="img">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/meetup-chengdu/forms.jpg" alt="img">&lt;/p>
 &lt;p>虽然在Service Mesh的形态，调用路径要长于传统的形态，路径越长消耗越大，对性能影响越大。但在当前的分布式应用的治理过程中，易用性已经成为一个比性能更重要的话题。当我们给客户部署一套微服务，即便性能很强，但没有处理好易用性问题的话，这将会给技术的推广带来巨大的阻碍，不仅是会影响外部的客户，也会影响内部的用户，如何实现喝着咖啡从容应对双11，必须先解决易用性的问题。在解决易用性问题后，沿着技术的发展路径再去解决性能问题。&lt;/p>
 &lt;p>Service Mesh的形态中的control plan不会导致重复建设，但在shared service是有可能存在重复建设的。&lt;/p>
 &lt;h2 id="service-mesh下的应用架构">Service Mesh下的应用架构&lt;/h2>
@@ -4486,7 +4486,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;h4 id="client做解码和反序列化是吧有计划支持http2协议吗">Client做解码和反序列化是吧，有计划支持HTTP2协议吗？&lt;/h4>
 &lt;p>Envoy默认就支持了，不需我们开发。这也是借力开源的收益。&lt;/p>
 &lt;h4 id="dubbo-mesh已经支持unix-domain-socket了吗">Dubbo Mesh已经支持UNIX Domain Socket了吗？&lt;/h4>
-&lt;p>目前不支持，这个还处于意向阶段。&lt;/p></description></item><item><title>Blog: 如何基于Dubbo实现全异步调用链</title><link>https://dubbo.apache.org/zh/blog/2018/09/02/%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8Edubbo%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E9%93%BE/</link><pubDate>Sun, 02 Sep 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/09/02/%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8Edubbo%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E9%93%BE/</guid><description>
+&lt;p>目前不支持，这个还处于意向阶段。&lt;/p></description></item><item><title>Blog: 如何基于Dubbo实现全异步调用链</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/09/02/%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8Edubbo%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E9%93%BE/</link><pubDate>Sun, 02 Sep 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/09/02/%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8Edubbo%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E9%93%BE/</guid><description>
 &lt;p>基于Dubbo实现全异步编程，是在2.7.0版本中对现有异步方式增强后新引入的功能。本文先是回顾2.6.x及之前版本对异步的支持情况及存在的问题，引出了2.7.0版本基于CompletableFuture做了哪些针对性的增强，通过几个示例详细阐述了增强后的异步编程的使用方式，最后总结了引入异步模式带来的新问题及Dubbo的解决方法。通过阅读这篇文章，可以很容易的基于Dubbo2.7.0+版本实现一个全异步的远程服务调用链路。&lt;/p>
 &lt;p>从3.0.0版本开始，Dubbo框架提供了对Reactive编程范式的支持，除了编程接口之外，在跨进程的RPC通信中引入了Reactive的语义。如果你所在的环境需要使用Reactive编程范式，或者你的RPC调用需要支持流式传输，Reactive应该会给你带来帮助，具体请参考发布在阿里巴巴中间件公众号上的响应式编程支持相关文章。&lt;/p>
 &lt;blockquote>
@@ -4499,7 +4499,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/ol>
 &lt;/blockquote>
 &lt;h2 id="26x版本之前的异步方式">2.6.x版本之前的异步方式&lt;/h2>
-&lt;p>在2.6.x及之前的版本提供了一定的异步编程能力，包括Consumer端&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/examples/async-call/">异步调用&lt;/a>、&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/examples/callback-parameter/">参数回调&lt;/a>、&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/examples/events-notify/">事件通知&lt;/a>等，在上面的文档链接中有关于使用方式的简单介绍和Demo。&lt;/p>
+&lt;p>在2.6.x及之前的版本提供了一定的异步编程能力，包括Consumer端&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/async-call/">异步调用&lt;/a>、&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/callback-parameter/">参数回调&lt;/a>、&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/events-notify/">事件通知&lt;/a>等，在上面的文档链接中有关于使用方式的简单介绍和Demo。&lt;/p>
 &lt;p>关于参数回调，其本质上是一种服务端的数据推送能力，这是终端应用很常见的一种需求，关于这部分的重构计划，不在本文讨论范围。&lt;/p>
 &lt;p>但当前的异步方式存在以下问题：&lt;/p>
 &lt;ul>
@@ -4837,7 +4837,7 @@ random的定义在配置文件&lt;code>META-INF/dubbo/internal/com.alibaba.dubbo
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">return&lt;/span> &lt;span style="color:#cb4b16">null&lt;/span>&lt;span style="color:#719e07">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo 集群容错</title><link>https://dubbo.apache.org/zh/blog/2018/08/22/dubbo-%E9%9B%86%E7%BE%A4%E5%AE%B9%E9%94%99/</link><pubDate>Wed, 22 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/22/dubbo-%E9%9B%86%E7%BE%A4%E5%AE%B9%E9%94%99/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo 集群容错</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/22/dubbo-%E9%9B%86%E7%BE%A4%E5%AE%B9%E9%94%99/</link><pubDate>Wed, 22 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/22/dubbo-%E9%9B%86%E7%BE%A4%E5%AE%B9%E9%94%99/</guid><description>
 &lt;h3 id="design-for-failure">Design For failure&lt;/h3>
 &lt;p>在分布式系统中，集群某个某些节点出现问题是大概率事件，因此在设计分布式RPC框架的过程中，必须要把失败作为设计的一等公民来对待。一次调用失败之后，应该如何选择对失败的选择策略，这是一个见仁见智的问题，每种策略可能都有自己独特的应用场景。因此，作为框架来说，应当针对不同场景提供多种策略，供用户进行选择。&lt;/p>
 &lt;p>在Dubbo设计中，通过Cluster这个接口的抽象，把一组可供调用的Provider信息组合成为一个统一的&lt;code>Invoker&lt;/code>供调用方进行调用。经过路由规则过滤，负载均衡选址后，选中一个具体地址进行调用，如果调用失败，则会按照集群配置的容错策略进行容错处理。&lt;/p>
@@ -5019,7 +5019,7 @@ Maven 项目结构：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>META-INF/dubbo/com.alibaba.dubbo.rpc.cluster.Cluster&lt;/code>文件的内容为&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>xxx=com.xxx.XxxCluster
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo 现有心跳方案总结以及改进建议</title><link>https://dubbo.apache.org/zh/blog/2018/08/19/dubbo-%E7%8E%B0%E6%9C%89%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE/</link><pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/19/dubbo-%E7%8E%B0%E6%9C%89%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo 现有心跳方案总结以及改进建议</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/19/dubbo-%E7%8E%B0%E6%9C%89%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE/</link><pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/19/dubbo-%E7%8E%B0%E6%9C%89%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE/</guid><description>
 &lt;h3 id="1-前言">1 前言&lt;/h3>
 &lt;p>设计一个好的心跳机制并不是一件容易的事，就我所熟知的几个 RPC 框架，它们的心跳机制可以说大相径庭，这篇文章我将探讨一下&lt;strong>如何设计一个优雅的心跳机制，主要从 Dubbo 的现有方案以及一个改进方案来做分析&lt;/strong>。&lt;/p>
 &lt;h3 id="2-预备知识">2 预备知识&lt;/h3>
@@ -5329,11 +5329,11 @@ Maven 项目结构：&lt;/p>
 &lt;li>&lt;strong>建议改动点二：&lt;/strong>&lt;/li>
 &lt;/ul>
 &lt;p>去除处理重连和断连的定时任务，Dubbo 可以判断心跳请求是否响应失败，可以借鉴改进方案的设计，在连接级别维护一个心跳失败次数的标记，任意响应成功，清除标记；连续心跳失败 n 次，客户端发起重连。这样可以减少一个不必要的定时器，任何轮询的方式，都是不优雅的。&lt;/p>
-&lt;p>最后再聊聊可扩展性这个话题。其实我是建议把定时器交给更加底层的 Netty 去做，也就是完全使用 &lt;code>IdleStateHandler&lt;/code> ，其他通信层组件各自实现自己的空闲检测逻辑，但是 Dubbo 中 mina，grizzy 的兼容问题囿住了我的拳脚，但试问一下，如今的 2019 年，又有多少人在使用 mina 和 grizzy？因为一些不太可能用的特性，而限制了主流用法的优化，这肯定不是什么好事。抽象，功能，可扩展性并不是越多越好，开源产品的人力资源是有限的，框架使用者的理解能力也是有限的，能解决大多数人问题的设计，才是好的设计。哎，谁让我不会 mina，grizzy，还懒得去学呢[摊手]。&lt;/p></description></item><item><title>Blog: Dubbo2.7 三大新特性详解</title><link>https://dubbo.apache.org/zh/blog/2018/08/15/dubbo2.7-%E4%B8%89%E5%A4%A7%E6%96%B0%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3/</link><pubDate>Wed, 15 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/15/dubbo2.7-%E4%B8%89%E5%A4%A7%E6%96%B0%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3/</guid><description>
+&lt;p>最后再聊聊可扩展性这个话题。其实我是建议把定时器交给更加底层的 Netty 去做，也就是完全使用 &lt;code>IdleStateHandler&lt;/code> ，其他通信层组件各自实现自己的空闲检测逻辑，但是 Dubbo 中 mina，grizzy 的兼容问题囿住了我的拳脚，但试问一下，如今的 2019 年，又有多少人在使用 mina 和 grizzy？因为一些不太可能用的特性，而限制了主流用法的优化，这肯定不是什么好事。抽象，功能，可扩展性并不是越多越好，开源产品的人力资源是有限的，框架使用者的理解能力也是有限的，能解决大多数人问题的设计，才是好的设计。哎，谁让我不会 mina，grizzy，还懒得去学呢[摊手]。&lt;/p></description></item><item><title>Blog: Dubbo2.7 三大新特性详解</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/15/dubbo2.7-%E4%B8%89%E5%A4%A7%E6%96%B0%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3/</link><pubDate>Wed, 15 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/15/dubbo2.7-%E4%B8%89%E5%A4%A7%E6%96%B0%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3/</guid><description>
 &lt;h2 id="1-背景介绍">1 背景介绍&lt;/h2>
 &lt;p>自 2017 年 7 月阿里重启 Dubbo 开源，到目前为止 github star 数，contributor 数都有了非常大的提升。2018 年 2 月 9 日阿里决定将 Dubbo 项目贡献给 Apache，经过一周的投票，顺利成为了 Apache 的孵化项目，也就是大家现在看到的 &lt;strong>Incubator Dubbo&lt;/strong>。预计在 2019 年 4 月，Dubbo 可以达成毕业，成为 Apache 的顶级项目。&lt;/p>
 &lt;h2 id="2-分支介绍">2 分支介绍&lt;/h2>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/270/branches.png" alt="分支">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/270/branches.png" alt="分支">&lt;/p>
 &lt;p>Dubbo 目前有如图所示的 5 个分支，其中 2.7.1-release 只是一个临时分支，忽略不计，对其他 4 个分支进行介绍。&lt;/p>
 &lt;ul>
 &lt;li>2.5.x 近期已经通过投票，Dubbo 社区即将停止对其的维护。&lt;/li>
@@ -5353,7 +5353,7 @@ Maven 项目结构：&lt;/p>
 &lt;/ul>
 &lt;h2 id="4-异步化改造">4 异步化改造&lt;/h2>
 &lt;h3 id="41-几种调用方式">4.1 几种调用方式&lt;/h3>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/270/invokes.png" alt="调用方式">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/270/invokes.png" alt="调用方式">&lt;/p>
 &lt;p>在远程方法调用中，大致可以分为这 4 种调用方式。oneway 指的是客户端发送消息后，不需要接受响应。对于那些不关心服务端响应的请求，比较适合使用 oneway 通信。&lt;/p>
 &lt;blockquote>
 &lt;p>注意，void hello() 方法在远程方法调用中，不属于 oneway 调用，虽然 void 方法表达了不关心返回值的语义，但在 RPC 层面，仍然需要做通信层的响应。&lt;/p>
@@ -5443,7 +5443,7 @@ Maven 项目结构：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">release&lt;/span>&lt;span style="color:#719e07">=&lt;/span>2.7.0&amp;amp;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">timestamp&lt;/span>&lt;span style="color:#719e07">=&lt;/span>&lt;span style="color:#2aa198">1552975501873&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>对于那些非必要的服务信息，仍然全量存储在元数据中心之中：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/270/metadata.png" alt="元数据">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/270/metadata.png" alt="元数据">&lt;/p>
 &lt;blockquote>
 &lt;p>元数据中心的数据可以被用于服务测试，服务 MOCK 等功能。目前注册中心配置中 simplified 的默认值为 false，因为考虑到了迁移的兼容问题，在后续迭代中，默认值将会改为 true。&lt;/p>
 &lt;/blockquote>
@@ -5473,21 +5473,21 @@ Maven 项目结构：&lt;/p>
 &lt;p>示例：使用 Zookeeper 作为配置中心&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;dubbo:config-center&lt;/span> address=&lt;span style="color:#2aa198">&amp;#34;zookeeper://127.0.0.1:2181&amp;#34;&lt;/span>&lt;span style="color:#268bd2">/&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>引入配置中心后，需要注意配置项的覆盖问题，优先级如图所示&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/configuration.jpg" alt="配置覆盖优先级">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/configuration.jpg" alt="配置覆盖优先级">&lt;/p>
 &lt;h2 id="6-服务治理增强">6 服务治理增强&lt;/h2>
 &lt;p>我更倾向于将 Dubbo 当做一个服务治理框架，而不仅仅是一个 RPC 框架。在 2.7 中，Dubbo 对其服务治理能力进行了增强，增加了标签路由的能力，并抽象出了应用路由和服务路由的概念。在最后一个特性介绍中，着重对标签路由 TagRouter 进行探讨。&lt;/p>
 &lt;blockquote>
 &lt;p>在服务治理中，路由层和负载均衡层的对比。区别 1，Router：m 选 n，LoadBalance：n 选 1；区别 2，路由往往是叠加使用的，负载均衡只能配置一种。&lt;/p>
 &lt;/blockquote>
 &lt;p>在很长的一段时间内，Dubbo 社区经常有人提的一个问题是：Dubbo 如何实现流量隔离和灰度发布，直到 2.7 提供了标签路由，用户可以使用这个功能，来实现上述的需求。&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/270/tag-route.png" alt="标签路由">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/270/tag-route.png" alt="标签路由">&lt;/p>
 &lt;p>标签路由提供了这样一个能力，当调用链路为 A -&amp;gt; B -&amp;gt; C -&amp;gt; D 时，用户给请求打标，最典型的打标方式可以借助 attachment（他可以在分布式调用中传递下去），调用会优先请求那些匹配的服务端，如 A -&amp;gt; B，C -&amp;gt; D，由于集群中未部署 C 节点，则会降级到普通节点。&lt;/p>
 &lt;p>打标方式会受到集成系统差异的影响，从而导致很大的差异，所以 Dubbo 只提供了 &lt;code>RpcContext.getContext().setAttachment()&lt;/code> 这样的基础接口，用户可以使用 SPI 扩展，或者 server filter 的扩展，对测试流量进行打标，引导进入隔离环境/灰度环境。&lt;/p>
 &lt;p>新版的 Dubbo Admin 提供了标签路由的配置项：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/270/tag-route-config.png" alt="标签路由配置">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/270/tag-route-config.png" alt="标签路由配置">&lt;/p>
 &lt;p>Dubbo 用户可以在自己系统的基础上对标签路由进行二次扩展，或者借鉴标签路由的设计，实现自己系统的流量隔离，灰度发布。&lt;/p>
 &lt;h2 id="7-总结">7 总结&lt;/h2>
-&lt;p>本文介绍了 Dubbo 2.7 比较重要的三大新特性：异步化改造，三大中心改造，服务治理增强。Dubbo 2.7 还包含了很多功能优化、特性升级，可以在项目源码的 &lt;a href="https://github.com/apache/dubbo/blob/master/CHANGES.md">CHANGES.md&lt;/a> 中浏览全部的改动点。最后提供一份 Dubbo 2.7 的升级文档：&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/versions/version-270/">2.7迁移文档&lt;/a>，欢迎体验。&lt;/p></description></item><item><title>Blog: Dubbo 关于同步/异步调用的几种方式</title><link>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5/%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5/%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid><description>
+&lt;p>本文介绍了 Dubbo 2.7 比较重要的三大新特性：异步化改造，三大中心改造，服务治理增强。Dubbo 2.7 还包含了很多功能优化、特性升级，可以在项目源码的 &lt;a href="https://github.com/apache/dubbo/blob/master/CHANGES.md">CHANGES.md&lt;/a> 中浏览全部的改动点。最后提供一份 Dubbo 2.7 的升级文档：&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/versions/version-270/">2.7迁移文档&lt;/a>，欢迎体验。&lt;/p></description></item><item><title>Blog: Dubbo 关于同步/异步调用的几种方式</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5/%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5/%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid><description>
 &lt;p>我们知道，Dubbo 缺省协议采用单一长连接，底层实现是 Netty 的 NIO 异步通讯机制；基于这种机制，Dubbo 实现了以下几种调用方式：&lt;/p>
 &lt;ul>
 &lt;li>同步调用&lt;/li>
@@ -5538,7 +5538,7 @@ Maven 项目结构：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;dubbo:method&lt;/span> name=&lt;span style="color:#2aa198">&amp;#34;goodbye&amp;#34;&lt;/span> async=&lt;span style="color:#2aa198">&amp;#34;true&amp;#34;&lt;/span> return=&lt;span style="color:#2aa198">&amp;#34;false&amp;#34;&lt;/span>&lt;span style="color:#268bd2">/&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时，&lt;code>RpcContext.getContext().getFuture()&lt;/code>将返回&lt;code>null&lt;/code>。&lt;/p>
 &lt;p>整个异步调用的时序图如下：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-async.svg" alt="异步调用">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-async.svg" alt="异步调用">&lt;/p>
 &lt;p>此示例代码位于：https://github.com/dubbo/dubbo-samples/tree/master/dubbo-samples-async&lt;/p>
 &lt;h2 id="参数回调">参数回调&lt;/h2>
 &lt;p>参数回调有点类似于本地 Callback 机制，但 Callback 并不是 Dubbo 内部的类或接口，而是由 Provider 端自定义的；Dubbo 将基于长连接生成反向代理，从而实现从 Provider 端调用 Consumer 端的逻辑。&lt;/p>
@@ -5636,7 +5636,7 @@ Maven 项目结构：&lt;/p>
 &lt;li>&lt;code>onthrow&lt;/code>方法第一个参数为调用异常，其余为调用方法的参数。&lt;/li>
 &lt;/ul>
 &lt;p>上述配置中，&lt;code>sayHello&lt;/code>方法为同步调用，因此事件通知方法的执行也是同步执行。可以配置 &lt;code>async=true&lt;/code>让方法调用为异步，这时事件通知的方法也是异步执行的。特别强调一下，&lt;code>oninvoke&lt;/code>方法不管是否异步调用，都是同步执行的。&lt;/p>
-&lt;p>事件通知的示例代码请参考：https://github.com/dubbo/dubbo-samples/tree/master/dubbo-samples-notify&lt;/p></description></item><item><title>Blog: Dubbo 基本用法 - Dubbo Consumer 配置</title><link>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-dubbo-consumer-%E9%85%8D%E7%BD%AE/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-dubbo-consumer-%E9%85%8D%E7%BD%AE/</guid><description>
+&lt;p>事件通知的示例代码请参考：https://github.com/dubbo/dubbo-samples/tree/master/dubbo-samples-notify&lt;/p></description></item><item><title>Blog: Dubbo 基本用法 - Dubbo Consumer 配置</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-dubbo-consumer-%E9%85%8D%E7%BD%AE/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-dubbo-consumer-%E9%85%8D%E7%BD%AE/</guid><description>
 &lt;h2 id="dubbo-consumer配置">Dubbo Consumer配置&lt;/h2>
 &lt;h3 id="consumer配置详解">Consumer配置详解&lt;/h3>
 &lt;p>配置Dubbo Consumer有3种方式：XML配置，API调用方式配置，注解方式配置。&lt;/p>
@@ -5756,7 +5756,7 @@ Maven 项目结构：&lt;/p>
 &lt;/table>
 &lt;p>其他属性，可以参考上面的xsd。&lt;/p>
 &lt;h6 id="配置的覆盖关系">配置的覆盖关系&lt;/h6>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/2018/08/14/dubbo-usage/1536496436861-1b63bc4e-3e59-4aa3-800e-a32cfe64950d.png" alt="undefined">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/2018/08/14/dubbo-usage/1536496436861-1b63bc4e-3e59-4aa3-800e-a32cfe64950d.png" alt="undefined">&lt;/p>
 &lt;center>配置的覆盖关系图&lt;/center>
 &lt;p>其中包含了consumer端和provider的配置，注意区分。&lt;/p>
 &lt;h4 id="annotation">annotation&lt;/h4>
@@ -5843,7 +5843,7 @@ Maven 项目结构：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;dubbo:protocol name=&amp;#34;dubbo&amp;#34; port=&amp;#34;20880&amp;#34; /&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;dubbo:reference id=&amp;#34;userReadService&amp;#34; interface=&amp;#34;com.package.UserReadService&amp;#34;check=&amp;#34;false&amp;#34; /&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/beans&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Dubbo配置的其他方式可以参考上一章节的相关配置，或者使用集成dubbo spring boot starter方式。&lt;/p></description></item><item><title>Blog: Dubbo 基础用法 - Provider 配置</title><link>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95-provider-%E9%85%8D%E7%BD%AE/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95-provider-%E9%85%8D%E7%BD%AE/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Dubbo配置的其他方式可以参考上一章节的相关配置，或者使用集成dubbo spring boot starter方式。&lt;/p></description></item><item><title>Blog: Dubbo 基础用法 - Provider 配置</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95-provider-%E9%85%8D%E7%BD%AE/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95-provider-%E9%85%8D%E7%BD%AE/</guid><description>
 &lt;h2 id="dubbo基本用法">Dubbo基本用法&lt;/h2>
 &lt;p>本章节主要讲述如何配置dubbo，按照配置方式上分，可以分为：XML配置，properties方式配置，注解方式配置，API调用方式配置。
 按照功能角度进行划分，可以分为Dubbo Provider和Dubbo Consumer。接下来章节中，分别对dubbo provider和Dubbo consumer进行讲解。&lt;/p>
@@ -5936,7 +5936,7 @@ Maven 项目结构：&lt;/p>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/user/dubbo-config.jpg" alt="配置之间关系图">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/dubbo-config.jpg" alt="配置之间关系图">&lt;/p>
 &lt;h6 id="配置项详解">配置项详解&lt;/h6>
 &lt;ul>
 &lt;li>
@@ -6048,7 +6048,7 @@ Maven 项目结构：&lt;/p>
 &lt;/table>
 &lt;p>其他属性，可以参考上面的xsd。&lt;/p>
 &lt;h6 id="配置的覆盖关系">配置的覆盖关系&lt;/h6>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/user/dubbo-config-override.jpg" alt="配置的覆盖关系图">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/dubbo-config-override.jpg" alt="配置的覆盖关系图">&lt;/p>
 &lt;p>这里的覆盖关系包含了Provider和Consumer两端的配置，如果对consumer有疑问，可以参考后一章节的consumer章节之后再来理解。&lt;/p>
 &lt;h4 id="dubboproperties方式配置">dubbo.properties方式配置&lt;/h4>
 &lt;blockquote>
@@ -6077,7 +6077,7 @@ Maven 项目结构：&lt;/p>
 &lt;li>比如：dubbo.registry.china.address=10.20.153.10:9090等价于&amp;lt;dubbo:registry id=&amp;ldquo;china&amp;rdquo; address=&amp;ldquo;10.20.153.10:9090&amp;rdquo; /&amp;gt;&lt;/li>
 &lt;/ul>
 &lt;h6 id="覆盖策略">覆盖策略&lt;/h6>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/user/dubbo-config.jpg" alt="覆盖策略">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/user/dubbo-config.jpg" alt="覆盖策略">&lt;/p>
 &lt;ul>
 &lt;li>JVM 启动 -D 参数优先，这样可以使用户在部署和启动时进行参数重写，比如在启动时需改变协议的端口。&lt;/li>
 &lt;li>XML 次之，如果在 XML 中有配置，则 dubbo.properties 中的相应配置项无效。&lt;/li>
@@ -6197,7 +6197,7 @@ Maven 项目结构：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;bean id=&amp;#34;userReadService&amp;#34; class=&amp;#34;com.package.UserReadServiceImpl&amp;#34;/&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;dubbo:service interface=&amp;#34;com.package.UserReadService&amp;#34; ref=&amp;#34;userReadService&amp;#34; /&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/beans&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Dubbo配置的其他方式可以参考上一章节的相关配置，或者使用集成dubbo spring boot starter方式。&lt;/p></description></item><item><title>Blog: Dubbo 优雅停机</title><link>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E4%BC%98%E9%9B%85%E5%81%9C%E6%9C%BA/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E4%BC%98%E9%9B%85%E5%81%9C%E6%9C%BA/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Dubbo配置的其他方式可以参考上一章节的相关配置，或者使用集成dubbo spring boot starter方式。&lt;/p></description></item><item><title>Blog: Dubbo 优雅停机</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E4%BC%98%E9%9B%85%E5%81%9C%E6%9C%BA/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo-%E4%BC%98%E9%9B%85%E5%81%9C%E6%9C%BA/</guid><description>
 &lt;h2 id="背景">背景&lt;/h2>
 &lt;p>对于任何一个线上应用，如何在服务更新部署过程中保证客户端无感知是开发者必须要解决的问题，即从应用停止到重启恢复服务这个阶段不能影响正常的业务请求。理想条件下，在没有请求的时候再进行更新是最安全可靠的，然而互联网应用必须要保证可用性，因此在技术层面上优化应用更新流程来保证服务在更新时无损是必要的。&lt;/p>
 &lt;p>传统的解决方式是通过将应用更新流程划分为手工摘流量、停应用、更新重启三个步骤，由人工操作实现客户端无对更新感知。这种方式简单而有效，但是限制较多：不仅需要使用借助网关的支持来摘流量，还需要在停应用前人工判断来保证在途请求已经处理完毕。这种需要人工介入的方式运维复杂度较高，只能适用规模较小的应用，无法在大规模系统上使用。&lt;/p>
@@ -6220,7 +6220,7 @@ Maven 项目结构：&lt;/p>
 &lt;p>基于&lt;code>ShutdownHook&lt;/code>方式的优雅停机无法确保所有关闭流程一定执行完，所以 Dubbo 推出了多段关闭的方式来保证服务完全无损。&lt;/p>
 &lt;p>多段关闭即将停止应用分为多个步骤，通过运维自动化脚本或手工操作的方式来保证脚本每一阶段都能执行完毕。&lt;/p>
 &lt;p>在关闭应用前，首先通过 QOS 的&lt;code>offline&lt;/code>指令下线所有服务，然后等待一定时间确保已经到达请求全部处理完毕，由于服务已经在注册中心下线，当前应用不会有新的请求。这时再执行真正的关闭(&lt;code>SIGTERM&lt;/code> 或&lt;code> SIGINT&lt;/code>)流程，就能保证服务无损。&lt;/p>
-&lt;p>QOS可通过 telnet 或 HTTP 方式使用，具体方式请见&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/references/qos/">Dubbo-QOS命令使用说明&lt;/a>。&lt;/p>
+&lt;p>QOS可通过 telnet 或 HTTP 方式使用，具体方式请见&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/references/qos/">Dubbo-QOS命令使用说明&lt;/a>。&lt;/p>
 &lt;h2 id="流程">流程&lt;/h2>
 &lt;p>Provider在接收到停机指令后&lt;/p>
 &lt;ul>
@@ -6291,7 +6291,7 @@ Maven 项目结构：&lt;/p>
 &lt;li>使用&lt;code>SIGKILL&lt;/code>关闭应用不会执行优雅停机；&lt;/li>
 &lt;li>优雅停机不保证会等待所有已发送/到达请求结束；&lt;/li>
 &lt;li>配置的优雅停机等待时间&lt;code>timeout&lt;/code>不是所有步骤等待时间的总和，而是每一个&lt;code>destroy&lt;/code>执行的最大时间。例如配置等待时间为5秒，则关闭Server、关闭Client等步骤会分别等待5秒。&lt;/li>
-&lt;/ul></description></item><item><title>Blog: Dubbo的泛化调用</title><link>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo%E7%9A%84%E6%B3%9B%E5%8C%96%E8%B0%83%E7%94%A8/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/14/dubbo%E7%9A%84%E6%B3%9B%E5%8C%96%E8%B0%83%E7%94%A8/</guid><description>
+&lt;/ul></description></item><item><title>Blog: Dubbo的泛化调用</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo%E7%9A%84%E6%B3%9B%E5%8C%96%E8%B0%83%E7%94%A8/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/dubbo%E7%9A%84%E6%B3%9B%E5%8C%96%E8%B0%83%E7%94%A8/</guid><description>
 &lt;p>以下几种场景可以考虑使用泛化调用：&lt;/p>
 &lt;ul>
 &lt;li>服务测试平台&lt;/li>
@@ -6421,7 +6421,7 @@ Maven 项目结构：&lt;/p>
 &lt;ul>
 &lt;li>本文介绍的泛化调用和泛接口实现，都是在原生的 &lt;code>Dubbo&lt;/code> 协议之上的。在 2.6.2 版本之前，其他协议如 http/hessian 等是不支持泛化调用的，2.6.3 版本将会对这两个协议的泛化调用做支持。&lt;/li>
 &lt;li>本文中提到的相关示例代码可以在 dubbo-samples中找到：https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-generic&lt;/li>
-&lt;/ul></description></item><item><title>Blog: Spring Boot Dubbo应用启停源码分析</title><link>https://dubbo.apache.org/zh/blog/2018/08/14/spring-boot-dubbo%E5%BA%94%E7%94%A8%E5%90%AF%E5%81%9C%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/14/spring-boot-dubbo%E5%BA%94%E7%94%A8%E5%90%AF%E5%81%9C%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid><description>
+&lt;/ul></description></item><item><title>Blog: Spring Boot Dubbo应用启停源码分析</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/spring-boot-dubbo%E5%BA%94%E7%94%A8%E5%90%AF%E5%81%9C%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/spring-boot-dubbo%E5%BA%94%E7%94%A8%E5%90%AF%E5%81%9C%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid><description>
 &lt;h2 id="背景介绍">背景介绍&lt;/h2>
 &lt;p>&lt;a href="https://github.com/apache/dubbo-spring-boot-project">Dubbo Spring Boot&lt;/a> 工程致力于简化 Dubbo RPC 框架在Spring Boot应用场景的开发。同时也整合了 Spring Boot 特性：&lt;/p>
 &lt;ul>
@@ -6599,7 +6599,7 @@ Maven 项目结构：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">}).&lt;/span>start&lt;span style="color:#719e07">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>[1] &lt;a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-12.html#jls-12.8">https://docs.oracle.com/javase/specs/jls/se8/html/jls-12.html#jls-12.8&lt;/a>&lt;/p>
-&lt;p>[2] &lt;a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#addShutdownHook">https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#addShutdownHook&lt;/a>&lt;/p></description></item><item><title>Blog: 通过QoS对服务进行动态控制</title><link>https://dubbo.apache.org/zh/blog/2018/08/14/%E9%80%9A%E8%BF%87qos%E5%AF%B9%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E5%8A%A8%E6%80%81%E6%8E%A7%E5%88%B6/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/14/%E9%80%9A%E8%BF%87qos%E5%AF%B9%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E5%8A%A8%E6%80%81%E6%8E%A7%E5%88%B6/</guid><description>
+&lt;p>[2] &lt;a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#addShutdownHook">https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#addShutdownHook&lt;/a>&lt;/p></description></item><item><title>Blog: 通过QoS对服务进行动态控制</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/%E9%80%9A%E8%BF%87qos%E5%AF%B9%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E5%8A%A8%E6%80%81%E6%8E%A7%E5%88%B6/</link><pubDate>Tue, 14 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/14/%E9%80%9A%E8%BF%87qos%E5%AF%B9%E6%9C%8D%E5%8A%A1%E8%BF%9B%E8%A1%8C%E5%8A%A8%E6%80%81%E6%8E%A7%E5%88%B6/</guid><description>
 &lt;p>QoS，全称为&lt;code>Quality of Service&lt;/code>, 是常见于网络设备中的一个术语 ，例如在路由器中，可以通过Qos动态的调整和控制某些端口的权重，从而优先的保障运行在这些端口上的服务质量。&lt;/p>
 &lt;p>在Dubbo中，QoS这个概念被用于动态的对服务进行查询和控制。例如对获取当前提供和消费的所有服务，以及对服务进行动态的上下线，即从注册中心上进行注册和反注册操作。&lt;/p>
 &lt;h2 id="qos工作机制">QoS工作机制&lt;/h2>
@@ -6608,7 +6608,7 @@ Maven 项目结构：&lt;/p>
 &lt;p>Qos功能基于Netty4实现，在Dubbo 2.6.x之前的版本中，默认依赖的是Netty3，因此需要显示的添加Netty4的依赖，才能确保Netty4正常工作。如果使用http://start.dubbo.io自动生成的Dubbo应用，则无需添加额外的配置，因为已经默认加上了Netty4的依赖。&lt;/p>
 &lt;/blockquote>
 &lt;p>Qos的工作机制如下图所示：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/qos-architecture.png" alt="undefined">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/qos-architecture.png" alt="undefined">&lt;/p>
 &lt;ol>
 &lt;li>启动并监听一个端口，默认端口是22222&lt;/li>
 &lt;li>识别目标请求的协议是Http或者是Telnet，根据协议不同动态添加对应的处理器&lt;/li>
@@ -6799,7 +6799,7 @@ Maven 项目结构：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>dubbo.application.qosEnable=true
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dubbo.application.qosPort=33333
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dubbo.application.qosAcceptForeignIp=false
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo的负载均衡</title><link>https://dubbo.apache.org/zh/blog/2018/08/10/dubbo%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</link><pubDate>Fri, 10 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/10/dubbo%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: Dubbo的负载均衡</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/10/dubbo%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</link><pubDate>Fri, 10 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/10/dubbo%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</guid><description>
 &lt;h2 id="背景">背景&lt;/h2>
 &lt;p>Dubbo是一个分布式服务框架，能避免单点故障和支持服务的横向扩容。一个服务通常会部署多个实例。如何从多个服务 Provider 组成的集群中挑选出一个进行调用，就涉及到一个负载均衡的策略。&lt;/p>
 &lt;h2 id="几个概念">几个概念&lt;/h2>
@@ -6971,7 +6971,7 @@ Maven 项目结构：&lt;/p>
 &lt;li>服务端接口级别配置。&lt;/li>
 &lt;/ol>
 &lt;h2 id="扩展负载均衡">扩展负载均衡&lt;/h2>
-&lt;p>Dubbo的4种负载均衡的实现，大多数情况下能满足要求。有时候，因为业务的需要，我们可能需要实现自己的负载均衡策略。本章只说明如何配置负载均衡算法。关于Dubbo扩展机制的更多内容，请前往&lt;a href="https://dubbo.apache.org/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/">Dubbo可扩展机制实战&lt;/a>。&lt;/p>
+&lt;p>Dubbo的4种负载均衡的实现，大多数情况下能满足要求。有时候，因为业务的需要，我们可能需要实现自己的负载均衡策略。本章只说明如何配置负载均衡算法。关于Dubbo扩展机制的更多内容，请前往&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/">Dubbo可扩展机制实战&lt;/a>。&lt;/p>
 &lt;ol>
 &lt;li>实现LoadBalance接口, 以下是Dubbo的LoadBalance接口:&lt;/li>
 &lt;/ol>
@@ -7003,7 +7003,7 @@ Maven 项目结构：&lt;/p>
 &lt;/ol>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>&amp;lt;dubbo:reference id=&amp;#34;helloService&amp;#34; interface=&amp;#34;com.demo.dubbo.api.IHelloService&amp;#34; loadbalance=&amp;#34;demo&amp;#34; /&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在Consumer端的&lt;code>dubbo:reference&lt;/code>中配置&lt;code>&amp;lt;loadbalance=&amp;quot;demo&amp;quot;&amp;gt;&lt;/code>&lt;/p>
-&lt;p>经过上面的3个步骤，我们编写了一个自定义的LoadBalance，并告诉Dubbo使用它了。启动Dubbo，我们就能看到Dubbo已经使用了自定义的DemoLoadBalance。&lt;/p></description></item><item><title>Blog: Dubbo 注解驱动</title><link>https://dubbo.apache.org/zh/blog/2018/08/07/dubbo-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/07/dubbo-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/</guid><description>
+&lt;p>经过上面的3个步骤，我们编写了一个自定义的LoadBalance，并告诉Dubbo使用它了。启动Dubbo，我们就能看到Dubbo已经使用了自定义的DemoLoadBalance。&lt;/p></description></item><item><title>Blog: Dubbo 注解驱动</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/dubbo-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/dubbo-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/</guid><description>
 &lt;h2 id="注解驱动annotation-driven">注解驱动（Annotation-Driven）&lt;/h2>
 &lt;h3 id="dubbocomponentscan">&lt;code>@DubboComponentScan&lt;/code>&lt;/h3>
 &lt;h4 id="起始版本-257">起始版本： &lt;code>2.5.7&lt;/code>&lt;/h4>
@@ -7501,7 +7501,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;/blockquote>
 &lt;p>问题版本：&lt;code>2.5.7&lt;/code>、&lt;code>2.5.8&lt;/code>&lt;/p>
 &lt;p>问题详情：https://github.com/alibaba/dubbo/issues/1120&lt;/p>
-&lt;p>修复版本：&lt;code>2.5.9&lt;/code>（下个版本）&lt;/p></description></item><item><title>Blog: 第一个 Dubbo 应用</title><link>https://dubbo.apache.org/zh/blog/2018/08/07/dubbo-101/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/07/dubbo-101/</guid><description>
+&lt;p>修复版本：&lt;code>2.5.9&lt;/code>（下个版本）&lt;/p></description></item><item><title>Blog: 第一个 Dubbo 应用</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/dubbo-101/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/dubbo-101/</guid><description>
 &lt;h2 id="java-rmi-简介">Java RMI 简介&lt;/h2>
 &lt;p>Java RMI （Remote Method Invocation）- 远程方法调用，能够让客户端像使用本地调用一样调用服务端 Java 虚拟机中的对象方法。RMI 是面向对象语言领域对 RPC （Remote Procedure Call）的完善，用户无需依靠 IDL 的帮助来完成分布式调用，而是通过依赖接口这种更简单自然的方式。&lt;/p>
 &lt;h3 id="java-rmi-工作原理">Java RMI 工作原理&lt;/h3>
@@ -7514,7 +7514,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;li>服务端的 Skeleton 对象收到网络请求之后，将调用信息解包，&lt;/li>
 &lt;li>然后找到真正的服务对象发起调用，并将返回结果打包通过网络发送回客户端。&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/rmi-flow.png" alt="RMI Flow">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/rmi-flow.png" alt="RMI Flow">&lt;/p>
 &lt;p>(来源：https://www.cs.rutgers.edu/~pxk/417/notes/images/rpc-rmi_flow.png)&lt;/p>
 &lt;h3 id="java-rmi-基本概念">Java RMI 基本概念&lt;/h3>
 &lt;p>Java RMI 是 Java 领域创建分布式应用的技术基石。后续的 EJB 技术，以及现代的分布式服务框架，其中的基本理念依旧是 Java RMI 的延续。在 RMI 调用中，有以下几个核心的概念：&lt;/p>
@@ -7564,7 +7564,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;li>监控中心 - 负责收集服务提供方和消费方的运行状态，比如服务调用次数、延迟等，用于监控&lt;/li>
 &lt;li>运行容器 - 负责服务提供方的初始化、加载以及运行的生命周期管理&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-architecture.png" alt="dubbo-architecture">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-architecture.png" alt="dubbo-architecture">&lt;/p>
 &lt;p>&lt;strong>部署阶段&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>服务提供者在指定端口暴露服务，并向注册中心注册服务信息。&lt;/li>
@@ -7702,7 +7702,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看到， &lt;em>hi, dubbo&lt;/em> 是从服务提供者返回的执行结果。&lt;/p>
 &lt;h2 id="快速生成-dubbo-应用">快速生成 Dubbo 应用&lt;/h2>
 &lt;p>Dubbo 还提供了一个公共服务快速搭建基于 Spring Boot 的 Dubbo 应用。访问 &lt;a href="http://start.dubbo.io">http://start.dubbo.io&lt;/a> 并按照下图所示来生成示例工程：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/blog/dubbo-initializr.png" alt="dubbo initializr">&lt;/p>
+&lt;p>&lt;img src="hickenlj.github.io/incubator-dubbo-website/imgs/blog/dubbo-initializr.png" alt="dubbo initializr">&lt;/p>
 &lt;p>&lt;strong>说明&lt;/strong>：&lt;/p>
 &lt;ol>
 &lt;li>在 &lt;em>Group&lt;/em> 中提供 maven groupId，默认值是 &lt;em>com.example&lt;/em>。&lt;/li>
@@ -7801,16 +7801,16 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;p>&lt;a href="https://docs.oracle.com/javase/6/docs/technotes/guides/rmi/hello/hello-world.html">Getting Started Using JavaTM RMI&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;li id="fn:2">
-&lt;p>&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/examples/explicit-target/">直连提供者&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;p>&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/examples/explicit-target/">直连提供者&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;li id="fn:3">
-&lt;p>&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/references/registry/multicast/">Multicast 注册中心&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;p>&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/references/registry/multicast/">Multicast 注册中心&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;li id="fn:4">
-&lt;p>&lt;a href="https://dubbo.apache.org/zh/docsv2.7/user/references/qos/">在线运维命令&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;p>&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docsv2.7/user/references/qos/">在线运维命令&lt;/a>&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Blog: 使用jdk17编译运行dubbo 2.7.14项目</title><link>https://dubbo.apache.org/zh/blog/2018/08/07/%E4%BD%BF%E7%94%A8jdk17%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cdubbo-2.7.14%E9%A1%B9%E7%9B%AE/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/07/%E4%BD%BF%E7%94%A8jdk17%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cdubbo-2.7.14%E9%A1%B9%E7%9B%AE/</guid><description>
+&lt;/div></description></item><item><title>Blog: 使用jdk17编译运行dubbo 2.7.14项目</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/%E4%BD%BF%E7%94%A8jdk17%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cdubbo-2.7.14%E9%A1%B9%E7%9B%AE/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/%E4%BD%BF%E7%94%A8jdk17%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cdubbo-2.7.14%E9%A1%B9%E7%9B%AE/</guid><description>
 &lt;h2 id="概述">概述&lt;/h2>
 &lt;p>java 17是java目前最新的长期支持(LTS)版本，但是由于其强封装 JDK 的内部 API的新特性，导致dubbo项目无法直接使用jdk17编译运行。通过参考&lt;a href="https://openjdk.java.net/jeps/403">openjdk的说明&lt;/a>，可以发现只需要添加相应参数即可绕开java 17的限制&lt;br>
 对于普通的dubbo项目，只需要在运行时添加&lt;br>
@@ -7861,7 +7861,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>result :Hello world, response from provider: *.*.*.*/&amp;lt;unresolved&amp;gt;:20880
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>provider端也有对应的日志&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>Hello world, request from consumer: /*.*.*.*:43346
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: 在 Dubbo 中使用注解</title><link>https://dubbo.apache.org/zh/blog/2018/08/07/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/08/07/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3/</guid><description>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blog: 在 Dubbo 中使用注解</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3/</link><pubDate>Tue, 07 Aug 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/%E5%9C%A8-dubbo-%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3/</guid><description>
 &lt;h1 id="在-dubbo-中使用注解">在 Dubbo 中使用注解&lt;/h1>
 &lt;p>随着微服务架构的广泛地推广和实施。在 Java 生态系统中，以 Spring Boot 和 Spring Cloud 为代表的微服务框架，引入了全新的编程模型，包括：&lt;/p>
 &lt;ul>
@@ -8171,7 +8171,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>result: hello, annotation
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="总结">总结&lt;/h2>
 &lt;p>通过本文的学习，读者可以掌握 Dubbo 专属的 annotation &lt;code>@EnableDubbo&lt;/code>、&lt;code>@Service&lt;/code>、&lt;code>@Reference&lt;/code> 的基本概念，并通过一个简单 Dubbo 应用的实战开发掌握其基本的用法。&lt;/p>
-&lt;p>Spring 除了传统的 XML 配置之外，还提供了注解驱动、外部化配置、以及自动装配等更现代的配置方式。本文专注在介绍通过注解方式来开发 Dubbo 应用，可以看到，与 XML 配置相比，注解方式编程更加简洁明快。在今后的博文中，会进一步的介绍在 Dubbo 中使用外部化配置、以及自动装配的方法。&lt;/p></description></item><item><title>Blog: Dubbo 2.7.x repackage 后的兼容实现方案</title><link>https://dubbo.apache.org/zh/blog/2018/07/22/dubbo-2.7.x-repackage-%E5%90%8E%E7%9A%84%E5%85%BC%E5%AE%B9%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88/</link><pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/07/22/dubbo-2.7.x-repackage-%E5%90%8E%E7%9A%84%E5%85%BC%E5%AE%B9%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88/</guid><description>
+&lt;p>Spring 除了传统的 XML 配置之外，还提供了注解驱动、外部化配置、以及自动装配等更现代的配置方式。本文专注在介绍通过注解方式来开发 Dubbo 应用，可以看到，与 XML 配置相比，注解方式编程更加简洁明快。在今后的博文中，会进一步的介绍在 Dubbo 中使用外部化配置、以及自动装配的方法。&lt;/p></description></item><item><title>Blog: Dubbo 2.7.x repackage 后的兼容实现方案</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/07/22/dubbo-2.7.x-repackage-%E5%90%8E%E7%9A%84%E5%85%BC%E5%AE%B9%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88/</link><pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/07/22/dubbo-2.7.x-repackage-%E5%90%8E%E7%9A%84%E5%85%BC%E5%AE%B9%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88/</guid><description>
 &lt;p>Dubbo至加入Apache孵化器以来，一个很强的诉求就是需要rename groupId和package name，这两项工作在项目毕业前需要完成。其中rename package相对来说复杂一些，除了要修改所有类的包名为&lt;code>org.apache.dubbo&lt;/code>外，更多的是需要考虑如何老版本的兼容性。&lt;/p>
 &lt;p>常见的兼容性包括但不限于以下几种情况：&lt;/p>
 &lt;ul>
@@ -8238,7 +8238,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;/ul>
 &lt;p>所以这里要特别强调的是，这类代码在2.7.x里存在2份，因此有修改的同时需要同步修改。&lt;/p>
 &lt;h2 id="扩展spi">扩展SPI&lt;/h2>
-&lt;p>Dubbo的SPI扩展机制，可以通过&lt;a href="https://dubbo.apache.org/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/">Dubbo可扩展机制实战&lt;/a>这篇博客详细了解。&lt;/p>
+&lt;p>Dubbo的SPI扩展机制，可以通过&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/blog/2019/04/25/dubbo%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%88%98/">Dubbo可扩展机制实战&lt;/a>这篇博客详细了解。&lt;/p>
 &lt;p>以Filter扩展为例，简单来说就是：&lt;/p>
 &lt;ol>
 &lt;li>
@@ -8331,7 +8331,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;li>com.alibaba.dubbo.cache.CacheFactory / Cache&lt;/li>
 &lt;li>com.alibaba.dubbo.rpc.service.EchoService / GenericService&lt;/li>
 &lt;/ul>
-&lt;p>大家如果在试用的过程中发现有任何问题请及时提出；同时如果对其他扩展点有兼容需求，也请大家提出来，也非常欢迎大家自己解决并贡献出来。&lt;/p></description></item><item><title>Blog: Dubbo 上下文信息</title><link>https://dubbo.apache.org/zh/blog/2018/07/12/dubbo-%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BF%A1%E6%81%AF/</link><pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/07/12/dubbo-%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BF%A1%E6%81%AF/</guid><description>
+&lt;p>大家如果在试用的过程中发现有任何问题请及时提出；同时如果对其他扩展点有兼容需求，也请大家提出来，也非常欢迎大家自己解决并贡献出来。&lt;/p></description></item><item><title>Blog: Dubbo 上下文信息</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/07/12/dubbo-%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BF%A1%E6%81%AF/</link><pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/07/12/dubbo-%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BF%A1%E6%81%AF/</guid><description>
 &lt;h2 id="简介">简介&lt;/h2>
 &lt;p>上下文信息是一次 RPC 调用过程中附带的环境信息，如方法名、参数类型、真实参数、本端/对端地址等。这些数据仅属于一次调用，作用于 Consumer 到 Provider 调用的整个流程。&lt;/p>
 &lt;p>提供上下文信息是 RPC 框架很重要的一个功能，使用上下文不仅可以为单次调用指定不同配置，还能在此基础上提供强大的上层功能，如分布式链路追踪。其实现原理就是在上下文中维护一个&lt;code>span_id&lt;/code>，Consumer 和 Provider 通过传递&lt;code>span_id&lt;/code>来连接一次RPC调用，分别上报日志后可以在追踪系统中串联并展示完整的调用流程。这样可以更方便地发现异常，定位问题。&lt;/p>
@@ -8451,9 +8451,9 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;li>Dubbo已经支持从 Provider 端向 Consumer 端传递参数，读写方式和 Consumer 端调用时的方式一样。&lt;/li>
 &lt;/ul>
 &lt;h3 id="异步调用">异步调用&lt;/h3>
-&lt;p>在异步调用时，可通过&lt;code>getCompletableFuture&lt;/code>或&lt;code>getFuture&lt;/code>获取相关的 Future，异步调用相关文档请参阅：&lt;a href="https://dubbo.apache.org/zh/docs/advanced/async-call/">异步调用&lt;/a>&lt;/p>
+&lt;p>在异步调用时，可通过&lt;code>getCompletableFuture&lt;/code>或&lt;code>getFuture&lt;/code>获取相关的 Future，异步调用相关文档请参阅：&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs/advanced/async-call/">异步调用&lt;/a>&lt;/p>
 &lt;h2 id="注意事项">注意事项&lt;/h2>
-&lt;p>Dubbo 内部使用 ThreadLocal 的方式存储每次调用的上下文信息，当接收到请求或发起请求时，当前线程会更新 RpcContext。例如，服务 A 调用服务 B，服务 B 调用服务 C，在 B 调 C 之前，RpcContext 记录的是 A 调 B 的信息，在 B 调 C 之后，RpcContext 记录的是 B 调 C 的信息。&lt;/p></description></item><item><title>Blog: 第一个 Dubbo Filter</title><link>https://dubbo.apache.org/zh/blog/2018/07/01/%E7%AC%AC%E4%B8%80%E4%B8%AA-dubbo-filter/</link><pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/07/01/%E7%AC%AC%E4%B8%80%E4%B8%AA-dubbo-filter/</guid><description>
+&lt;p>Dubbo 内部使用 ThreadLocal 的方式存储每次调用的上下文信息，当接收到请求或发起请求时，当前线程会更新 RpcContext。例如，服务 A 调用服务 B，服务 B 调用服务 C，在 B 调 C 之前，RpcContext 记录的是 A 调 B 的信息，在 B 调 C 之后，RpcContext 记录的是 B 调 C 的信息。&lt;/p></description></item><item><title>Blog: 第一个 Dubbo Filter</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/07/01/%E7%AC%AC%E4%B8%80%E4%B8%AA-dubbo-filter/</link><pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/07/01/%E7%AC%AC%E4%B8%80%E4%B8%AA-dubbo-filter/</guid><description>
 &lt;h3 id="概述">概述&lt;/h3>
 &lt;p>在Dubbo的整体设计中，Filter是一个很重要的概念，包括Dubbo本身的大多数功能，都是基于此扩展点实现的，在每次的调用过程中，Filter的拦截都会被执行。&lt;/p>
 &lt;h4 id="dubbo-filter的加载机制">Dubbo Filter的加载机制&lt;/h4>
@@ -8611,7 +8611,7 @@ DubboComponentScanRegistrar-85]-[main]-[INFO] 0 annotated @Service Components { 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#586e75">// ...
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#586e75">&lt;/span>&lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>使用 xml 的配置方式会更加灵活，粒度更细。&lt;/p>
-&lt;p>在before和after中，可以实现自己的业务逻辑来赋予该filter一定的功能。编写和配置完成后，该filter就会被Dubbo框架激活并且在调用链中执行。&lt;/p></description></item><item><title>Blog: 回声测试</title><link>https://dubbo.apache.org/zh/blog/2018/06/26/%E5%9B%9E%E5%A3%B0%E6%B5%8B%E8%AF%95/</link><pubDate>Tue, 26 Jun 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/06/26/%E5%9B%9E%E5%A3%B0%E6%B5%8B%E8%AF%95/</guid><description>
+&lt;p>在before和after中，可以实现自己的业务逻辑来赋予该filter一定的功能。编写和配置完成后，该filter就会被Dubbo框架激活并且在调用链中执行。&lt;/p></description></item><item><title>Blog: 回声测试</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/06/26/%E5%9B%9E%E5%A3%B0%E6%B5%8B%E8%AF%95/</link><pubDate>Tue, 26 Jun 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/06/26/%E5%9B%9E%E5%A3%B0%E6%B5%8B%E8%AF%95/</guid><description>
 &lt;p>回声测试用于检测服务是否可用。客户端通过 EchoService 来使用回声测试。EchoService 申明如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-Java" data-lang="Java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">interface&lt;/span> &lt;span style="color:#268bd2">EchoService&lt;/span> &lt;span style="color:#719e07">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -8684,7 +8684,7 @@ Spring 配置：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#719e07">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>请求经过 EchoFilter.invoke 方法时，如果判定为 $echo 调用，则直接返回请求参数，否则继续执行 Filter 链。EchoFilter 默认加入到每一个服务提供者的 Filter 链里 EchoFilter.invoke 方法时，如果判定为 $echo 调用，则直接返回请求参数，否则继续执行 Filter 链。EchoFilter 默认加入到每一个服务提供者的 Filter 链里。这样每一个服务提供者自动具备了响应 EchoService 的能力。&lt;/p>
-&lt;p>通过上述分析，我们了解了框架是如何通过动态代理和 Filter 机制，使得用户可以透明地使用 EchoService 功能。&lt;/p></description></item><item><title>Blog: 以 Dubbo 为例，聊聊如何向开源项目做贡献</title><link>https://dubbo.apache.org/zh/blog/2018/06/03/%E4%BB%A5-dubbo-%E4%B8%BA%E4%BE%8B%E8%81%8A%E8%81%8A%E5%A6%82%E4%BD%95%E5%90%91%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%81%9A%E8%B4%A1%E7%8C%AE/</link><pubDate>Sun, 03 Jun 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/06/03/%E4%BB%A5-dubbo-%E4%B8%BA%E4%BE%8B%E8%81%8A%E8%81%8A%E5%A6%82%E4%BD%95%E5%90%91%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%81%9A%E8%B4%A1%E7%8C%AE/</guid><description>
+&lt;p>通过上述分析，我们了解了框架是如何通过动态代理和 Filter 机制，使得用户可以透明地使用 EchoService 功能。&lt;/p></description></item><item><title>Blog: 以 Dubbo 为例，聊聊如何向开源项目做贡献</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/06/03/%E4%BB%A5-dubbo-%E4%B8%BA%E4%BE%8B%E8%81%8A%E8%81%8A%E5%A6%82%E4%BD%95%E5%90%91%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%81%9A%E8%B4%A1%E7%8C%AE/</link><pubDate>Sun, 03 Jun 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/06/03/%E4%BB%A5-dubbo-%E4%B8%BA%E4%BE%8B%E8%81%8A%E8%81%8A%E5%A6%82%E4%BD%95%E5%90%91%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%81%9A%E8%B4%A1%E7%8C%AE/</guid><description>
 &lt;p>Github 上有众多优秀的开源项目，大多数 IT 从业者将其当做了予取予求的工具库，遇到什么需求，先去 Github 搜一把，但有没有想过有一天自己也可以给开源事业做一些贡献呢？本文将会以 dubbo 项目为例，向你阐释，给开源项目做贡献并不是一件难事。&lt;/p>
 &lt;h2 id="1-为何要给开源贡献力量">1 为何要给开源贡献力量&lt;/h2>
 &lt;p>为开源项目做贡献得到的收益是多方面的，为了让你有足够的信心加入到开源项目中，我在文章最开始列举出它的诸多好处。&lt;/p>
@@ -8732,7 +8732,7 @@ Spring 配置：&lt;/p>
 &lt;h2 id="3-其他贡献形式">3 其他贡献形式&lt;/h2>
 &lt;p>不仅仅只有贡献代码，修复 bug 等行为才算作为开源做贡献，以下这些行为也属于主要形式：&lt;/p>
 &lt;h3 id="31-撰写文档">3.1 撰写文档&lt;/h3>
-&lt;p>&lt;a href="https://dubbo.apache.org/">Dubbo文档&lt;/a>是其开源组成成分的重要一环，其内容源文件位于：&lt;a href="https://github.com/apache/dubbo-website">https://github.com/apache/dubbo-website&lt;/a>。同样也是一个 Git 仓库，任何你想要对 dubbo 知识点的补充，都可以在这儿提交 pull request，只需要一些 markdown 的语法知识，和一些可有可无的 npm 语法即可。如果你觉得贡献代码对于现在的自己仍然有点难度，不妨从贡献文档开始接触开源。&lt;/p>
+&lt;p>&lt;a href="hickenlj.github.io/incubator-dubbo-website/">Dubbo文档&lt;/a>是其开源组成成分的重要一环，其内容源文件位于：&lt;a href="https://github.com/apache/dubbo-website">https://github.com/apache/dubbo-website&lt;/a>。同样也是一个 Git 仓库，任何你想要对 dubbo 知识点的补充，都可以在这儿提交 pull request，只需要一些 markdown 的语法知识，和一些可有可无的 npm 语法即可。如果你觉得贡献代码对于现在的自己仍然有点难度，不妨从贡献文档开始接触开源。&lt;/p>
 &lt;h3 id="32-issue">3.2 ISSUE&lt;/h3>
 &lt;p>无论是 Github 中的 Issue 还是 mailing list 中的讨论，无论是提出问题，汇报 bug，还是回答问题（bugfix 则不仅仅需要 Issue 了），协助管理者 review pull request，都是贡献的一种形式，勿以善小而不为。&lt;/p>
 &lt;h3 id="33-其他行为">3.3 其他行为&lt;/h3>
@@ -8802,10 +8802,10 @@ Spring 配置：&lt;/p>
 &lt;li>&lt;strong>和项目现有的风格保持一致&lt;/strong> 尽你最大的努力，这也就是意味着在使用缩进、分号、以及注释很可能和你自己的风格大相径庭，但是为了节省维护者的精力，以及未来他人更好的理解和维护，还请你容忍一下。&lt;/li>
 &lt;/ul>
 &lt;h2 id="5-成为一个开源贡献者">5 成为一个开源贡献者&lt;/h2>
-&lt;p>如果你有志于参与开源事业，可以尝试从自己最熟悉的项目开始，开源并不是属于高级开发者的专属词汇，它就是由你我这样的人在需求，修复，构建中演进下去的。Let&amp;rsquo;s try it !&lt;/p></description></item><item><title>Blog: Dubbo 外部化配置</title><link>https://dubbo.apache.org/zh/blog/2018/05/21/dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/</link><pubDate>Mon, 21 May 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/05/21/dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/</guid><description>
+&lt;p>如果你有志于参与开源事业，可以尝试从自己最熟悉的项目开始，开源并不是属于高级开发者的专属词汇，它就是由你我这样的人在需求，修复，构建中演进下去的。Let&amp;rsquo;s try it !&lt;/p></description></item><item><title>Blog: Dubbo 外部化配置</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/05/21/dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/</link><pubDate>Mon, 21 May 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/05/21/dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/</guid><description>
 &lt;h1 id="dubbo-外部化配置">Dubbo 外部化配置&lt;/h1>
 &lt;h2 id="外部化配置">外部化配置&lt;/h2>
-&lt;p>在&lt;a href="https://dubbo.apache.org/zh/blog/2018/08/07/dubbo-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/">Dubbo 注解驱动&lt;/a>例子中，无论是服务提供方，还是服务消费方，均需要转配相关配置Bean：&lt;/p>
+&lt;p>在&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/08/07/dubbo-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/">Dubbo 注解驱动&lt;/a>例子中，无论是服务提供方，还是服务消费方，均需要转配相关配置Bean：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">@Bean&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> ApplicationConfig &lt;span style="color:#268bd2">applicationConfig&lt;/span>&lt;span style="color:#719e07">()&lt;/span> &lt;span style="color:#719e07">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ApplicationConfig applicationConfig &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ApplicationConfig&lt;span style="color:#719e07">();&lt;/span>
@@ -8883,7 +8883,7 @@ Spring 配置：&lt;/p>
 &lt;/tbody>
 &lt;/table>
 &lt;p>通过申明对应的 Spring 扩展标签，在 Spring 应用上下文中将自动生成相应的配置 Bean。&lt;/p>
-&lt;p>在 Dubbo 官方用户手册的&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/reference-manual/config/properties/">“属性配置”&lt;/a>章节中，&lt;code>dubbo.properties&lt;/code> 配置属性能够映射到 &lt;code>ApplicationConfig&lt;/code> 、&lt;code>ProtocolConfig&lt;/code> 以及 &lt;code>RegistryConfig&lt;/code> 的字段。从某种意义上来说，&lt;code>dubbo.properties&lt;/code> 也是 Dubbo 的外部化配置。&lt;/p>
+&lt;p>在 Dubbo 官方用户手册的&lt;a href="hickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/config/properties/">“属性配置”&lt;/a>章节中，&lt;code>dubbo.properties&lt;/code> 配置属性能够映射到 &lt;code>ApplicationConfig&lt;/code> 、&lt;code>ProtocolConfig&lt;/code> 以及 &lt;code>RegistryConfig&lt;/code> 的字段。从某种意义上来说，&lt;code>dubbo.properties&lt;/code> 也是 Dubbo 的外部化配置。&lt;/p>
 &lt;p>其中，引用“映射规则”的内容：&lt;/p>
 &lt;blockquote>
 &lt;h2 id="映射规则">映射规则&lt;/h2>
@@ -9291,7 +9291,7 @@ Spring 配置：&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">applicationBean3&lt;/span>.&lt;span style="color:#268bd2">name&lt;/span> &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#268bd2">dubbo&lt;/span>&lt;span style="color:#719e07">-&lt;/span>&lt;span style="color:#268bd2">demo&lt;/span>&lt;span style="color:#719e07">-&lt;/span>&lt;span style="color:#268bd2">application3&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">moduleBean&lt;/span>.&lt;span style="color:#268bd2">name&lt;/span> &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#268bd2">dubbo&lt;/span>&lt;span style="color:#719e07">-&lt;/span>&lt;span style="color:#268bd2">demo&lt;/span>&lt;span style="color:#719e07">-&lt;/span>&lt;span style="color:#719e07">module&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">registry&lt;/span>.&lt;span style="color:#268bd2">address&lt;/span> &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#268bd2">zookeeper&lt;/span>:&lt;span style="color:#586e75">//192.168.99.100:32770
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出的内容与&lt;code>classpath:/META-INF/bindings.properties&lt;/code> 绑定的内容一致，符合期望。&lt;/p></description></item><item><title>Blog: Dubbo 博客文档中文排版指南</title><link>https://dubbo.apache.org/zh/blog/2018/01/01/dubbo-%E5%8D%9A%E5%AE%A2%E6%96%87%E6%A1%A3%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%E6%8C%87%E5%8D%97/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/blog/2018/01/01/dubbo-%E5%8D%9A%E5%AE%A2%E6%96%87%E6%A1%A3%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%E6%8C%87%E5%8D%97/</guid><description>
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出的内容与&lt;code>classpath:/META-INF/bindings.properties&lt;/code> 绑定的内容一致，符合期望。&lt;/p></description></item><item><title>Blog: Dubbo 博客文档中文排版指南</title><link>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/01/01/dubbo-%E5%8D%9A%E5%AE%A2%E6%96%87%E6%A1%A3%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%E6%8C%87%E5%8D%97/</link><pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate><guid>hickenlj.github.io/incubator-dubbo-website/zh/blog/2018/01/01/dubbo-%E5%8D%9A%E5%AE%A2%E6%96%87%E6%A1%A3%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%E6%8C%87%E5%8D%97/</guid><description>
 &lt;h1 id="dubbo-博客文档中文排版指南">Dubbo 博客文档中文排版指南&lt;/h1>
 &lt;p>[TOC]&lt;/p>
 &lt;h2 id="空格">空格&lt;/h2>
