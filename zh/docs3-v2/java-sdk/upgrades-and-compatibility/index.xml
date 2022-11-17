@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 升级和兼容性</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/</link><description>Recent content in 升级和兼容性 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs3-V2: 2.x 升级至 3.x 操作指南</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/2.x-to-3.x-compatibility-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/2.x-to-3.x-compatibility-guide/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 升级和兼容性</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/</link><description>Recent content in 升级和兼容性 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs3-V2: 2.x 升级至 3.x 操作指南</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/2.x-to-3.x-compatibility-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/2.x-to-3.x-compatibility-guide/</guid><description>
 &lt;h3 id="升级">升级&lt;/h3>
 &lt;p>&lt;strong>无需改动任何代码，直接升级到 Dubbo 3.0。&lt;/strong>&lt;/p>
 &lt;p>在 3.0 版本的设计与开发之初，我们就定下了兼容老版本 Dubbo 用户（2.5、2.6、2.7）的目标。因此，往 3.0 版本的升级过程将会是完全透明的，用户无需做任何业务改造，升级 3.x 后的框架行为将保持与 2.x 版本完全一致。&lt;/p>
@@ -19,26 +19,26 @@
 &lt;ul>
 &lt;li>&lt;strong>新的地址发现模型（应用级服务发现）。&lt;/strong>
 &lt;ul>
-&lt;li>查看&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/service-discovery-samples/">应用级服务发现迁移示例&lt;/a>。&lt;/li>
-&lt;li>查看&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/migration-service-discovery/">应用级服务发现的迁移步骤&lt;/a>&lt;/li>
-&lt;li>查看&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/service-discovery-rule/">应用级服务发现地址迁移规则说明&lt;/a>&lt;/li>
+&lt;li>查看&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/service-discovery-samples/">应用级服务发现迁移示例&lt;/a>。&lt;/li>
+&lt;li>查看&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/migration-service-discovery/">应用级服务发现的迁移步骤&lt;/a>&lt;/li>
+&lt;li>查看&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/service-discovery-rule/">应用级服务发现地址迁移规则说明&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;li>&lt;strong>下一代基于 HTTP/2 的 Triple 协议。&lt;/strong>
 &lt;ul>
-&lt;li>查看&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/migration-triple/">Triple 协议迁移步骤&lt;/a>&lt;/li>
-&lt;li>查看 &lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/reference-manual/protocol/triple/guide/">Triple 协议使用方式&lt;/a>&lt;/li>
-&lt;li>查看 &lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/reference-manual/protocol/triple/overview/">Triple 协议设计与实现&lt;/a>。&lt;/li>
+&lt;li>查看&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/migration-triple/">Triple 协议迁移步骤&lt;/a>&lt;/li>
+&lt;li>查看 &lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/triple/guide/">Triple 协议使用方式&lt;/a>&lt;/li>
+&lt;li>查看 &lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/reference-manual/protocol/triple/overview/">Triple 协议设计与实现&lt;/a>。&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;li>&lt;strong>统一的路由规则。&lt;/strong>
 &lt;ul>
-&lt;li>查看&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/advanced-features-and-usage/traffic/mesh-style/">统一路由规则设计与实现&lt;/a>&lt;/li>
+&lt;li>查看&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/advanced-features-and-usage/traffic/mesh-style/">统一路由规则设计与实现&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;/li>
-&lt;/ul></description></item><item><title>Docs3-V2: Dubbo 协议迁移至 Triple 协议指南</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/migration-triple/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/migration-triple/</guid><description>
+&lt;/ul></description></item><item><title>Docs3-V2: Dubbo 协议迁移至 Triple 协议指南</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/migration-triple/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/migration-triple/</guid><description>
 &lt;h2 id="triple-介绍">Triple 介绍&lt;/h2>
-&lt;p>&lt;code>Triple&lt;/code> 协议的格式和原理请参阅 &lt;a href="https://dubbo.apache.org/zh/docs/concepts/rpc-protocol/">RPC 通信协议&lt;/a>&lt;/p>
+&lt;p>&lt;code>Triple&lt;/code> 协议的格式和原理请参阅 &lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/rpc-protocol/">RPC 通信协议&lt;/a>&lt;/p>
 &lt;p>根据 Triple 设计的目标，&lt;code>Triple&lt;/code> 协议有以下优势:&lt;/p>
 &lt;ul>
 &lt;li>具备跨语言交互的能力，传统的多语言多 SDK 模式和 Mesh 化跨语言模式都需要一种更通用易扩展的数据传输协议。&lt;/li>
@@ -88,24 +88,24 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="仅使用-dubbo-协议">仅使用 dubbo 协议&lt;/h3>
 &lt;p>为保证兼容性，我们先将部分 provider 升级到 &lt;code>dubbo3&lt;/code> 版本并使用 &lt;code>dubbo&lt;/code> 协议。&lt;/p>
 &lt;p>使用 &lt;code>dubbo&lt;/code> 协议启动一个 &lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-triple/src/main/java/org/apache/dubbo/sample/tri/migration/ApiMigrationDubboProvider.java">&lt;code>Provider&lt;/code>&lt;/a> 和 &lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-triple/src/main/java/org/apache/dubbo/sample/tri/migration/ApiMigrationDubboConsumer.java">&lt;code>Consumer&lt;/code>&lt;/a> ,完成调用，输出如下:
-&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/dubbo3-tri-migration-dubbo-dubbo-result.png" alt="result">&lt;/p>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/dubbo3-tri-migration-dubbo-dubbo-result.png" alt="result">&lt;/p>
 &lt;h3 id="同时使用-dubbo-和-triple-协议">同时使用 dubbo 和 triple 协议&lt;/h3>
 &lt;p>对于线上服务的升级，不可能一蹴而就同时完成 provider 和 consumer 升级, 需要按步操作，保证业务稳定。
 第二步, provider 提供双协议的方式同时支持 dubbo + tri 两种协议的客户端。&lt;/p>
 &lt;p>结构如图所示:
-&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/migrate-dubbo-tri-strust.png" alt="strust">&lt;/p>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/migrate-dubbo-tri-strust.png" alt="strust">&lt;/p>
 &lt;blockquote>
 &lt;p>按照推荐升级步骤，provider 已经支持了tri协议，所以 dubbo3的 consumer 可以直接使用 tri 协议&lt;/p>
 &lt;/blockquote>
 &lt;p>使用&lt;code>dubbo&lt;/code>协议和&lt;code>triple&lt;/code>协议启动&lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-triple/src/main/java/org/apache/dubbo/sample/tri/migration/ApiMigrationBothProvider.java">&lt;code>Provider&lt;/code>&lt;/a>和&lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-triple/src/main/java/org/apache/dubbo/sample/tri/migration/ApiMigrationBothConsumer.java">&lt;code>Consumer&lt;/code>&lt;/a>,完成调用，输出如下:&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/dubbo3-tri-migration-both-dubbo-tri-result.png" alt="result">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/dubbo3-tri-migration-both-dubbo-tri-result.png" alt="result">&lt;/p>
 &lt;h3 id="仅使用-triple-协议">仅使用 triple 协议&lt;/h3>
 &lt;p>当所有的 consuemr 都升级至支持 &lt;code>Triple&lt;/code> 协议的版本后，provider 可切换至仅使用 &lt;code>Triple&lt;/code> 协议启动&lt;/p>
 &lt;p>结构如图所示:
-&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/migrate-only-tri-strust.png" alt="strust">&lt;/p>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/migrate-only-tri-strust.png" alt="strust">&lt;/p>
 &lt;p>&lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-triple/src/main/java/org/apache/dubbo/sample/tri/migration/ApiMigrationTriProvider.java">Provider&lt;/a>
 和 &lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-triple/src/main/java/org/apache/dubbo/sample/tri/migration/ApiMigrationTriConsumer.java">Consumer&lt;/a> 完成调用，输出如下:&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/dubbo3-tri-migration-tri-tri-result.png" alt="result">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/dubbo3-tri-migration-tri-tri-result.png" alt="result">&lt;/p>
 &lt;h3 id="实现原理">实现原理&lt;/h3>
 &lt;p>通过上面介绍的升级过程，我们可以很简单的通过修改协议类型来完成升级。框架是怎么帮我们做到这些的呢？&lt;/p>
 &lt;p>通过对 &lt;code>Triple&lt;/code> 协议的介绍，我们知道Dubbo3的 &lt;code>Triple&lt;/code> 的数据类型是 &lt;code>protobuf&lt;/code> 对象，那为什么非 &lt;code>protobuf&lt;/code> 的 java 对象也可以被正常传输呢。&lt;/p>
@@ -138,7 +138,7 @@
 &lt;/blockquote>
 &lt;p>对于 Dubbo3 和 Triple 来说，主推的是使用 &lt;code>protobuf&lt;/code> 序列化，并且使用 &lt;code>proto&lt;/code> 定义的 &lt;code>IDL&lt;/code> 来生成相关接口定义。以 &lt;code>IDL&lt;/code> 做为多语言中的通用接口约定，加上 &lt;code>Triple&lt;/code> 与 &lt;code>Grpc&lt;/code> 的天然互通性，可以轻松地实现跨语言交互，例如 Go 语言等。&lt;/p>
 &lt;p>将编写好的 &lt;code>.proto&lt;/code> 文件使用 &lt;code>dubbo-compiler&lt;/code> 插件进行编译并编写实现类，完成方法调用：&lt;/p>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/dubbo3-tri-migration-tri-tri-result.png" alt="result">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/dubbo3-tri-migration-tri-tri-result.png" alt="result">&lt;/p>
 &lt;p>从上面升级的例子我们可以知道，&lt;code>Triple&lt;/code> 协议使用 &lt;code>protbuf&lt;/code> 对象序列化后进行传输，所以对于本身就是 &lt;code>protobuf&lt;/code> 对象的方法来说，没有任何其他逻辑。&lt;/p>
 &lt;p>使用 &lt;code>protobuf&lt;/code> 插件编译后接口如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">interface&lt;/span> &lt;span style="color:#268bd2">PbGreeter&lt;/span> &lt;span style="color:#719e07">{&lt;/span>
@@ -168,11 +168,11 @@
 &lt;p>Stream 分为以下三种:&lt;/p>
 &lt;ul>
 &lt;li>SERVER_STREAM(服务端流)
-&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/migrate-server-stream.png" alt="SERVER_STREAM">&lt;/li>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/migrate-server-stream.png" alt="SERVER_STREAM">&lt;/li>
 &lt;li>CLIENT_STREAM(客户端流)
-&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/migrate-client-stream.png" alt="CLIENT_STREAM">&lt;/li>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/migrate-client-stream.png" alt="CLIENT_STREAM">&lt;/li>
 &lt;li>BIDIRECTIONAL_STREAM(双向流)
-&lt;img src="https://dubbo.apache.org/imgs/v3/migration/tri/migrate-bi-stream.png" alt="BIDIRECTIONAL_STREAM">&lt;/li>
+&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/v3/migration/tri/migrate-bi-stream.png" alt="BIDIRECTIONAL_STREAM">&lt;/li>
 &lt;/ul>
 &lt;blockquote>
 &lt;p>由于 &lt;code>java&lt;/code> 语言的限制，BIDIRECTIONAL_STREAM 和 CLIENT_STREAM 的实现是一样的。&lt;/p>
@@ -308,8 +308,8 @@
 &lt;h2 id="triple-与应用级注册发现">Triple 与应用级注册发现&lt;/h2>
 &lt;p>关于 Triple 协议的应用级服务注册和发现和其他语言是一致的，可以通过下列内容了解更多。&lt;/p>
 &lt;ul>
-&lt;li>&lt;a href="https://dubbo.apache.org/zh/docs/concepts/service-discovery/">服务发现&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://dubbo.apache.org/zh/docs/migration/migration-service-discovery/">应用级地址发现迁移指南&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs/concepts/service-discovery/">服务发现&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs/migration/migration-service-discovery/">应用级地址发现迁移指南&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;h2 id="与-grpc-互通">与 GRPC 互通&lt;/h2>
 &lt;p>通过对于协议的介绍，我们知道 &lt;code>Triple&lt;/code> 协议是基于 &lt;code>HTTP2&lt;/code> 并兼容 &lt;code>GRPC&lt;/code>。为了保证和验证与&lt;code>GRPC&lt;/code>互通能力，Dubbo3 也编写了各种从场景下的测试。详细的可以通过&lt;a href="https://github.com/apache/dubbo-samples/tree/master/dubbo-samples-triple/README.MD">这里&lt;/a> 了解更多。&lt;/p>
@@ -323,7 +323,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;li>&amp;hellip;&lt;/li>
 &lt;/ul>
 &lt;p>&lt;code>stub&lt;/code> 用一种统一的使用方式帮我们屏蔽了不同调用方式的细节。不过目前 &lt;code>Dubbo3&lt;/code> 暂时只支持传统定义接口并进行调用的使用方式。&lt;/p>
-&lt;p>在不久的未来，&lt;code>Triple&lt;/code> 也将实现各种常用的 &lt;code>Stub&lt;/code>，让用户写一份&lt;code>proto&lt;/code>文件，通过 &lt;code>comipler&lt;/code> 可以在任意场景方便的使用，请拭目以待。&lt;/p></description></item><item><title>Docs3-V2: 序列化协议升级指南</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/serialization-upgrade/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/serialization-upgrade/</guid><description>
+&lt;p>在不久的未来，&lt;code>Triple&lt;/code> 也将实现各种常用的 &lt;code>Stub&lt;/code>，让用户写一份&lt;code>proto&lt;/code>文件，通过 &lt;code>comipler&lt;/code> 可以在任意场景方便的使用，请拭目以待。&lt;/p></description></item><item><title>Docs3-V2: 序列化协议升级指南</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/serialization-upgrade/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/serialization-upgrade/</guid><description>
 &lt;p>在 3.1.0 版本中，Dubbo 默认支持的序列化协议新增对 Fastjson2 的支持。部分用户可能会考虑在现有的系统中对序列化协议进行升级，但服务端和客户端版本的差异可能导致客户端并不支持服务端的序列化协议。而在 3.2.0 版本中 Dubbo 的服务端引入新的配置&lt;code>prefer-serialization&lt;/code>，该特性可以完美解决服务端序列化升级过程中可能带来的风险。&lt;/p>
 &lt;h3 id="最佳实践">最佳实践&lt;/h3>
 &lt;p>序列化协议升级，需要分两步走：&lt;/p>
@@ -339,7 +339,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;p>dubbo 客户端序列化协议是根据服务端的注册配置来选择的（即服务端的&lt;code>serialization&lt;/code>配置）。在请求阶段 dubbo 会把客户端的序列化协议组装到请求头上，服务端在进行反序列化时会根据请求头来确定反序列化协议。&lt;/p>
 &lt;ul>
 &lt;li>&lt;strong>所以，如果服务端和客户端的版本不一致就可能会出现客户端序列化不了的情况。&lt;/strong> 为了解决这个情况，3.2.0 在客户端序列化的时候会优先使用&lt;code>prefer-serialization&lt;/code>配置的协议，如果不支持&lt;code>prefer-serialization&lt;/code>相关的协议，才会使用&lt;code>serialization&lt;/code>配置的协议。（可以把&lt;code>serialization&lt;/code>理解为一个兜底的配置）&lt;/li>
-&lt;/ul></description></item><item><title>Docs3-V2: 应用级服务发现</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/</guid><description/></item><item><title>Docs3-V2: Protobuf与Interface对比</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/protobufinterface/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/protobufinterface/</guid><description>
+&lt;/ul></description></item><item><title>Docs3-V2: 应用级服务发现</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/service-discovery/</guid><description/></item><item><title>Docs3-V2: Protobuf与Interface对比</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/protobufinterface/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/protobufinterface/</guid><description>
 &lt;h2 id="1-数据类型">1. 数据类型&lt;/h2>
 &lt;h3 id="11-基本类型">1.1. 基本类型&lt;/h3>
 &lt;table>
@@ -430,7 +430,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>生成的java代码&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/docs/advanced/protobufinterface/124234531-b96c2c80-db46-11eb-8155-a77dbe059f07.png" alt="image">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/docs/advanced/protobufinterface/124234531-b96c2c80-db46-11eb-8155-a77dbe059f07.png" alt="image">&lt;/p>
 &lt;blockquote>
 &lt;p>枚举是常量，因此采用大写&lt;/p>
 &lt;/blockquote>
@@ -444,7 +444,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>生成的java代码&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/docs/advanced/protobufinterface/124234564-c4bf5800-db46-11eb-94fc-a056af6089cb.png" alt="image">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/docs/advanced/protobufinterface/124234564-c4bf5800-db46-11eb-94fc-a056af6089cb.png" alt="image">&lt;/p>
 &lt;blockquote>
 &lt;p>底层实际上是1个ArrayList&lt;/p>
 &lt;/blockquote>
@@ -460,7 +460,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>生成的java代码&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/docs/advanced/protobufinterface/124234654-e4568080-db46-11eb-9700-b30022ebee21.png" alt="image">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/docs/advanced/protobufinterface/124234654-e4568080-db46-11eb-9700-b30022ebee21.png" alt="image">&lt;/p>
 &lt;h3 id="25-嵌套">2.5. 嵌套&lt;/h3>
 &lt;ul>
 &lt;li>原始pb代码&lt;/li>
@@ -482,7 +482,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>生成的java代码&lt;/li>
 &lt;/ul>
-&lt;p>&lt;img src="https://dubbo.apache.org/imgs/docs/advanced/protobufinterface/124234723-f89a7d80-db46-11eb-82d0-a8aee5322098.png" alt="image">&lt;/p>
+&lt;p>&lt;img src="https://chickenlj.github.io/incubator-dubbo-website/imgs/docs/advanced/protobufinterface/124234723-f89a7d80-db46-11eb-82d0-a8aee5322098.png" alt="image">&lt;/p>
 &lt;h2 id="3-字段默认值">3. 字段默认值&lt;/h2>
 &lt;ul>
 &lt;li>对于字符串，默认值为空字符串。&lt;/li>
@@ -582,7 +582,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;li>社区主页地址：https://developers.google.cn/protocol-buffers/&lt;/li>
 &lt;li>社区开源地址：https://github.com/google/protobuf&lt;/li>
 &lt;li>相关jar的maven：http://mvnrepository.com/artifact/com.google.protobuf&lt;/li>
-&lt;/ul></description></item><item><title>Docs3-V2: 3.0 升级至 3.1 操作指南</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.0-to-3.1-compatibility-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.0-to-3.1-compatibility-guide/</guid><description>
+&lt;/ul></description></item><item><title>Docs3-V2: 3.0 升级至 3.1 操作指南</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.0-to-3.1-compatibility-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.0-to-3.1-compatibility-guide/</guid><description>
 &lt;h2 id="功能修改点">功能修改点&lt;/h2>
 &lt;h3 id="1-nacos-group-对齐应用级服务发现">1. Nacos Group 对齐（应用级服务发现）&lt;/h3>
 &lt;p>在 Dubbo 2.7.x 中，配置在 Nacos Registry URL 上的 group 值是对齐 Nacos 注册中心中的 group 分组的。（group 可以当成类似 namespace 的软隔离）&lt;/p>
@@ -592,7 +592,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;ol>
 &lt;li>请检查注册中心 URL 上是否已经配置了 group 属性，如果是的话需要检查服务端和消费端的 group 是否都一致，如果不一致请修改为一致&lt;/li>
 &lt;li>如果不希望 group 重新对齐到 Nacos 注册中心中的 group 分组，可以配置 &lt;code>dubbo.nacos-service-discovery.use-default-group=false&lt;/code> 全局属性值忽略该功能&lt;/li>
-&lt;/ol></description></item><item><title>Docs3-V2: 3.1 升级至 3.2 操作指南</title><link>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.1-to-3.2-compatibility-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.1-to-3.2-compatibility-guide/</guid><description>
+&lt;/ol></description></item><item><title>Docs3-V2: 3.1 升级至 3.2 操作指南</title><link>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.1-to-3.2-compatibility-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/3.1-to-3.2-compatibility-guide/</guid><description>
 &lt;h2 id="功能修改点">功能修改点&lt;/h2>
 &lt;h3 id="1-传递依赖变更">1. 传递依赖变更&lt;/h3>
 &lt;ul>
@@ -606,7 +606,7 @@ Grpc 使用 &lt;code>compiler&lt;/code> 将编写的 &lt;code>proto&lt;/code> �
 &lt;/ul>
 &lt;h4 id="faq">FAQ&lt;/h4>
 &lt;h4 id="q1会不会影响和低版本的-dubbo-互通">Q1：会不会影响和低版本的 Dubbo 互通？&lt;/h4>
-&lt;p>不会。与低版本互通仍使用 &lt;code>hessian-lite&lt;/code>。原理可参考&lt;a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/upgrades-and-compatibility/serialization-upgrade/">序列化协议升级指南&lt;/a>一文。&lt;/p>
+&lt;p>不会。与低版本互通仍使用 &lt;code>hessian-lite&lt;/code>。原理可参考&lt;a href="https://chickenlj.github.io/incubator-dubbo-website/zh/docs3-v2/java-sdk/upgrades-and-compatibility/serialization-upgrade/">序列化协议升级指南&lt;/a>一文。&lt;/p>
 &lt;h4 id="q2为什么要切换默认序列化方式">Q2：为什么要切换默认序列化方式？&lt;/h4>
 &lt;p>&lt;code>fastjson2&lt;/code> 是一款高性能的序列化框架，性能优于 &lt;code>hessian2&lt;/code>，原生支持 JDK17、Native 等，以及完全向前兼容 &lt;code>hessian2&lt;/code> 所有功能。
 由于 &lt;code>hessian-lite&lt;/code> 在未来维护难度越来越大，我们决定将默认序列化方式从 &lt;code>hessian2&lt;/code> 切换为 &lt;code>fastjson2&lt;/code>。&lt;/p>
