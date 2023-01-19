@@ -1,4 +1,4 @@
-baseURL = "http://static.dubbo.apache.org:8080/"
+baseURL = "https://chickenlj.github.io/incubator-dubbo-website/"
 languageCode = "en-us"
 title = "Apache Dubbo"
 theme = ["docsy"]
