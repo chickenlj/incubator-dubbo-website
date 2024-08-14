@@ -1,0 +1,448 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Dubbo – 快速创建应用</title><link>https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/develop/</link><description>Recent content in 快速创建应用 on Apache Dubbo</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><atom:link href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/develop/index.xml" rel="self" type="application/rss+xml"/><item><title>Overview: Spring Boot</title><link>https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/develop/springboot/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/develop/springboot/</guid><description>
+&lt;p>Dubbo 提供了对 Spring 框架的完整支持，我们推荐使用官方提供的 &lt;code>dubbo-spring-boot-starter&lt;/code> 高效开发 Dubbo 微服务应用。&lt;/p>
+&lt;h2 id="创建项目">创建项目&lt;/h2>
+&lt;p>创建 Dubbo 应用最快捷的方式就是使用官方项目脚手架工具 - &lt;a href="https://start.dubbo.apache.org" target="_blank">start.dubbo.apache.org&lt;/a> 在线服务。它可以帮助开发者创建 Spring Boot 结构应用，自动管理 &lt;code>dubbo-spring-boot-starter&lt;/code> 等依赖和必要配置。&lt;/p>
+&lt;p>另外，Jetbrain 官方也提供了 Apache Dubbo 项目插件，可用于快速创建 Dubbo Spring Boot 项目，能力与 start.dubbo.apache.org 对等，具体安装使用请查看 &lt;a href="zh-cn/blog/2023/10/23/intellij-idea%EF%B8%8Fapache-dubboidea%E5%AE%98%E6%96%B9%E6%8F%92%E4%BB%B6%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%B8%83/">博客文章&lt;/a>&lt;/p>
+&lt;h2 id="dubbo-spring-boot-starter">dubbo-spring-boot-starter&lt;/h2>
+&lt;p>在 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/quick-start/">快速开始&lt;/a> 中，我们已经详细介绍了典型的 Dubbo Spring Boot 工程源码及其项目结构，不熟悉的开发者可以前往查看。&lt;/p>
+&lt;p>&lt;code>dubbo-spring-boot-starter&lt;/code> 可为项目引入 dubbo 核心依赖，自动扫描 dubbo 相关配置与注解。&lt;/p>
+&lt;h3 id="maven-依赖">Maven 依赖&lt;/h3>
+&lt;p>使用 Dubbo Spring Boot Starter，首先引入以下 Maven 依赖&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;dependencyManagement&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;dependencies&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;groupId&amp;gt;&lt;/span>org.apache.dubbo&lt;span style="color:#268bd2">&amp;lt;/groupId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;artifactId&amp;gt;&lt;/span>dubbo-bom&lt;span style="color:#268bd2">&amp;lt;/artifactId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;version&amp;gt;&lt;/span>3.3.0-beta.1&lt;span style="color:#268bd2">&amp;lt;/version&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;type&amp;gt;&lt;/span>pom&lt;span style="color:#268bd2">&amp;lt;/type&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;scope&amp;gt;&lt;/span>import&lt;span style="color:#268bd2">&amp;lt;/scope&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;/dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;/dependencies&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;/dependencyManagement&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后，在相应模块的 pom 中增加必要的 starter 依赖：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;dependencies&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;groupId&amp;gt;&lt;/span>org.apache.dubbo&lt;span style="color:#268bd2">&amp;lt;/groupId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;artifactId&amp;gt;&lt;/span>dubbo-spring-boot-starter&lt;span style="color:#268bd2">&amp;lt;/artifactId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;/dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;groupId&amp;gt;&lt;/span>org.apache.dubbo&lt;span style="color:#268bd2">&amp;lt;/groupId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;artifactId&amp;gt;&lt;/span>dubbo-zookeeper-spring-boot-starter&lt;span style="color:#268bd2">&amp;lt;/artifactId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;/dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;/dependencies&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>dubbo-spring-boot-starter&lt;/code> 和 &lt;code>dubbo-zookeeper-spring-boot-starter&lt;/code> 是官方提供的 starter，提供了 Spring Boot 的集成适配，它们的版本号与 Dubbbo 主框架版本号完全一致。&lt;/p>
+&lt;h3 id="applicationyml-配置文件">application.yml 配置文件&lt;/h3>
+&lt;p>以下是一个示例文件配置&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">dubbo&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">application&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">name&lt;/span>: dubbo-springboot-demo-provider
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">logger&lt;/span>: slf4j
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">protocol&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">name&lt;/span>: triple
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">port&lt;/span>: -&lt;span style="color:#2aa198">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">registry&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">address&lt;/span>: zookeeper://127.0.0.1:2181
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>除 service、reference 之外的组件都可以在 application.yml 文件中设置，具体可参考 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/config/spring/spring-boot/#applicationyaml">配置列表&lt;/a>。&lt;/p>
+&lt;p>service、reference 组件也可以通过 &lt;code>id&lt;/code> 与 application 中的全局组件做关联，以下面配置为例。如果要扩展 service 或 reference 的注解配置，则需要增加 &lt;code>dubbo.properties&lt;/code> 配置文件或使用其他非注解如 Java Config 方式，具体请看下文 &lt;a href="#%E6%89%A9%E5%B1%95%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AE">扩展注解的配置&lt;/a>。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">dubbo&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">application&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">name&lt;/span>: dubbo-springboot-demo-provider
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">protocol&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">name&lt;/span>: triple
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">port&lt;/span>: -&lt;span style="color:#2aa198">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">registry&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">id&lt;/span>: zk-registry
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">address&lt;/span>: zookeeper://127.0.0.1:2181
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>通过注解将 service 关联到上文定义的特定注册中心（通过id关联）&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@DubboService&lt;/span>(registry&lt;span style="color:#719e07">=&lt;/span>&lt;span style="color:#2aa198">&amp;#34;zk-registry&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">DemoServiceImpl&lt;/span> &lt;span style="color:#268bd2">implements&lt;/span> DemoService {}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>通过 Java Config 配置进行关联也是同样道理&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@Configuration&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">ProviderConfiguration&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">@Bean&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> ServiceConfig &lt;span style="color:#268bd2">demoService&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ServiceConfig service &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ServiceConfig();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> service.setRegistry(&lt;span style="color:#2aa198">&amp;#34;zk-registry&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">return&lt;/span> service;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="dubbo-注解">Dubbo 注解&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>application.properties&lt;/code> 或 &lt;code>application.yml&lt;/code> 配置文件。&lt;/li>
+&lt;li>&lt;code>@DubboService&lt;/code>、&lt;code>@DubboReference&lt;/code> 与 &lt;code>EnableDubbo&lt;/code> 注解。其中 &lt;code>@DubboService&lt;/code> 与 &lt;code>@DubboReference&lt;/code> 用于标记 Dubbo 服务，&lt;code>EnableDubbo&lt;/code> 启动 Dubbo 相关配置并指定 Spring Boot 扫描包路径。&lt;/li>
+&lt;/ul>
+&lt;h4 id="dubboservice-注解">@DubboService 注解&lt;/h4>
+&lt;blockquote>
+&lt;p>&lt;code>@Service&lt;/code> 注解从 3.0 版本开始就已经废弃，改用 &lt;code>@DubboService&lt;/code>，以区别于 Spring 的 &lt;code>@Service&lt;/code> 注解&lt;/p>
+&lt;/blockquote>
+&lt;p>定义好 Dubbo 服务接口后，提供服务接口的实现逻辑，并用 &lt;code>@DubboService&lt;/code> 注解标记，就可以实现 Dubbo 的服务暴露&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@DubboService&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">DemoServiceImpl&lt;/span> &lt;span style="color:#268bd2">implements&lt;/span> DemoService {}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果要设置服务参数，&lt;code>@DubboService&lt;/code> 也提供了常用参数的设置方式。如果有更复杂的参数设置需求，则可以考虑使用其他设置方式&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@DubboService&lt;/span>(version &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#2aa198">&amp;#34;1.0.0&amp;#34;&lt;/span>, group &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#2aa198">&amp;#34;dev&amp;#34;&lt;/span>, timeout &lt;span style="color:#719e07">=&lt;/span> 5000)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">DemoServiceImpl&lt;/span> &lt;span style="color:#268bd2">implements&lt;/span> DemoService {}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="dubboreference-注解">@DubboReference 注解&lt;/h4>
+&lt;blockquote>
+&lt;p>&lt;code>@Reference&lt;/code> 注解从 3.0 版本开始就已经废弃，改用 &lt;code>@DubboReference&lt;/code>，以区别于 Spring 的 &lt;code>@Reference&lt;/code> 注解&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@Component&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">DemoClient&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">@DubboReference&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">private&lt;/span> DemoService demoService;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>@DubboReference&lt;/code> 注解将自动注入为 Dubbo 服务代理实例，使用 demoService 即可发起远程服务调用&lt;/p>
+&lt;h4 id="enabledubbo-注解">@EnableDubbo 注解&lt;/h4>
+&lt;p>&lt;code>@EnableDubbo&lt;/code> 注解必须配置，否则将无法加载 Dubbo 注解定义的服务，&lt;code>@EnableDubbo&lt;/code> 可以定义在主类上&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@SpringBootApplication&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@EnableDubbo&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">ProviderApplication&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) &lt;span style="color:#268bd2">throws&lt;/span> Exception {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> SpringApplication.run(ProviderApplication.class, args);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Spring Boot 注解默认只会扫描 main 类所在的 package，如果服务定义在其它 package 中，需要增加配置 &lt;code>EnableDubbo(scanBasePackages = {&amp;quot;org.apache.dubbo.springboot.demo.provider&amp;quot;})&lt;/code>&lt;/p>
+&lt;h4 id="扩展注解配置">扩展注解配置&lt;/h4>
+&lt;p>虽然可以通过 &lt;code>@DubboService&lt;/code> 和 &lt;code>DubboReference&lt;/code> 调整配置参数（如下代码片段所示），但总体来说注解是为易用性设计的，其提供的仅仅是 80% 场景下常用的配置项。在这种情况下，如果有更复杂的参数设置需求，可以使用 &lt;code>Java Config&lt;/code> 或 &lt;code>dubbo.properties&lt;/code> 两种方式。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@DubboService&lt;/span>(version &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#2aa198">&amp;#34;1.0.0&amp;#34;&lt;/span>, group &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#2aa198">&amp;#34;dev&amp;#34;&lt;/span>, timeout &lt;span style="color:#719e07">=&lt;/span> 5000)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@DubboReference&lt;/span>(version &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#2aa198">&amp;#34;1.0.0&amp;#34;&lt;/span>, group &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#2aa198">&amp;#34;dev&amp;#34;&lt;/span>, timeout &lt;span style="color:#719e07">=&lt;/span> 5000)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="使用-java-config-代替注解">使用 Java Config 代替注解&lt;/h4>
+&lt;p>注意，Java Config 是 &lt;code>DubboService&lt;/code> 或 &lt;code>DubboReference&lt;/code> 的替代方式，对于有复杂配置需求的服务建议使用这种方式。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">@Configuration&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">ProviderConfiguration&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">@Bean&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> ServiceBean &lt;span style="color:#268bd2">demoService&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ServiceBean service &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ServiceBean();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> service.setInterface(DemoService.class);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> service.setRef(&lt;span style="color:#719e07">new&lt;/span> DemoServiceImpl());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> service.setGroup(&lt;span style="color:#2aa198">&amp;#34;dev&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> service.setVersion(&lt;span style="color:#2aa198">&amp;#34;1.0.0&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Map&lt;span style="color:#719e07">&amp;lt;&lt;/span>String, String&lt;span style="color:#719e07">&amp;gt;&lt;/span> parameters &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> HashMap&lt;span style="color:#719e07">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> service.setParameters(parameters);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">return&lt;/span> service;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="通过-dubboproperties-补充配置">通过 dubbo.properties 补充配置&lt;/h4>
+&lt;p>对于使用 &lt;code>DubboService&lt;/code> 或 &lt;code>DubboReference&lt;/code> 的场景，可以通过在项目 resources 目录下增加 dubbo.properties 文件作为配置补充，&lt;a href="../principle/#1-%E9%85%8D%E7%BD%AE%E6%A0%BC%E5%BC%8F">具体格式&lt;/a>这里有更详细解释。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-properties" data-lang="properties">&lt;span style="display:flex;">&lt;span>dubbo.service.org.apache.dubbo.springboot.demo.DemoService.timeout&lt;span style="color:#719e07">=&lt;/span>&lt;span style="color:#2aa198">5000&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dubbo.service.org.apache.dubbo.springboot.demo.DemoService.parameters&lt;span style="color:#719e07">=&lt;/span>&lt;span style="color:#2aa198">[{myKey:myValue},{anotherKey:anotherValue}]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dubbo.reference.org.apache.dubbo.springboot.demo.DemoService.timeout&lt;span style="color:#719e07">=&lt;/span>&lt;span style="color:#2aa198">6000&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>properties 格式配置目前结构性不太强，比如体现在 key 字段冗余较多，后续会考虑提供对于 yaml 格式的支持。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="更多微服务开发模式">更多微服务开发模式&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="../api/">纯 API 开发模式&lt;/a>&lt;/li>
+&lt;li>其他 Spring 开发模式
+&lt;ul>
+&lt;li>&lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/config/spring/xml/">Spring XML&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="dubbo-与-spring-cloud-的关系">Dubbo 与 Spring Cloud 的关系&lt;/h2>
+&lt;p>Dubbo 与 Spring Cloud 是两套平行的微服务开发与解决方案，两者都提供了微服务定义、发布、治理的相关能力，对于微服务开发者来说，我们建议在开发之初就确定好 Apache Dubbo 与 Spring Cloud 之间的选型，尽量避免两个不同体系在同一集群中出现，以降低集群维护复杂度。而对于一些确需两套体系共存的场景，为了解决相互之间的通信问题，我们提供了 &lt;a href="https://dubbo.apache.org/zh-cn/blog/2023/10/07/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E9%9B%B6%E6%94%B9%E9%80%A0%E5%AE%9E%E7%8E%B0-spring-cloud-apache-dubbo-%E4%BA%92%E9%80%9A/">Dubbo 与 Spring Cloud 异构微服务体系互通最佳实践&lt;/a> 解决方案。&lt;/p>
+&lt;p>Dubbo 与 Spring Boot 是互补的关系，Dubbo 在 Spring Boot 体系之上提供了完整的微服务开发、治理能力，关于这一点我们在另一篇文章中有更详尽的说明：&lt;a href="https://dubbo.apache.org/zh-cn/overview/what/xyz-difference/">Dubbo、Spring Cloud 与 Istio&lt;/a>。&lt;/p></description></item><item><title>Overview: 使用原生 API 开发 Dubbo 应用</title><link>https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/develop/api/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/develop/api/</guid><description>
+&lt;p>你可能已经注意到了，文档中大部分的功能、示例都是基于 Spring Boot 模式编写的，但 Spring Boot 或 Spring 仅仅是 Dubbo 适配的一种应用或者微服务开发模式。&lt;strong>作为一款 RPC 框架，Dubbo 定义了一套完善的 API 接口，我们可以基于原生 API 开发 Dubbo 应用&lt;/strong>，纯 API 可以实现的业务场景包括：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>轻量 RPC Server &amp;amp; Client&lt;/strong>，通常用于一些应用内、基础组件、中间件等内的简单远程调用场景&lt;/li>
+&lt;li>&lt;strong>微服务应用&lt;/strong>，不依赖 Spring 的情况下，直接用 API 开发微服务&lt;/li>
+&lt;/ul>
+&lt;h2 id="api-概览">API 概览&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">Application&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DubboBootstrap.getInstance()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .protocol(&lt;span style="color:#719e07">new&lt;/span> ProtocolConfig(CommonConstants.TRIPLE, 50051))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().ref(&lt;span style="color:#719e07">new&lt;/span> DemoServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .start()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .await();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>以上是启动 Dubbo RPC Server 的一段代码示例，&lt;code>DubboBootstrap&lt;/code> 实例代表一个 Dubbo 应用，是整个 Dubbo 应用的启动入口。在 DubboBootstrap 基础上，我们可以设置 &lt;code>protocol&lt;/code>、&lt;code>service&lt;/code>、&lt;code>registry&lt;/code>、&lt;code>metrics&lt;/code> 等来注册服务、连接注册中心等，这和我们在 Spring Boot 中调整 application.yml 或者 application.properties 文件是对等的作用。&lt;/p>
+&lt;p>官方推荐使用 &lt;code>DubboBootstrap.start()&lt;/code> 作为应用的集中启动入口，但为了方便在进程启动后，在运行态单独发布一些服务，Dubbo 框架也允许直接调用 &lt;code>ServiceConfig.export()&lt;/code> 或 &lt;code>ReferenceConfig.refer()&lt;/code> 方法发布单个服务，这时 Service/Reference 会注册到默认的 DubboBootstrap 实例中，效果同调用 &lt;code>DubboBootstrap.service(...).start()&lt;/code> 类似。&lt;/p>
+&lt;p>以下是开发中会常用到的一些组件，完整组件定义及详细参数说明请参见 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/config/properties/#%E9%85%8D%E7%BD%AE%E9%A1%B9%E6%89%8B%E5%86%8C">参考手册 - 配置项手册&lt;/a>：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>API 组件&lt;/th>
+&lt;th>全局唯一&lt;/th>
+&lt;th>核心方法或属性&lt;/th>
+&lt;th>说明&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;span style="display:inline-block;width:160px">DubboBootstrap&lt;/span>&lt;/td>
+&lt;td>是（多应用场景除外）&lt;/td>
+&lt;td>start()、stop()&lt;/td>
+&lt;td>DubboBootstrap 实例代表一个 Dubbo 应用，是整个 Dubbo 应用的启动入口。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ApplicationConfig&lt;/td>
+&lt;td>是&lt;/td>
+&lt;td>name&lt;/td>
+&lt;td>应用名及应用级别的一些全局配置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>MetricsConfig&lt;/td>
+&lt;td>是&lt;/td>
+&lt;td>protocol、prometheus、tracing&lt;/td>
+&lt;td>Metrics、tracing 采集相关配置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ProtocolConfig&lt;/td>
+&lt;td>否。多协议场景服务通过 id 关联&lt;/td>
+&lt;td>id、name、port、serialization、threadpool&lt;/td>
+&lt;td>RPC 协议端口、序列化协议、运行时行为配置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>RegistrtyConfig&lt;/td>
+&lt;td>否。多注册中心场景服务通过 id 关联&lt;/td>
+&lt;td>id、address、protocol、group&lt;/td>
+&lt;td>注册中心实现、地址、订阅等配置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ConfigCenterConfig&lt;/td>
+&lt;td>否。多配置中心场景服务通过 id 关联&lt;/td>
+&lt;td>id、address、protocol、group、namespace&lt;/td>
+&lt;td>配置中心实现、地址、分组隔离等配置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>MetadataReportConfig&lt;/td>
+&lt;td>否。多元数据中心场景服务通过 id 关联&lt;/td>
+&lt;td>id、address、protocol、group、namespace&lt;/td>
+&lt;td>元数据中心实现、地址、分组隔离等配置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ProviderConfig&lt;/td>
+&lt;td>否&lt;/td>
+&lt;td>参考 ServiceConfig&lt;/td>
+&lt;td>作为多个ServiceConfig的默认值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ConsumerConfig&lt;/td>
+&lt;td>否&lt;/td>
+&lt;td>参考 ReferenceConfig&lt;/td>
+&lt;td>作为多个ReferenceConfig的默认值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ServiceConfig&lt;/td>
+&lt;td>否&lt;/td>
+&lt;td>- 方法：export()&lt;br/> - 属性： interfaceClass、ref、group、version、timeout、retry&lt;/td>
+&lt;td>一个 ServiceConfig 实例代表一个 RPC 服务&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ReferenceConfig&lt;/td>
+&lt;td>否&lt;/td>
+&lt;td>- 方法：refer()&lt;br/> - 属性：interfaceClass、group、version、timeout、retry、cluster、loadbalance&lt;/td>
+&lt;td>一个 ReferenceConfig 实例代表一个 RPC 服务&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>MethodConfig&lt;/td>
+&lt;td>否&lt;/td>
+&lt;td>name、oninvoke、onreturn、onthrow&lt;/td>
+&lt;td>ServiceConfig/ReferenceConfig 内嵌的方法级别配置&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ArgumentConfig&lt;/td>
+&lt;td>否&lt;/td>
+&lt;td>index、type、callback&lt;/td>
+&lt;td>MethodConfig 内嵌的参数级别配置&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="轻量-rpc-示例">轻量 RPC 示例&lt;/h2>
+&lt;p>本示例演示如何使用轻量 Dubbo SDK 开发 RPC Server 与 Client，示例使用 Java Interface 方式定义、发布和访问 RPC 服务，底层使用 Triple 协议通信。本示例完整代码请参见 &lt;a href="https://github.com/apache/dubbo-samples/tree/master/1-basic/dubbo-samples-api" target="_blank">dubbo-samples&lt;/a>。&lt;/p>
+&lt;p>基于 Dubbo 定义的 Triple 协议，你可以轻松编写浏览器、gRPC 兼容的 RPC 服务，并让这些服务同时运行在 HTTP/1 和 HTTP/2 上。Dubbo Java SDK 支持使用 IDL 或编程语言特有的方式定义服务，并提供一套轻量的 API 来发布或调用这些服务。&lt;/p>
+&lt;h3 id="maven-依赖">Maven 依赖&lt;/h3>
+&lt;p>在基于 Dubbo RPC 编码之前，您只需要在项目添加一个非常轻量的 &lt;code>dubbo&lt;/code>依赖包即可，以 Maven 为例：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;groupId&amp;gt;&lt;/span>org.apache.dubbo&lt;span style="color:#268bd2">&amp;lt;/groupId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;artifactId&amp;gt;&lt;/span>dubbo&lt;span style="color:#268bd2">&amp;lt;/artifactId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">&amp;lt;version&amp;gt;&lt;/span>3.3.0&lt;span style="color:#268bd2">&amp;lt;/version&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">&amp;lt;/dependency&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="定义服务">定义服务&lt;/h3>
+&lt;p>定义一个名为 &lt;code>DemoService&lt;/code>的标准 Java 接口作为 Dubbo 服务（Dubbo 还支持&lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/protocols/triple/idl/">基于 IDL 的服务定义模式&lt;/a>）。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">interface&lt;/span> &lt;span style="color:#268bd2">DemoService&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> String &lt;span style="color:#268bd2">sayHello&lt;/span>(String name);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>实现 &lt;code>DemoService&lt;/code> 接口并编写业务逻辑代码。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">DemoServiceImpl&lt;/span> &lt;span style="color:#268bd2">implements&lt;/span> DemoService {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">@Override&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> String &lt;span style="color:#268bd2">sayHello&lt;/span>(String name) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">return&lt;/span> &lt;span style="color:#2aa198">&amp;#34;Hello &amp;#34;&lt;/span> &lt;span style="color:#719e07">+&lt;/span> name &lt;span style="color:#719e07">+&lt;/span> &lt;span style="color:#2aa198">&amp;#34;, response from provider.&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="注册服务并启动-server">注册服务并启动 Server&lt;/h3>
+&lt;p>启动 server 并在指定端口监听 RPC 请求，在此之前，我们向 server 注册了以下信息：&lt;/p>
+&lt;ul>
+&lt;li>使用 &lt;code>Triple&lt;/code> 作为通信 RPC 协议与并监听端口 &lt;code>50051&lt;/code>&lt;/li>
+&lt;li>注册 Dubbo 服务到 &lt;code>DemoService&lt;/code> server&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">Application&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DubboBootstrap.getInstance()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .protocol(&lt;span style="color:#719e07">new&lt;/span> ProtocolConfig(CommonConstants.TRIPLE, 50051))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().ref(&lt;span style="color:#719e07">new&lt;/span> DemoServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .start()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .await();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="访问服务">访问服务&lt;/h3>
+&lt;p>最简单方式是使用 HTTP/1.1 POST 请求访问服务，参数则以标准 JSON 格式作为 HTTP 负载传递。如下是使用 cURL 命令的访问示例：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>curl &lt;span style="color:#cb4b16">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#cb4b16">&lt;/span> --header &lt;span style="color:#2aa198">&amp;#34;Content-Type: application/json&amp;#34;&lt;/span> &lt;span style="color:#cb4b16">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#cb4b16">&lt;/span> --data &lt;span style="color:#2aa198">&amp;#39;[&amp;#34;Dubbo&amp;#34;]&amp;#39;&lt;/span> &lt;span style="color:#cb4b16">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#cb4b16">&lt;/span> http://localhost:50051/org.apache.dubbo.demo.DemoService/sayHello
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>参数必须以数组格式进行传递，如果有多个参数，则格式类似 &lt;code>[&amp;quot;param1&amp;quot;, {&amp;quot;param2-field&amp;quot;: &amp;quot;param2-value&amp;quot;}, ...]&lt;/code>，具体请参见 triple 协议规范。&lt;/p>
+&lt;/blockquote>
+&lt;p>接下来，您也可以使用标准的 Dubbo client 请求服务，指定 server 地址即可发起 RPC 调用，其格式为 &lt;code>protocol://ip:host&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">class&lt;/span> &lt;span style="color:#268bd2">Application&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DemoService demoService &lt;span style="color:#719e07">=&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ReferenceBuilder.newBuilder()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .interfaceClass(DemoService.class)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .url(&lt;span style="color:#2aa198">&amp;#34;tri://localhost:50051&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .build()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .get();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> String message &lt;span style="color:#719e07">=&lt;/span> demoService.sayHello(&lt;span style="color:#2aa198">&amp;#34;dubbo&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.out.println(message);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>恭喜您， 以上即是 Dubbo Java RPC 通信的基本使用方式！ 🎉&lt;/p>
+&lt;h3 id="更多示例">更多示例&lt;/h3>
+&lt;p>除了以上简单使用场景之外，开发者还可以发布多个服务、直接调用 ServiceConfig/ReferenceConfig 发布/订阅单个服务等。&lt;/p>
+&lt;h4 id="发布多个服务">发布多个服务&lt;/h4>
+&lt;p>以下示例注册并发布任意多个服务 FooService、BarService，这些服务都将使用 providerConfig 中配置的默认超时时间，省去多个服务重复配置的烦恼。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ProviderConfig providerConfig &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ProviderConfig();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> providerConfig.setTimeout(5000);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ProtocolConfig protocolConfig &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ProtocolConfig(CommonConstants.TRIPLE, 50051);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DubboBootstrap.getInstance()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .protocol(protocolConfig)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .provider(providerConfig)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().ref(&lt;span style="color:#719e07">new&lt;/span> FooServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().ref(&lt;span style="color:#719e07">new&lt;/span> BarServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .start()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .await();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="发布单个服务">发布单个服务&lt;/h4>
+&lt;p>直接调用 ServiceConfig.export() 发布服务，适用于运行态动态发布或订阅一个服务，对于 ReferenceConfig 同理。对于正常的应用启动流程，推荐使用 DubboBootstrap 而非直接调用 ServiceConfig.export() 发布单个服务。&lt;/p>
+&lt;ol>
+&lt;li>通过 ServiceConfig 发布服务&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ServiceConfig&lt;span style="color:#719e07">&amp;lt;&lt;/span>DemoService&lt;span style="color:#719e07">&amp;gt;&lt;/span> demoServiceConfig &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ServiceConfig&lt;span style="color:#719e07">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.setInterface(DemoService.class);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.setRef(&lt;span style="color:#719e07">new&lt;/span> DemoServiceImpl());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.setVersion(&lt;span style="color:#2aa198">&amp;#34;1.0.0&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.export(); &lt;span style="color:#586e75">// this service will be registered to the default instance of DubboBootstrap.getInstance()&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>通过 ReferenceConfig 订阅服务&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">private&lt;/span> DemoService &lt;span style="color:#268bd2">referService&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ReferenceConfig&lt;span style="color:#719e07">&amp;lt;&lt;/span>DemoService&lt;span style="color:#719e07">&amp;gt;&lt;/span> reference &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ReferenceConfig&lt;span style="color:#719e07">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> reference.setInterfaceClass(DemoService.class);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ReferenceCache cache &lt;span style="color:#719e07">=&lt;/span> SimpleReferenceCache.getCache();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">return&lt;/span> cache.get(reference);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#719e07">catch&lt;/span> (Exception e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">throw&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RuntimeException(e.getMessage());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>由于 ReferenceConfig.get() 创建的代理对象持有连接、地址等大量资源，因此建议缓存复用，Dubbo 官方提供了 SimpleReferenceCache 实现参考实现。关于 SimpleReferenceCache 更多内容，请参考 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/framework/more/reference-config-cache/">RPC 框架&lt;/a>。&lt;/p>
+&lt;h4 id="获得引用代理">获得引用代理&lt;/h4>
+&lt;p>使用 DubboBootstrap 作为启动入口，订阅服务并获得代理对象。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ReferenceConfig&lt;span style="color:#719e07">&amp;lt;&lt;/span>GreetingsService&lt;span style="color:#719e07">&amp;gt;&lt;/span> reference &lt;span style="color:#719e07">=&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ReferenceBuilder.&lt;span style="color:#719e07">&amp;lt;&lt;/span>GreetingsService&lt;span style="color:#719e07">&amp;gt;&lt;/span>newBuilder()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .interfaceClass(GreetingsService.class)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .build();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DubboBootstrap.getInstance().reference(reference).start();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> GreetingsService service &lt;span style="color:#719e07">=&lt;/span> reference.get();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="微服务示例">微服务示例&lt;/h2>
+&lt;h3 id="注册中心和应用名">注册中心和应用名&lt;/h3>
+&lt;p>相比于 RPC server、RPC client，基于 API 的微服务应用开发需要配置应用名、注册中心。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DubboBootstrap.getInstance()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .application()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .registry(&lt;span style="color:#719e07">new&lt;/span> RegistryConfig(&lt;span style="color:#2aa198">&amp;#34;nacos://127.0.0.1:8848&amp;#34;&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .protocol(&lt;span style="color:#719e07">new&lt;/span> ProtocolConfig(CommonConstants.TRIPLE, 50051))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().ref(&lt;span style="color:#719e07">new&lt;/span> DemoServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().ref(&lt;span style="color:#719e07">new&lt;/span> FooServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .start()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .await();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="多个注册中心">多个注册中心&lt;/h3>
+&lt;p>多个注册中心可指定不同的 id，服务通过 id 关联注册中心实例。如下示例中，GreetingsService 发布到 bjRegistry，DemoService 发布到 hzRegistry。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RegistryConfig bjRegistry &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RegistryConfig();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> bjRegistry.setId(&lt;span style="color:#2aa198">&amp;#34;bj&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> bjRegistry.setAddress(&lt;span style="color:#2aa198">&amp;#34;nacos://127.0.0.1:8848&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RegistryConfig hzRegistry &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RegistryConfig();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hzRegistry.setId(&lt;span style="color:#2aa198">&amp;#34;hz&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hzRegistry.setAddress(&lt;span style="color:#2aa198">&amp;#34;nacos://127.0.0.2:8848&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DubboBootstrap.getInstance()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .registry(bjRegistry)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .registry(hzRegistry)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().registryIds(&lt;span style="color:#2aa198">&amp;#34;bj&amp;#34;&lt;/span>).interfaceClass(GreetingsService.class).ref(&lt;span style="color:#719e07">new&lt;/span> GreetingsServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .service(ServiceBuilder.newBuilder().registryIds(&lt;span style="color:#2aa198">&amp;#34;hz&amp;#34;&lt;/span>).interfaceClass(DemoService.class).ref(&lt;span style="color:#719e07">new&lt;/span> DemoServiceImpl()).build())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .start()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .await();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="发布单个服务-1">发布单个服务&lt;/h3>
+&lt;p>直接调用 ServiceConfig.export() 发布服务，适用于运行态动态发布或订阅一个服务，对于 ReferenceConfig 同理。对于正常的应用启动流程，推荐使用 DubboBootstrap 而非直接调用 ServiceConfig.export() 发布单个服务。&lt;/p>
+&lt;div class="alert alert-primary" role="alert">
+&lt;h4 class="alert-heading">注意&lt;/h4>
+&lt;/div>
+&lt;ol>
+&lt;li>通过 ServiceConfig 发布服务&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">public&lt;/span> &lt;span style="color:#268bd2">static&lt;/span> &lt;span style="color:#dc322f">void&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>(String&lt;span style="color:#719e07">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RegistryConfig hzRegistry &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RegistryConfig();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hzRegistry.setId(&lt;span style="color:#2aa198">&amp;#34;hz&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hzRegistry.setAddress(&lt;span style="color:#2aa198">&amp;#34;nacos://127.0.0.2:8848&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ServiceConfig&lt;span style="color:#719e07">&amp;lt;&lt;/span>DemoService&lt;span style="color:#719e07">&amp;gt;&lt;/span> demoServiceConfig &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ServiceConfig&lt;span style="color:#719e07">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.setInterface(DemoService.class);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.setRef(&lt;span style="color:#719e07">new&lt;/span> DemoServiceImpl());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.setVersion(&lt;span style="color:#2aa198">&amp;#34;1.0.0&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.setRegistry(hzRegistry);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> demoServiceConfig.export(); &lt;span style="color:#586e75">// this service will be registered to the default instance of DubboBootstrap.getInstance()&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>通过 ReferenceConfig 订阅服务&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#268bd2">private&lt;/span> DemoService &lt;span style="color:#268bd2">referService&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RegistryConfig hzRegistry &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RegistryConfig();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hzRegistry.setId(&lt;span style="color:#2aa198">&amp;#34;hz&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hzRegistry.setAddress(&lt;span style="color:#2aa198">&amp;#34;nacos://127.0.0.2:8848&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ReferenceConfig&lt;span style="color:#719e07">&amp;lt;&lt;/span>DemoService&lt;span style="color:#719e07">&amp;gt;&lt;/span> reference &lt;span style="color:#719e07">=&lt;/span> &lt;span style="color:#719e07">new&lt;/span> ReferenceConfig&lt;span style="color:#719e07">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> reference.setInterfaceClass(DemoService.class);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> reference.setRegistry(hzRegistry)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ReferenceCache cache &lt;span style="color:#719e07">=&lt;/span> SimpleReferenceCache.getCache();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">return&lt;/span> cache.get(reference);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#719e07">catch&lt;/span> (Exception e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#719e07">throw&lt;/span> &lt;span style="color:#719e07">new&lt;/span> RuntimeException(e.getMessage());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="更多内容">更多内容&lt;/h2>
+&lt;ul>
+&lt;li>Triple 协议完全兼容 gRPC，您可以参考这里了解如何 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/protocols/triple/idl/">使用 IDL 编写 gRPC 兼容的服务&lt;/a>，或者 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/protocols/">使用其他通信协议&lt;/a>&lt;/li>
+&lt;li>作为 RPC 框架，Dubbo 支持异步调用、连接管理、context上下文等，请参考 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/framework/">RPC 框架核心功能&lt;/a>&lt;/li>
+&lt;li>使用 &lt;a href="https://dubbo.apache.org/zh-cn/overview/mannual/java-sdk/tasks/develop/springboot/">Dubbo Spring Boot 开发微服务应用&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>
